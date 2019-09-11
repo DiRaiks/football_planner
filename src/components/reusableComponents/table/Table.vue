@@ -16,7 +16,7 @@
                         :name="item.name"
                         :friends="item.friends"
                 />
-                <tr class="boldRow">
+                <tr class="boldRow minimumRow">
                     <td>Минимум</td>
                     <td :colspan="friendsColspan + 1">{{allPeopleCount}}</td>
                 </tr>
@@ -31,7 +31,10 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import { mapGetters } from 'vuex';
+
 import TableLine from './TableLine.vue';
+
 
 interface PeopleItem {
     friends: string[];
@@ -43,22 +46,11 @@ export default Vue.extend({
     components: {
         TableLine,
     },
-    data() {
-        return {
-            testData: [{
-                name: 'ololoo',
-                friends: ['1212121dfsdfsdfsdf', '121212', 'assa'],
-            },
-            {
-                name: 'ololoo',
-                friends: [],
-            }],
-        };
-    },
     computed: {
-        friendsColspan() {
+        ...mapGetters('table', { peopleData: 'getPeopleData' }),
+        friendsColspan(): number {
             let maxColspan = 0;
-            this.testData.forEach((item: PeopleItem) => {
+            this.peopleData.forEach((item: PeopleItem) => {
                 if (maxColspan < item.friends.length) {
                     maxColspan = item.friends.length;
                 }
@@ -67,10 +59,10 @@ export default Vue.extend({
         },
         allPeopleCount(): number {
             let count = 0;
-            this.testData.forEach((item: PeopleItem) => {
+            this.peopleData.forEach((item: PeopleItem) => {
                 count += item.friends.length;
             });
-            return count + this.testData.length;
+            return count + this.peopleData.length;
         },
     },
 });
@@ -84,5 +76,8 @@ export default Vue.extend({
     .boldRow {
         background: aquamarine;
         font-weight: bold;
+    }
+    .minimumRow {
+        background: rgba(255, 0, 3, 0.48);
     }
 </style>
