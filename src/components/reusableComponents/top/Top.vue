@@ -5,19 +5,16 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import { Component, Prop, Vue } from 'vue-property-decorator';
 
-export default Vue.extend({
-    name: 'Top',
-    props: {
-        color: String,
-    },
-    computed: {
-        currentClass() {
-            return 'red';
-        },
-    },
-});
+@Component
+export default class Top extends Vue {
+    @Prop() private color!: string;
+
+    get currentClass(): string {
+        return 'red';
+    }
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

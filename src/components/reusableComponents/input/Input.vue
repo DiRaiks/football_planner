@@ -1,26 +1,23 @@
 <template>
     <label :for="currentId">
         <span >{{label}}</span>
-        <input :id="currentId" :type="type" :value="text">
+        <input :id="currentId" :type="type" :placeholder="text">
     </label>
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import { Component, Prop, Vue } from 'vue-property-decorator';
 
-export default Vue.extend({
-    name: 'Input',
-    props: {
-        type: String,
-        text: String,
-        label: String,
-    },
-    computed: {
-        currentId(): string {
-            return this.label + this.type;
-        },
-    },
-});
+@Component
+export default class Input extends Vue {
+    @Prop() private label!: string;
+    @Prop() private text!: string;
+    @Prop() private type!: string;
+
+    get currentId(): string {
+        return this.label + this.type;
+    }
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

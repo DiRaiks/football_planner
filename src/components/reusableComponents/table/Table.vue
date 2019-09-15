@@ -30,10 +30,17 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import { mapGetters } from 'vuex';
+import { Component, Vue } from 'vue-property-decorator';
+import {
+    State,
+    Getter,
+    Action,
+    Mutation,
+} from 'vuex-class';
 
 import TableLine from './TableLine.vue';
+
+const namespace: string = 'table';
 
 
 interface PeopleItem {
@@ -41,31 +48,33 @@ interface PeopleItem {
     name: string;
 }
 
-export default Vue.extend({
-    name: 'Table',
+@Component({
     components: {
         TableLine,
     },
-    computed: {
-        ...mapGetters('table', { peopleData: 'getPeopleData' }),
-        friendsColspan(): number {
-            let maxColspan = 0;
-            this.peopleData.forEach((item: PeopleItem) => {
-                if (maxColspan < item.friends.length) {
-                    maxColspan = item.friends.length;
-                }
-            });
-            return maxColspan;
-        },
-        allPeopleCount(): number {
-            let count = 0;
-            this.peopleData.forEach((item: PeopleItem) => {
-                count += item.friends.length;
-            });
-            return count + this.peopleData.length;
-        },
-    },
-});
+})
+export default class UserDetail extends Vue {
+    @Getter('getPeopleData', { namespace })
+    private peopleData!: PeopleItem[];
+
+
+    get friendsColspan(): number {
+        let maxColspan = 0;
+        this.peopleData.forEach((item: PeopleItem) => {
+            if (maxColspan < item.friends.length) {
+                maxColspan = item.friends.length;
+            }
+        });
+        return maxColspan;
+    }
+    get allPeopleCount(): number {
+        let count = 0;
+        this.peopleData.forEach((item: PeopleItem) => {
+            count += item.friends.length;
+        });
+        return count + this.peopleData.length;
+    }
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

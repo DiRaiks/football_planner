@@ -9,16 +9,15 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import { Component, Prop, Vue } from 'vue-property-decorator';
 
-export default Vue.extend({
-    name: 'TableLine',
-    props: {
-        number: Number,
-        name: String,
-        friends: Array,
-    },
-});
+@Component
+
+export default class TableLine extends Vue {
+    @Prop() private number!: number;
+    @Prop() private name!: string;
+    @Prop() private friends!: object[];
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

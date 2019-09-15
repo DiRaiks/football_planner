@@ -3,15 +3,13 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import { Component, Prop, Vue } from 'vue-property-decorator';
 
-export default Vue.extend({
-    name: 'Button',
-    props: {
-        text: String,
-        onChange: Function,
-    },
-});
+@Component
+export default class Button extends Vue {
+    @Prop() private text!: string;
+    @Prop() private onChange!: () => void;
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

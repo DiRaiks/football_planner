@@ -10,15 +10,15 @@
 </template>
 
 <script>
-import Vue from 'vue';
+import { Component, Vue } from 'vue-property-decorator';
 import Top from '@/components/reusableComponents/top/Top.vue';
 
-export default Vue.extend({
-  name: 'App',
+@Component({
   components: {
     Top,
   },
-});
+})
+export default class App extends Vue {}
 </script>
 
 <style lang="scss">
