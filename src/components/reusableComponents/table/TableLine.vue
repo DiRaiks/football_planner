@@ -16,7 +16,7 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 export default class TableLine extends Vue {
     @Prop() private number!: number;
     @Prop() private name!: string;
-    @Prop() private friends!: object[];
+    @Prop() private friends!: string[];
 }
 </script>
 

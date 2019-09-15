@@ -10,7 +10,7 @@
             </thead>
             <tbody>
                 <TableLine
-                        v-for="(item, index) in testData"
+                        v-for="(item, index) in peopleData"
                         :key="index"
                         :number="index"
                         :name="item.name"
@@ -31,12 +31,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import {
-    State,
-    Getter,
-    Action,
-    Mutation,
-} from 'vuex-class';
+import { Getter } from 'vuex-class';
 
 import TableLine from './TableLine.vue';
 
