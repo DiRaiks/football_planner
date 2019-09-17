@@ -6,4 +6,5 @@ export interface RootState {
 
 export interface TableState {
     peopleData: object[];
+    minimum: number;
 }

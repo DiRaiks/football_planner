@@ -18,7 +18,7 @@
                 />
                 <tr class="boldRow minimumRow">
                     <td>Минимум</td>
-                    <td :colspan="friendsColspan + 1">{{allPeopleCount}}</td>
+                    <td :colspan="friendsColspan + 1">{{minimum}}</td>
                 </tr>
                 <tr class="boldRow">
                     <td>Всего</td>
@@ -51,6 +51,8 @@ interface PeopleItem {
 export default class UserDetail extends Vue {
     @Getter('getPeopleData', { namespace })
     private peopleData!: PeopleItem[];
+    @Getter('getMinimum', { namespace })
+    private minimum!: number;
 
 
     get friendsColspan(): number {
