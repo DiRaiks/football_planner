@@ -6,6 +6,7 @@
                     <td></td>
                     <td>Имя</td>
                     <td :colspan="friendsColspan">+1</td>
+                    <td>Редактирование</td>
                 </tr>
             </thead>
             <tbody>
@@ -43,7 +44,7 @@ const namespace: string = 'table';
         TableLine,
     },
 })
-export default class UserDetail extends Vue {
+export default class Table extends Vue {
     @Getter('getPeopleData', { namespace })
     private peopleData!: PeopleItem[];
     @Getter('getPeopleDataCount', { namespace })

@@ -5,18 +5,31 @@
         <template v-for="(friend, index) in friends">
             <td :key="friend + index" >{{friend}}</td>
         </template>
+        <td v-if="!friends.length" :colspan="friendsColspan"></td>
+        <td><button @click="deleteName">Удалить</button></td>
     </tr>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Getter, Action } from 'vuex-class';
+
+const namespace: string = 'table';
 
 @Component
-
 export default class TableLine extends Vue {
     @Prop() private number!: number;
     @Prop() private name!: string;
     @Prop() private friends!: string[];
+
+    @Getter('getFriendsColspan', { namespace })
+    private friendsColspan!: number;
+    @Action('deletePeople', { namespace })
+    private deletePeople!: any;
+
+    protected deleteName(): void {
+        this.deletePeople(this.name);
+    }
 }
 </script>
 
