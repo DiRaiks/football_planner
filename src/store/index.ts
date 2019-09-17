@@ -5,6 +5,7 @@ import createLogger from 'vuex/dist/logger';
 import { RootState } from './types';
 
 import { table } from './table';
+import { auth } from './auth';
 
 Vue.use(Vuex);
 
@@ -21,6 +22,7 @@ if (debug) {
 
 const storeModules = {
   table,
+  auth,
 };
 
 const store: StoreOptions<RootState> = {

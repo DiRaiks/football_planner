@@ -79,7 +79,7 @@ export default class Home extends Vue {
 
 <style scoped lang="scss">
   .home {
-    padding: 0 20px;
+    padding: 20px;
   }
   .inputWr {
     display: flex;
