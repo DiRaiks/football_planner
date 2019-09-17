@@ -6,7 +6,8 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "test:unit": "vue-cli-service test:unit"
+    "test:unit": "vue-cli-service test:unit",
+    "deploy": "scp -rp ./dist/* root@87.236.22.136:/var/www/html/footbal-planner/"
   },
   "dependencies": {
     "core-js": "^2.6.5",
