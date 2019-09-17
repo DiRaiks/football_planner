@@ -62,7 +62,11 @@ export default class Home extends Vue {
   }
   protected savePeople(): void {
     if (this.peopleName) {
-      this.setPeopleData({ name: this.peopleName, friends: this.friends });
+      const filteredFriends = this.friends.filter((friend: string) => {
+        if (friend) return friend;
+      });
+
+      this.setPeopleData({ name: this.peopleName, friends: filteredFriends });
       this.peopleName = '';
       this.friends = [''];
     }
@@ -74,6 +78,9 @@ export default class Home extends Vue {
 </script>
 
 <style scoped lang="scss">
+  .home {
+    padding: 0 20px;
+  }
   .inputWr {
     display: flex;
     flex-direction: column;

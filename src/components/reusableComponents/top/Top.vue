@@ -1,18 +1,35 @@
 <template>
-    <div :class="['top', currentClass]">
-
+    <div :class="currentClass">
+        <div>{{ currentText }}</div>
     </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Getter } from 'vuex-class';
+
+const namespace: string = 'table';
 
 @Component
 export default class Top extends Vue {
-    @Prop() private color!: string;
+    @Getter('getMinimum', { namespace })
+    private minimum!: number;
+    @Getter('getPeopleDataCount', { namespace })
+    private peopleDataCount!: number;
 
-    get currentClass(): string {
-        return 'red';
+    get currentColor(): string {
+        return this.peopleDataCount >= this.minimum ? 'positive' : 'negative';
+    }
+
+    get currentClass(): object {
+        const { currentColor } = this;
+        return {
+            top: true,
+            [`top-${ currentColor }`]: currentColor,
+        };
+    }
+    get currentText(): string {
+        return this.peopleDataCount >= this.minimum ? '' : 'НЕДОСТАТОЧНО ЛЮДЕЙ';
     }
 }
 </script>
@@ -22,13 +39,17 @@ export default class Top extends Vue {
     .top {
         width: 100%;
         height: 100px;
-    }
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 28px;
 
-    .red {
-        background: red;
-    }
+        &-positive {
+            background: green;
+        }
 
-    .green {
-        background: green;
+        &-negative {
+            background: red;
+        }
     }
 </style>

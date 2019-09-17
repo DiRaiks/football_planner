@@ -22,7 +22,7 @@
                 </tr>
                 <tr class="boldRow">
                     <td>Всего</td>
-                    <td :colspan="friendsColspan + 1">{{allPeopleCount}}</td>
+                    <td :colspan="friendsColspan + 1">{{peopleDataCount}}</td>
                 </tr>
             </tbody>
         </table>
@@ -33,15 +33,10 @@
 import { Component, Vue } from 'vue-property-decorator';
 import { Getter } from 'vuex-class';
 
+import { PeopleItem } from '@/store/types';
 import TableLine from './TableLine.vue';
 
 const namespace: string = 'table';
-
-
-interface PeopleItem {
-    friends: string[];
-    name: string;
-}
 
 @Component({
     components: {
@@ -51,26 +46,12 @@ interface PeopleItem {
 export default class UserDetail extends Vue {
     @Getter('getPeopleData', { namespace })
     private peopleData!: PeopleItem[];
+    @Getter('getPeopleDataCount', { namespace })
+    private peopleDataCount!: number;
+    @Getter('getFriendsColspan', { namespace })
+    private friendsColspan!: number;
     @Getter('getMinimum', { namespace })
     private minimum!: number;
-
-
-    get friendsColspan(): number {
-        let maxColspan = 0;
-        this.peopleData.forEach((item: PeopleItem) => {
-            if (maxColspan < item.friends.length) {
-                maxColspan = item.friends.length;
-            }
-        });
-        return maxColspan;
-    }
-    get allPeopleCount(): number {
-        let count = 0;
-        this.peopleData.forEach((item: PeopleItem) => {
-            count += item.friends.length;
-        });
-        return count + this.peopleData.length;
-    }
 }
 </script>
 

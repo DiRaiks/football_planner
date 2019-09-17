@@ -5,6 +5,11 @@ export interface RootState {
 // TABLE
 
 export interface TableState {
-    peopleData: object[];
+    peopleData: PeopleItem[];
     minimum: number;
+}
+
+export interface PeopleItem {
+    friends: string[];
+    name: string;
 }

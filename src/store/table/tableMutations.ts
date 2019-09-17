@@ -1,8 +1,8 @@
 import { MutationTree } from 'vuex';
 
-import { TableState } from '../types';
+import { TableState, PeopleItem } from '../types';
 
 export const mutations: MutationTree<TableState> = {
-    setPeopleData(state, newData: object[]) { state.peopleData = newData; },
+    setPeopleData(state, newData: PeopleItem[]) { state.peopleData = newData; },
     setMinimum(state, newMinimum: number) { state.minimum = newMinimum; },
 };
