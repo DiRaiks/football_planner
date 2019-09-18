@@ -54,6 +54,8 @@ export default class Home extends Vue {
 
   @Action('setPeopleData', { namespace })
   private setPeopleData!: any;
+  @Action('getPeopleData', { namespace })
+  private getPeopleData!: any;
   @Mutation('setMinimum', { namespace })
   private setMinimum!: any;
 
@@ -73,6 +75,10 @@ export default class Home extends Vue {
   }
   protected saveMinimum(): void {
     this.setMinimum(this.minimum);
+  }
+
+  private mounted() {
+    this.getPeopleData();
   }
 }
 </script>

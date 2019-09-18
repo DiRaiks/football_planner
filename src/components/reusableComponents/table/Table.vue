@@ -16,6 +16,7 @@
                         :number="index"
                         :name="item.name"
                         :friends="item.friends"
+                        :id="item._id"
                 />
                 <tr class="boldRow minimumRow">
                     <td>Минимум</td>

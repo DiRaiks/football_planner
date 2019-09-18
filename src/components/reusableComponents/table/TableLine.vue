@@ -21,6 +21,7 @@ export default class TableLine extends Vue {
     @Prop() private number!: number;
     @Prop() private name!: string;
     @Prop() private friends!: string[];
+    @Prop() private id!: string;
 
     @Getter('getFriendsColspan', { namespace })
     private friendsColspan!: number;
@@ -28,7 +29,7 @@ export default class TableLine extends Vue {
     private deletePeople!: any;
 
     protected deleteName(): void {
-        this.deletePeople(this.name);
+        this.deletePeople(this.id);
     }
 }
 </script>

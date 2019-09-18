@@ -68,7 +68,6 @@ input, button, select, input {
   color: #2c3e50;
   position: relative;
   margin: 0;
-  max-width: 1600px;
   height: 100%;
 }
 #nav {

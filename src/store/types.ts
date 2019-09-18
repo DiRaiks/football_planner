@@ -10,8 +10,10 @@ export interface TableState {
 }
 
 export interface PeopleItem {
+    _id: string;
     friends: string[];
     name: string;
+    date: string;
 }
 
 // AUTH
