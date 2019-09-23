@@ -1,17 +1,23 @@
 <template>
   <div class="home">
-    <Table/>
-    <div class="minInputWr">
-      <Input
-              placeholder="Минимум"
-              type="number"
-              :min="0" :max="20"
-              label="Минимум игроков"
-              v-model="minimum"
-      />
-      <Button class="saveMinimum" text="Изменить" @onClick="saveMinimum"/>
+    <div class="leftColumn">
+      <Table/>
+      <div class="minInputWr">
+        <Input
+                placeholder="Минимум"
+                type="number"
+                :min="0" :max="20"
+                label="Минимум игроков"
+                v-model="minimum"
+        />
+        <Button class="saveMinimum" text="Изменить" @onClick="saveMinimum"/>
+      </div>
     </div>
-    <div>
+    <div class="rightColumn">
+      <div class="addPeopleBlock">
+        <Button text="Добавить друга" @onClick="addFriend"/>
+        <Button class="savePeople" text="Сохранить" viewType="positive" @onClick="savePeople"/>
+      </div>
       <div class="inputWr">
         <Input placeholder="Своё имя" type="text" label="Своё имя" v-model="peopleName"/>
         <Input
@@ -23,9 +29,7 @@
                 v-model="friends[index]"
         />
       </div>
-      <Button text="Добавить друга" @onClick="addFriend"/>
     </div>
-    <Button class="savePeople" text="Сохранить" viewType="positive" @onClick="savePeople"/>
   </div>
 </template>
 
@@ -86,26 +90,28 @@ export default class Home extends Vue {
 <style scoped lang="scss">
   .home {
     padding: 20px;
+    display: flex;
+    justify-content: space-around;
   }
   .inputWr {
     display: flex;
     flex-direction: column;
     width: 400px;
-    margin: 20px auto;
+    margin-top: 30px;
 
     label:first-child {
       font-weight: bold;
     }
   }
 
-  .savePeople {
-    margin-top: 40px;
-  }
-
   .minInputWr {
     margin-top: 20px;
-    width: 600px;
     display: flex;
     align-items: center;
+  }
+
+  .addPeopleBlock {
+    display: flex;
+    justify-content: space-around;
   }
 </style>

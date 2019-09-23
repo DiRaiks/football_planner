@@ -47,7 +47,7 @@ export default class Input extends Vue {
     label {
         display: flex;
         justify-content: space-between;
-        margin: 15px 20px;
+        padding: 15px 20px;
         align-items: center;
     }
     span {
