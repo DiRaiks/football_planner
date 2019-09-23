@@ -45,11 +45,11 @@ export default class Top extends Vue {
         font-size: 28px;
 
         &-positive {
-            background: green;
+            background: aquamarine;
         }
 
         &-negative {
-            background: red;
+            background: rgba(255, 0, 3, 0.48);
         }
     }
 </style>

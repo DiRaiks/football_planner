@@ -4,7 +4,7 @@
             <h1>Footbal planner</h1>
             <div class="inputWr">
                 <Input placeholder="Login" type="text" label="Login" v-model="login"/>
-                <Input placeholder="Password" type="text" label="Password" v-model="password"/>
+                <Input placeholder="Password" type="password" label="Password" v-model="password"/>
                 <Button class="loginButton" text="Log In" viewType="positive" @onClick="auth"/>
             </div>
         </div>
@@ -47,7 +47,7 @@ export default class Auth extends Vue {
         align-items: center;
     }
     .authWr {
-        width: 300px;
+        width: 310px;
         margin: 0 auto;
 
         & .inputWr {
