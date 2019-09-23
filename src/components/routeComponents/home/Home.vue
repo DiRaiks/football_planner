@@ -1,7 +1,6 @@
 <template>
   <div class="home">
     <div class="leftColumn">
-      <Table/>
       <div class="minInputWr">
         <Input
                 placeholder="Минимум"
@@ -12,6 +11,7 @@
         />
         <Button class="saveMinimum" text="Изменить" @onClick="saveMinimum"/>
       </div>
+      <Table/>
     </div>
     <div class="rightColumn">
       <div class="addPeopleBlock">
@@ -97,7 +97,6 @@ export default class Home extends Vue {
     display: flex;
     flex-direction: column;
     width: 400px;
-    margin-top: 30px;
 
     label:first-child {
       font-weight: bold;
@@ -105,7 +104,6 @@ export default class Home extends Vue {
   }
 
   .minInputWr {
-    margin-top: 20px;
     display: flex;
     align-items: center;
   }
@@ -113,5 +111,34 @@ export default class Home extends Vue {
   .addPeopleBlock {
     display: flex;
     justify-content: space-around;
+    padding: 15px 20px;
+  }
+
+  @media (max-width: 1250px) {
+    .home {
+      flex-direction: column;
+    }
+
+    .rightColumn {
+      margin-top: 40px;
+
+      .inputWr {
+        margin: 30px auto 0;
+      }
+
+      .addPeopleBlock {
+        justify-content: center;
+
+        .savePeople {
+          margin-left: 40px;
+        }
+      }
+    }
+
+    .leftColumn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
   }
 </style>
