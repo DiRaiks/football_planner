@@ -33,13 +33,12 @@ deploy:
       uses: appleboy/scp-action@v0.0.1
     - name: deploy
        env:
-          HOST = "87.236.22.136"
-          USERNAME = "root"
-          PORT = "22"
-          SOURCE = "/var/www/html/footbal-planner/"
-          TARGET = "./dist/*"
-          secrets:
-            secrets.shh_key,
+          HOST: "87.236.22.136"
+          USERNAME: "root"
+          PORT: "22"
+          SOURCE: "/var/www/html/footbal-planner/"
+          TARGET: "./dist/*"
+          secrets: ${{ secrets.shh_key }}
         
       
 
