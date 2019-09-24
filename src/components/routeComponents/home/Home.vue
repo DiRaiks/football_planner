@@ -35,7 +35,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import { Action, Mutation } from 'vuex-class';
+import { Action, Mutation, Getter } from 'vuex-class';
 
 import Button from '@/components/reusableComponents/button/Button.vue';
 import Input from '@/components/reusableComponents/input/Input.vue';
@@ -62,6 +62,8 @@ export default class Home extends Vue {
   private getPeopleData!: any;
   @Mutation('setMinimum', { namespace })
   private setMinimum!: any;
+  @Getter('getMinimum', { namespace })
+  private currentMinimum!: number;
 
   protected addFriend(): void {
     this.friends.push('');
@@ -83,6 +85,8 @@ export default class Home extends Vue {
 
   private mounted() {
     this.getPeopleData();
+
+    this.minimum = this.currentMinimum || 0;
   }
 }
 </script>
