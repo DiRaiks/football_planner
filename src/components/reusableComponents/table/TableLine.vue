@@ -3,7 +3,7 @@
         <td>{{number}}</td>
         <td>{{name}}</td>
         <template v-for="(friend, index) in friends">
-            <td :key="friend + index" >{{friend}}</td>
+            <td :colspan="oneFriendColspan" :key="friend + index" >{{friend}}</td>
         </template>
         <td v-if="!friends.length" :colspan="friendsColspan"></td>
         <td><button @click="deleteName">Удалить</button></td>
@@ -30,6 +30,13 @@ export default class TableLine extends Vue {
 
     protected deleteName(): void {
         this.deletePeople(this.id);
+    }
+
+    get oneFriendColspan(): number {
+        if (this.friends.length === 1) {
+            return this.friendsColspan;
+        }
+        return 1;
     }
 }
 </script>
