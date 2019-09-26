@@ -20,11 +20,19 @@
                 />
                 <tr class="boldRow minimumRow">
                     <td>Минимум</td>
-                    <td :colspan="friendsColspan + 1">{{minimum}}</td>
+                    <td :colspan="friendsColspan + 2">{{ minimum }}</td>
                 </tr>
                 <tr class="boldRow">
                     <td>Всего</td>
-                    <td :colspan="friendsColspan + 1">{{peopleDataCount}}</td>
+                    <td :colspan="friendsColspan + 2">{{ peopleDataCount }}</td>
+                </tr>
+                <tr class="boldRow baseRow">
+                    <td>Место</td>
+                    <td :colspan="friendsColspan + 2">{{ place }}</td>
+                </tr>
+                <tr class="boldRow baseRow">
+                    <td>Время</td>
+                    <td :colspan="friendsColspan + 2">{{ time }}</td>
                 </tr>
             </tbody>
         </table>
@@ -54,6 +62,10 @@ export default class Table extends Vue {
     private friendsColspan!: number;
     @Getter('getMinimum', { namespace })
     private minimum!: number;
+    @Getter('getPlace', { namespace })
+    private place!: string;
+    @Getter('getTime', { namespace })
+    private time!: string;
 }
 </script>
 
@@ -71,5 +83,8 @@ export default class Table extends Vue {
     }
     .minimumRow {
         background: rgba(255, 0, 3, 0.48);
+    }
+    .baseRow {
+        background: white;
     }
 </style>
