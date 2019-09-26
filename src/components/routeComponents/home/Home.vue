@@ -145,4 +145,20 @@ export default class Home extends Vue {
       align-items: center;
     }
   }
+
+  @media (max-width: 475px) {
+    .tableWr {
+      font-size: 12px;
+    }
+
+    .inputWr {
+      width: auto;
+    }
+  }
+
+  @media (max-width: 350px) {
+    .tableWr {
+      font-size: 8px;
+    }
+  }
 </style>

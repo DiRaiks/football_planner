@@ -47,7 +47,6 @@ export default class Auth extends Vue {
         align-items: center;
     }
     .authWr {
-        width: 310px;
         margin: 0 auto;
 
         & .inputWr {
