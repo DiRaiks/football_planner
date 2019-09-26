@@ -3,9 +3,9 @@
     <div class="horizontalLine">
       <div class="placeWr">
         <Input placeholder="Место" type="text" label="Где играем?" v-model="place"/>
-        <Button text="Изменить место" @onClick="savePlace"/>
+        <Input placeholder="Дата" type="date" label="Когда?" v-model="date"/>
         <Input placeholder="Время" type="time" label="Во сколько?" v-model="time"/>
-        <Button text="Изменить время" @onClick="saveTime"/>
+        <Button text="Сохранить" @onClick="saveEvent"/>
       </div>
     </div>
     <div class="columnWr">
@@ -67,19 +67,18 @@ export default class Home extends Vue {
   protected minimum: number = 0;
   protected place: string = '';
   protected time: string = '';
+  protected date: string = '';
 
   @Action('setPeopleData', { namespace })
   private setPeopleData!: any;
   @Action('getPeopleData', { namespace })
   private getPeopleData!: any;
+  @Action('setEvent', { namespace })
+  private setEvent!: any;
   @Mutation('setMinimum', { namespace })
   private setMinimum!: any;
   @Getter('getMinimum', { namespace })
   private currentMinimum!: number;
-  @Mutation('setPlace', { namespace })
-  private setPlace!: any;
-  @Mutation('setTime', { namespace })
-  private setTime!: any;
 
   protected addFriend(): void {
     this.friends.push('');
@@ -98,13 +97,12 @@ export default class Home extends Vue {
   protected saveMinimum(): void {
     this.setMinimum(this.minimum);
   }
-  protected savePlace(): void {
-    this.setPlace(this.place);
+  protected saveEvent(): void {
+    if (!this.time || !this.place || !this.date) return;
+    this.setEvent({ time: this.time, place: this.place, date: this.date });
     this.place = '';
-  }
-  protected saveTime(): void {
-    this.setTime(this.time);
     this.time = '';
+    this.date = '';
   }
 
   private mounted() {

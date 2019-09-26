@@ -28,11 +28,11 @@
                 </tr>
                 <tr class="boldRow baseRow">
                     <td>Место</td>
-                    <td :colspan="friendsColspan + 2">{{ place }}</td>
+                    <td :colspan="friendsColspan + 2">{{ event.place }}</td>
                 </tr>
                 <tr class="boldRow baseRow">
                     <td>Время</td>
-                    <td :colspan="friendsColspan + 2">{{ time }}</td>
+                    <td :colspan="friendsColspan + 2">{{ event.date }} {{ event.time }}</td>
                 </tr>
             </tbody>
         </table>
@@ -62,10 +62,8 @@ export default class Table extends Vue {
     private friendsColspan!: number;
     @Getter('getMinimum', { namespace })
     private minimum!: number;
-    @Getter('getPlace', { namespace })
-    private place!: string;
-    @Getter('getTime', { namespace })
-    private time!: string;
+    @Getter('getEvent', { namespace })
+    private event!: object;
 }
 </script>
 

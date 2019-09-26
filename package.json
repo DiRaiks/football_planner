@@ -7,7 +7,8 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit",
-    "deploy": "scp -rp ./dist/* root@87.236.22.136:/var/www/html/footbal-planner/"
+    "deploy": "scp -rp ./dist/* root@87.236.22.136:/var/www/html/footbal-planner/",
+    "deploy-server": "scp -rp ./server/* root@87.236.22.136:/var/www/html/footbal-planner/server/"
   },
   "dependencies": {
     "axios": "^0.19.0",

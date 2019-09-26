@@ -25,6 +25,5 @@ export const getters: GetterTree<TableState, RootState> = {
         });
         return maxColspan;
     },
-    getPlace: (state): string => state.place,
-    getTime: (state): string => state.time,
+    getEvent: (state): object => state.event,
 };

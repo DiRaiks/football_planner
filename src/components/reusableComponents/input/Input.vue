@@ -2,6 +2,7 @@
     <label :for="currentId">
         <span >{{label}}</span>
         <input
+                :class="inputClass"
                 :id="currentId"
                 :type="type"
                 :placeholder="placeholder"
@@ -19,6 +20,7 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 
 @Component
 export default class Input extends Vue {
+    @Prop({ default: 'default' }) private viewType!: string;
     @Prop({ default: '' }) private value!: string | number;
     @Prop() private label!: string;
     @Prop() private placeholder!: string;
@@ -27,6 +29,14 @@ export default class Input extends Vue {
     @Prop() private filter!: (value: string) => void;
     @Prop({ default: -99999 }) private min!: number;
     @Prop({ default: 99999 }) private max!: number;
+
+    get inputClass(): object {
+        const { viewType } = this;
+
+        return {
+            [`input-${ viewType }`]: viewType,
+        };
+    }
 
     get currentId(): string {
         return this.label + this.type;
@@ -60,12 +70,17 @@ export default class Input extends Vue {
         font-size: 14px;
         color: #000000;
         line-height: 20px;
-        padding: 9px 14px;
         border-radius: 6px;
         border: 1px solid black;
         box-shadow: none;
         outline: none;
         position: relative;
         appearance: none;
+    }
+    .input-default {
+        padding: 9px 14px;
+    }
+    .input-small {
+        padding: 4px 7px;
     }
 </style>

@@ -7,8 +7,7 @@ export interface RootState {
 export interface TableState {
     peopleData: PeopleItem[];
     minimum: number;
-    place: string;
-    time: string;
+    event: object;
 }
 
 export interface PeopleItem {
