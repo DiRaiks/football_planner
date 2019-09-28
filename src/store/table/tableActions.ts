@@ -1,20 +1,29 @@
 import { ActionTree } from 'vuex';
 
-import { getPeopleData, savePeople, deletePeople, saveEvent } from './tableApi';
+import {
+    getPeopleData,
+    savePeople,
+    deletePeople,
+    saveEvent,
+    getPeopleByDate,
+    getEvents,
+    deleteEvent,
+} from './tableApi';
 
 import { TableState, RootState, PeopleItem } from '../types';
 
 export const actions: ActionTree<TableState, RootState> = {
     async setPeopleData({ commit, getters }, newPeople: PeopleItem) {
         const peoples = getters.getPeopleData;
+        const currentEventDate = getters.getCurrentEvent.date;
 
         try {
-            const savedPeople = await savePeople({ ...newPeople, date: '21.11.12' });
+            const savedPeople = await savePeople({ ...newPeople, date: currentEventDate });
             const newPeopleData = [...peoples, savedPeople];
 
             commit('setPeopleData', newPeopleData);
         } catch (error) {
-            commit('setError');
+            commit('setError'); // TODO: need error handler
         }
     },
     async deletePeople({ commit }, id: string) {
@@ -39,11 +48,40 @@ export const actions: ActionTree<TableState, RootState> = {
         try {
             const savedEvent = await saveEvent(time, place, date);
 
-            commit('setEvent', {
-                time: savedEvent.time,
-                place: savedEvent.place,
-                date: savedEvent.date,
-            });
+            commit('setEvent', savedEvent);
+        } catch (error) {
+            commit('setError');
+        }
+    },
+    async getEvents({ commit, dispatch }) {
+        try {
+            const events = await getEvents();
+
+            const firstEvent = events[0];
+
+            if (firstEvent) await dispatch('getPeopleByDate', firstEvent.date);
+
+            commit('setEvent', firstEvent);
+        } catch (error) {
+            commit('setError');
+        }
+    },
+    async deleteEvent({ commit, getters }) {
+        try {
+            const currentEvent = getters.getCurrentEvent;
+
+            await deleteEvent(currentEvent._id);
+
+            commit('setEvent', null);
+        } catch (error) {
+            commit('setError');
+        }
+    },
+    async getPeopleByDate({ commit }, date: string) {
+        try {
+            const peoplesData = await getPeopleByDate(date);
+
+            commit('setPeopleData', peoplesData);
         } catch (error) {
             commit('setError');
         }

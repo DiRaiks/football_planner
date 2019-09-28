@@ -10,6 +10,13 @@ export interface TableState {
     event: object;
 }
 
+export interface EventItem {
+    _id: string;
+    place: string;
+    time: string;
+    date: string;
+}
+
 export interface PeopleItem {
     _id: string;
     friends: string[];

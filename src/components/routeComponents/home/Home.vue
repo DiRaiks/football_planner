@@ -2,13 +2,16 @@
   <div class="home">
     <div class="horizontalLine">
       <div class="placeWr">
-        <Input placeholder="Место" type="text" label="Где играем?" v-model="place"/>
-        <Input placeholder="Дата" type="date" label="Когда?" v-model="date"/>
-        <Input placeholder="Время" type="time" label="Во сколько?" v-model="time"/>
-        <Button text="Сохранить" @onClick="saveEvent"/>
+        <Button v-if="currentEvent" class="deleteEventButton" text="Удалить текущее событие" @onClick="deleteCurrentEvent"/>
+        <template v-else>
+          <Input placeholder="Место" type="text" label="Где играем?" v-model="place"/>
+          <Input placeholder="Дата" type="date" label="Когда?" v-model="date"/>
+          <Input placeholder="Время" type="time" label="Во сколько?" v-model="time"/>
+          <Button text="Сохранить" @onClick="saveEvent"/>
+        </template>
       </div>
     </div>
-    <div class="columnWr">
+    <div v-if="currentEvent" class="columnWr">
       <div class="leftColumn">
         <div class="minInputWr">
           <Input
@@ -71,14 +74,18 @@ export default class Home extends Vue {
 
   @Action('setPeopleData', { namespace })
   private setPeopleData!: any;
-  @Action('getPeopleData', { namespace })
-  private getPeopleData!: any;
+  @Action('getEvents', { namespace })
+  private getEvent!: any;
   @Action('setEvent', { namespace })
   private setEvent!: any;
+  @Action('deleteEvent', { namespace })
+  private deleteEvent!: any;
   @Mutation('setMinimum', { namespace })
   private setMinimum!: any;
   @Getter('getMinimum', { namespace })
   private currentMinimum!: number;
+  @Getter('getCurrentEvent', { namespace })
+  private currentEvent!: number;
 
   protected addFriend(): void {
     this.friends.push('');
@@ -104,9 +111,12 @@ export default class Home extends Vue {
     this.time = '';
     this.date = '';
   }
+  protected deleteCurrentEvent(): void {
+    this.deleteEvent();
+  }
 
   private mounted() {
-    this.getPeopleData();
+    this.getEvent();
 
     this.minimum = this.currentMinimum || 0;
   }
