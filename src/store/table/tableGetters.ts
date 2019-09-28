@@ -4,7 +4,6 @@ import { TableState, RootState, PeopleItem } from '../types';
 
 export const getters: GetterTree<TableState, RootState> = {
     getPeopleData: (state): object[] => state.peopleData,
-    getMinimum: (state): number => state.minimum,
     getPeopleDataCount: (state): number => {
         const peopleData = state.peopleData;
         let count = 0;

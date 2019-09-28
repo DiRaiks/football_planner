@@ -54,6 +54,8 @@ import Button from '@/components/reusableComponents/button/Button.vue';
 import Input from '@/components/reusableComponents/input/Input.vue';
 import Table from '@/components/reusableComponents/table/Table.vue';
 
+import { EventItem } from '@/store/types';
+
 const namespace: string = 'table';
 
 @Component({
@@ -78,14 +80,12 @@ export default class Home extends Vue {
   private getEvent!: any;
   @Action('setEvent', { namespace })
   private setEvent!: any;
+  @Action('setEventMinimum', { namespace })
+  private setEventMinimum!: any;
   @Action('deleteEvent', { namespace })
   private deleteEvent!: any;
-  @Mutation('setMinimum', { namespace })
-  private setMinimum!: any;
-  @Getter('getMinimum', { namespace })
-  private currentMinimum!: number;
   @Getter('getCurrentEvent', { namespace })
-  private currentEvent!: number;
+  private currentEvent!: EventItem;
 
   protected addFriend(): void {
     this.friends.push('');
@@ -102,11 +102,11 @@ export default class Home extends Vue {
     }
   }
   protected saveMinimum(): void {
-    this.setMinimum(this.minimum);
+    this.setEventMinimum(this.minimum);
   }
   protected saveEvent(): void {
     if (!this.time || !this.place || !this.date) return;
-    this.setEvent({ time: this.time, place: this.place, date: this.date });
+    this.setEvent({ time: this.time, place: this.place, date: this.date, minimum: 0 });
     this.place = '';
     this.time = '';
     this.date = '';
@@ -115,10 +115,10 @@ export default class Home extends Vue {
     this.deleteEvent();
   }
 
-  private mounted() {
-    this.getEvent();
+  private async mounted() {
+    await this.getEvent();
 
-    this.minimum = this.currentMinimum || 0;
+    this.minimum = this.currentEvent.minimum || 0;
   }
 }
 </script>

@@ -6,7 +6,6 @@ export interface RootState {
 
 export interface TableState {
     peopleData: PeopleItem[];
-    minimum: number;
     event: object;
 }
 
@@ -15,6 +14,7 @@ export interface EventItem {
     place: string;
     time: string;
     date: string;
+    minimum: number;
 }
 
 export interface PeopleItem {

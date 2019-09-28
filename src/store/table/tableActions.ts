@@ -8,6 +8,7 @@ import {
     getPeopleByDate,
     getEvents,
     deleteEvent,
+    saveEventMinimum,
 } from './tableApi';
 
 import { TableState, RootState, PeopleItem } from '../types';
@@ -44,9 +45,9 @@ export const actions: ActionTree<TableState, RootState> = {
             commit('setError');
         }
     },
-    async setEvent({ commit }, { time, place, date }) {
+    async setEvent({ commit }, { time, place, date, minimum }) {
         try {
-            const savedEvent = await saveEvent(time, place, date);
+            const savedEvent = await saveEvent(time, place, date, minimum);
 
             commit('setEvent', savedEvent);
         } catch (error) {
@@ -63,6 +64,8 @@ export const actions: ActionTree<TableState, RootState> = {
 
             commit('setEvent', firstEvent);
         } catch (error) {
+            commit('setEvent', null);
+
             commit('setError');
         }
     },
@@ -82,6 +85,17 @@ export const actions: ActionTree<TableState, RootState> = {
             const peoplesData = await getPeopleByDate(date);
 
             commit('setPeopleData', peoplesData);
+        } catch (error) {
+            commit('setError');
+        }
+    },
+    async setEventMinimum({ commit, getters}, minimum: number) {
+        const currentEvent = getters.getCurrentEvent;
+
+        try {
+            const newEvent = await saveEventMinimum(currentEvent._id, minimum);
+
+            commit('setEvent', newEvent);
         } catch (error) {
             commit('setError');
         }

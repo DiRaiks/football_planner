@@ -5,20 +5,22 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Vue } from 'vue-property-decorator';
 import { Getter } from 'vuex-class';
+
+import { EventItem } from '@/store/types';
 
 const namespace: string = 'table';
 
 @Component
 export default class Top extends Vue {
-    @Getter('getMinimum', { namespace })
-    private minimum!: number;
+    @Getter('getCurrentEvent', { namespace })
+    private currentEvent!: EventItem;
     @Getter('getPeopleDataCount', { namespace })
     private peopleDataCount!: number;
 
     get currentColor(): string {
-        return this.peopleDataCount >= this.minimum ? 'positive' : 'negative';
+        return this.peopleDataCount >= this.currentEvent.minimum ? 'positive' : 'negative';
     }
 
     get currentClass(): object {
@@ -29,7 +31,7 @@ export default class Top extends Vue {
         };
     }
     get currentText(): string {
-        return this.peopleDataCount >= this.minimum ? '' : 'НЕДОСТАТОЧНО ЛЮДЕЙ';
+        return this.peopleDataCount >= this.currentEvent.minimum ? '' : 'НЕДОСТАТОЧНО ЛЮДЕЙ';
     }
 }
 </script>

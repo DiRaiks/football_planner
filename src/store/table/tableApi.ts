@@ -11,10 +11,13 @@ export const savePeople = (people: PeopleItem) => axios.post(`${FETCH_URL}/saveP
     .then((response) => response.data);
 export const deletePeople = (id: string) => axios.post(`${FETCH_URL}/deletePeople`, { id })
     .then((response) => response.data);
-export const saveEvent = (time: string, place: string, date: string) => axios
-    .post(`${FETCH_URL}/saveEvent`, { time, place, date })
+export const saveEvent = (time: string, place: string, date: string, minimum: number) => axios
+    .post(`${FETCH_URL}/saveEvent`, { time, place, date, minimum })
     .then((response) => response.data);
 export const getEvents = () => axios.get(`${FETCH_URL}/getEvent`)
     .then((response) => response.data);
 export const deleteEvent = (id: string) => axios.post(`${FETCH_URL}/deleteEvent`, { id })
+    .then((response) => response.data);
+export const saveEventMinimum = (eventId: string, minimum: number) => axios
+    .post(`${FETCH_URL}/saveEventMinimum`, { eventId, minimum })
     .then((response) => response.data);

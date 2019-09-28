@@ -20,7 +20,7 @@
                 />
                 <tr class="boldRow minimumRow">
                     <td>Минимум</td>
-                    <td :colspan="friendsColspan + 2">{{ minimum }}</td>
+                    <td :colspan="friendsColspan + 2">{{ currentEvent.minimum }}</td>
                 </tr>
                 <tr class="boldRow">
                     <td>Всего</td>
@@ -60,8 +60,6 @@ export default class Table extends Vue {
     private peopleDataCount!: number;
     @Getter('getFriendsColspan', { namespace })
     private friendsColspan!: number;
-    @Getter('getMinimum', { namespace })
-    private minimum!: number;
     @Getter('getCurrentEvent', { namespace })
     private currentEvent!: object;
 }
