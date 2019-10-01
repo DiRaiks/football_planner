@@ -1,11 +1,16 @@
 <template>
     <div class="auth">
         <div class="authWr">
-            <h1>Footbal planner</h1>
+            <h1>Football planner</h1>
+            <div>
+                <a @click="clickLoginLink" :class="loginLinkClass" href="#">Логин</a>
+                <a @click="clickRegistrationLink" :class="regLinkClass" href="#">Регистрация</a>
+            </div>
             <div class="inputWr">
                 <Input placeholder="Login" type="text" label="Login" v-model="login"/>
                 <Input placeholder="Password" type="password" label="Password" v-model="password"/>
-                <Button class="loginButton" text="Log In" viewType="positive" @onClick="auth"/>
+                <Button v-if="isLogin" class="authButton loginButton" text="Log In" viewType="positive" @onClick="loginHandler"/>
+                <Button v-else class="authButton regButton" text="Registration" viewType="positive" @onClick="registrationHandler"/>
             </div>
         </div>
     </div>
@@ -29,13 +34,46 @@ const namespace: string = 'auth';
 export default class Auth extends Vue {
     private login: string = '';
     private password: string = '';
+    private isLogin: boolean = true;
 
-    @Action('authorization', { namespace })
-    private authorization!: any;
+    @Action('loginUser', { namespace })
+    private loginUser!: any;
+    @Action('registrationUser', { namespace })
+    private registrationUser!: any;
 
-    protected auth(): void {
+    get loginLinkClass(): object {
+        return {
+            loginLink: true,
+            active: this.isLogin,
+        };
+    }
+
+    get regLinkClass(): object {
+        return {
+            active: !this.isLogin,
+        };
+    }
+
+    protected loginHandler(): void {
         const {login, password} = this;
-        this.authorization({ login, password });
+        this.loginUser({ login, password });
+    }
+
+    protected registrationHandler(): void {
+        const {login, password} = this;
+        this.registrationUser({ login, password });
+    }
+
+    protected clickLoginLink(event: any): void {
+        event.preventDefault();
+
+        this.isLogin = true;
+    }
+
+    protected clickRegistrationLink(event: any): void {
+        event.preventDefault();
+
+        this.isLogin = false;
     }
 }
 </script>
@@ -49,12 +87,25 @@ export default class Auth extends Vue {
     .authWr {
         margin: 0 auto;
 
-        & .inputWr {
+        .inputWr {
             margin-top: 40px;
 
-            & .loginButton {
+            .authButton {
                 margin-top: 10px;
             }
+        }
+
+        a {
+            text-decoration: none;
+            color: black;
+        }
+
+        a.active {
+            border-bottom: 2px solid black;
+        }
+
+        .loginLink {
+            margin-right: 20px;
         }
     }
 </style>

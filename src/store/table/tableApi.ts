@@ -1,23 +1,22 @@
-import axios from 'axios';
+import { fetch } from '@/utils';
 
 import { PeopleItem } from '@/store/types';
-import { FETCH_URL } from '@/store/constants';
 
-export const getPeopleData = () => axios.get(`${FETCH_URL}/api/people/getPeopleData`)
+export const getPeopleData = () => fetch.get('/people/getPeopleData')
     .then((response) => response.data);
-export const getPeopleByDate = (date: string) => axios.post(`${FETCH_URL}/api/people/getPeoplesByDate`, { date })
+export const getPeopleByDate = (date: string) => fetch.post('/people/getPeoplesByDate', { date })
     .then((response) => response.data);
-export const savePeople = (people: PeopleItem) => axios.post(`${FETCH_URL}/api/people/savePeople`, { people })
+export const savePeople = (people: PeopleItem) => fetch.post('/people/savePeople', { people })
     .then((response) => response.data);
-export const deletePeople = (id: string) => axios.post(`${FETCH_URL}/api/people/deletePeople`, { id })
+export const deletePeople = (id: string) => fetch.post('/people/deletePeople', { id })
     .then((response) => response.data);
-export const saveEvent = (time: string, place: string, date: string, minimum: number) => axios
-    .post(`${FETCH_URL}/api/events/saveEvent`, { time, place, date, minimum })
+export const saveEvent = (time: string, place: string, date: string, minimum: number) => fetch
+    .post('/events/saveEvent', { time, place, date, minimum })
     .then((response) => response.data);
-export const getEvents = () => axios.get(`${FETCH_URL}/api/events/getEvent`)
+export const getEvents = () => fetch.get('/events/getEvent')
     .then((response) => response.data);
-export const deleteEvent = (id: string) => axios.post(`${FETCH_URL}/api/events/deleteEvent`, { id })
+export const deleteEvent = (id: string) => fetch.post('/events/deleteEvent', { id })
     .then((response) => response.data);
-export const saveEventMinimum = (eventId: string, minimum: number) => axios
-    .post(`${FETCH_URL}/api/events/saveEventMinimum`, { eventId, minimum })
+export const saveEventMinimum = (eventId: string, minimum: number) => fetch
+    .post('/events/saveEventMinimum', { eventId, minimum })
     .then((response) => response.data);

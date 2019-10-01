@@ -2,6 +2,8 @@
 node_modules
 /dist
 /server
+.env.production
+.env.development
 
 # local env files
 .env.local

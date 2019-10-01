@@ -118,8 +118,6 @@ export default class Home extends Vue {
   }
 
   private async mounted() {
-    await this.getEvent();
-
     this.minimum = this.currentEvent.minimum || 0;
   }
 }

@@ -17,7 +17,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import { Getter } from 'vuex-class';
+import { Getter, Action } from 'vuex-class';
 
 import Top from '@/components/reusableComponents/top/Top.vue';
 import Auth from '@/components/routeComponents/auth/Auth.vue';
@@ -33,8 +33,14 @@ const namespace: string = 'auth';
   },
 })
 export default class App extends Vue {
+    @Action('getCurrentUser', { namespace })
+    private getCurrentUser!: any;
     @Getter('getIsAuth', { namespace })
     private isAuth!: void;
+
+    private async mounted() {
+        await this.getCurrentUser();
+    }
 }
 </script>
 
