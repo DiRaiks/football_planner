@@ -32,8 +32,9 @@
     background-color: #aaa1;
     border-radius: 10px;
     text-align: center;
-    overflow: hidden;
-    padding: 5px 20px 0px;
+    /* overflow: hidden; */
+    padding: 5px 20px 1px;
+    position: relative;
   }
   .header {
     display: grid;
@@ -153,3 +154,30 @@
           .satisfied {
             color: #28a745;
           }
+
+
+
+  .participant .controls {
+    display: block;
+    height: auto;
+    padding: 3px;
+    width: 50px;
+    /* background-color: green; */
+    position: absolute;
+    left: 100%;
+  }
+  .participant .controls .control {
+    display: inline-block;
+    opacity: 0;
+    cursor: pointer;
+  }
+  .participant .controls .control.edit{
+    color: grey;
+  }
+  .participant .controls .control.delete{
+    color: #dc3545;
+  }
+
+  .participant .controls:hover .control{
+    opacity: 1;
+  }
