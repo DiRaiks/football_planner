@@ -6,8 +6,14 @@
             </template>
         </div>
         <div :class="optionsClass">
-            <div class="option notEnough">Мало<br>игроков</div>
-            <div class="option">Маленькое<br>поле</div>
+            <div class="option">Мало<br>игроков</div>
+            <div class="option miniField">
+                <div class="separator left"></div>
+                <span>
+                    Маленькое<br>поле
+                </span>
+                <div class="separator right"></div>
+            </div>
             <div class="option">Большое<br>поле</div>
         </div>
         <div class="total-info">
@@ -111,24 +117,18 @@ export default class CountInfo extends Vue {
         &.notEnough {
             div:nth-child(1) {
                 opacity: 1;
-                border-left: 1px solid black;
-                border-right: 1px solid black;
             }
         }
 
         &.miniField {
             div:nth-child(2) {
                 opacity: 1;
-                border-left: 1px solid black;
-                border-right: 1px solid black;
             }
         }
 
         &.normalFiled {
             div:nth-child(3) {
                 opacity: 1;
-                border-left: 1px solid black;
-                border-right: 1px solid black;
             }
         }
 
@@ -136,13 +136,22 @@ export default class CountInfo extends Vue {
             background-color: white;
             text-align: center;
             opacity: 0.1;
-        }
 
-       .separator {
-            position: absolute;
-            width: 1px;
-            height: 20px;
-            background-color: grey;
+            &.miniField {
+                position: relative;
+
+                .separator {
+                    position: absolute;
+                    width: 1px;
+                    height: 20px;
+                    background-color: grey;
+
+                    &.right {
+                        top: 0;
+                        right: 0;
+                    }
+                }
+            }
         }
     }
 
