@@ -31,6 +31,7 @@
           <Button class="savePeople" text="Сохранить" viewType="positive" @onClick="savePeople"/>
         </div>
         <div class="inputWr">
+          <Input type="checkbox" label="Точно буду" v-model="status"/>
           <Input placeholder="Своё имя" type="text" label="Своё имя" v-model="peopleName"/>
           <Input
                   v-for="(friend, index) in friends"
@@ -73,6 +74,7 @@ export default class Home extends Vue {
   protected place: string = '';
   protected time: string = '';
   protected date: string = '';
+  protected status: boolean = true;
 
   @Action('setPeopleData', { namespace })
   private setPeopleData!: any;
@@ -96,7 +98,7 @@ export default class Home extends Vue {
         if (friend) return friend;
       });
 
-      this.setPeopleData({ name: this.peopleName, friends: filteredFriends });
+      this.setPeopleData({ name: this.peopleName, friends: filteredFriends, status: this.status });
       this.peopleName = '';
       this.friends = [''];
     }
