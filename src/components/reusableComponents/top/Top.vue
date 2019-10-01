@@ -20,7 +20,8 @@ export default class Top extends Vue {
     private peopleDataCount!: number;
 
     get currentColor(): string {
-        return this.peopleDataCount >= this.currentEvent.minimum ? 'positive' : 'negative';
+        // return this.peopleDataCount >= this.currentEvent.minimum ? 'positive' : 'negative';
+        return 'positive';
     }
 
     get currentClass(): object {
@@ -31,16 +32,16 @@ export default class Top extends Vue {
         };
     }
     get currentText(): string {
-        return this.peopleDataCount >= this.currentEvent.minimum ? '' : 'НЕДОСТАТОЧНО ЛЮДЕЙ';
+        // return this.peopleDataCount >= this.currentEvent.minimum ? '' : 'НЕДОСТАТОЧНО ЛЮДЕЙ';
+        return '';
     }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
     .top {
         width: 100%;
-        height: 100px;
+        height: 50px;
         display: flex;
         align-items: center;
         justify-content: center;
