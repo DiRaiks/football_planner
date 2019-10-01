@@ -15,7 +15,7 @@
                     <td>Статус</td>
                     <td class="name">Игрок</td>
                     <td >Друзья</td>
-                    <td>Редактирование</td>
+                    <td></td>
                 </tr>
             </thead>
             <tbody>
@@ -101,6 +101,10 @@ export default class Table extends Vue {
                 .name {
                     text-align: left;
                 }
+            }
+
+            @media (max-width: 475px) {
+                border-spacing: 10px 5px;
             }
         }
     }
