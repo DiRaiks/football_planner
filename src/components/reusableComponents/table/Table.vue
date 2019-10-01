@@ -104,12 +104,16 @@ export default class Table extends Vue {
             }
 
             @media (max-width: 475px) {
-                border-spacing: 10px 5px;
+                border-spacing: 2px 5px;
             }
         }
     }
     td {
         padding: 0 10px;
+
+        @media (max-width: 475px) {
+            padding: 0 5px;
+        }
     }
     .boldRow {
         background: aquamarine;
