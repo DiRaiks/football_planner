@@ -9,6 +9,7 @@
                 :min="min"
                 :max="max"
                 :value="value"
+                :checked="value"
                 @input="handleInput"
                 @change="handleInput"
         >
@@ -21,7 +22,7 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 @Component
 export default class Input extends Vue {
     @Prop({ default: 'default' }) private viewType!: string;
-    @Prop({ default: '' }) private value!: string | number;
+    @Prop({ default: '' }) private value!: string | number | boolean;
     @Prop() private label!: string;
     @Prop() private placeholder!: string;
     @Prop() private type!: string;
@@ -37,22 +38,21 @@ export default class Input extends Vue {
             [`input-${ viewType }`]: viewType,
         };
     }
-
     get currentId(): string {
         return this.label + this.type;
     }
 
-    private handleInput(event: any): void {
+    protected handleInput(event: any): void {
         const { value } = event.target;
-        const filteredValue = this.filter ? this.filter(value) : value;
+        let filteredValue = this.filter ? this.filter(value) : value;
 
         if (filteredValue !== value) event.currentTarget.value = value;
+        if (this.type === 'checkbox' || this.type === 'radio') filteredValue = event.target.checked;
         this.$emit('input', filteredValue);
     }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
     label {
         display: flex;
@@ -60,9 +60,11 @@ export default class Input extends Vue {
         padding: 15px 20px;
         align-items: center;
     }
+
     span {
         margin-right: 20px;
     }
+
     input {
         margin: 0;
         vertical-align: top;
@@ -77,9 +79,21 @@ export default class Input extends Vue {
         position: relative;
         appearance: none;
     }
+
+    input[type="checkbox" i] {
+        background-color: initial;
+        cursor: default;
+        -webkit-appearance: checkbox;
+        box-sizing: border-box;
+        margin: 3px 0.5ex;
+        padding: initial;
+        border: initial;
+    }
+
     .input-default {
         padding: 9px 14px;
     }
+
     .input-small {
         padding: 4px 7px;
     }

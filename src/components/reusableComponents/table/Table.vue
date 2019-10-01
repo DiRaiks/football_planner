@@ -1,11 +1,20 @@
 <template>
     <div class="tableWr">
-        <table border="1">
+        <h2 class="headerWr">
+            Товарищеский матч
+        </h2>
+        <div class="gameInfo">
+            <div class="info place">{{ currentEvent.place }}</div>
+            <div class="info date">{{ currentEvent.date }}</div>
+            <div class="info time">{{ currentEvent.time }}</div>
+        </div>
+        <table>
             <thead>
                 <tr>
-                    <td></td>
-                    <td>Имя</td>
-                    <td :colspan="friendsColspan">+1</td>
+                    <td>№</td>
+                    <td>Статус</td>
+                    <td class="name">Игрок</td>
+                    <td >Друзья</td>
                     <td>Редактирование</td>
                 </tr>
             </thead>
@@ -13,29 +22,15 @@
                 <TableLine
                         v-for="(item, index) in peopleData"
                         :key="index"
-                        :number="index"
+                        :number="index + 1"
                         :name="item.name"
                         :friends="item.friends"
+                        :status="item.status"
                         :id="item._id"
                 />
-                <tr class="boldRow minimumRow">
-                    <td>Минимум</td>
-                    <td :colspan="friendsColspan + 2">{{ currentEvent.minimum }}</td>
-                </tr>
-                <tr class="boldRow">
-                    <td>Всего</td>
-                    <td :colspan="friendsColspan + 2">{{ peopleDataCount }}</td>
-                </tr>
-                <tr class="boldRow baseRow">
-                    <td>Место</td>
-                    <td :colspan="friendsColspan + 2">{{ currentEvent.place }}</td>
-                </tr>
-                <tr class="boldRow baseRow">
-                    <td>Время</td>
-                    <td :colspan="friendsColspan + 2">{{ currentEvent.date }} {{ currentEvent.time }}</td>
-                </tr>
             </tbody>
         </table>
+        <CountInfo/>
     </div>
 </template>
 
@@ -45,12 +40,14 @@ import { Getter } from 'vuex-class';
 
 import { PeopleItem } from '@/store/types';
 import TableLine from './TableLine.vue';
+import CountInfo from './CountInfo.vue';
 
 const namespace: string = 'table';
 
 @Component({
     components: {
         TableLine,
+        CountInfo,
     },
 })
 export default class Table extends Vue {
@@ -58,20 +55,57 @@ export default class Table extends Vue {
     private peopleData!: PeopleItem[];
     @Getter('getPeopleDataCount', { namespace })
     private peopleDataCount!: number;
-    @Getter('getFriendsColspan', { namespace })
-    private friendsColspan!: number;
     @Getter('getCurrentEvent', { namespace })
     private currentEvent!: object;
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
     .tableWr {
         padding: 15px 20px;
+        font-family: Helvetica, Geneva, Arial, sans-serif;
+        font-size: 16px;
+        font-weight: 300;
+        color: #444;
+
+        .headerWr {
+            text-align: left;
+            margin: 0 0 0 10px;
+        }
+
+        .gameInfo {
+            display: block;
+            width: 96%;
+            padding: 2%;
+            text-align: left;
+
+            .info {
+                margin-bottom: 3px;
+            }
+            .place {
+                font-size: 22px;
+            }
+        }
+
+        table {
+            background-color: #aaa1;
+            border-radius: 10px;
+            text-align: center;
+            overflow: hidden;
+            border-spacing: 20px 10px;
+
+            thead {
+                font-weight: 500;
+                font-size: 18px;
+
+                .name {
+                    text-align: left;
+                }
+            }
+        }
     }
     td {
-        padding: 5px 10px;
+        padding: 0 10px;
     }
     .boldRow {
         background: aquamarine;
@@ -79,8 +113,5 @@ export default class Table extends Vue {
     }
     .minimumRow {
         background: rgba(255, 0, 3, 0.48);
-    }
-    .baseRow {
-        background: white;
     }
 </style>

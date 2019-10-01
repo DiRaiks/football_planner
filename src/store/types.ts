@@ -22,6 +22,7 @@ export interface PeopleItem {
     friends: string[];
     name: string;
     date: string;
+    status: boolean;
 }
 
 // AUTH
