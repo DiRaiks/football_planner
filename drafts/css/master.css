@@ -1,0 +1,155 @@
+
+  .wrapper {
+    display: block;
+    width: 520px;
+    margin: 10% auto;
+    font-family: Helvetica, Geneva, Arial, sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    color: #444
+  }
+  .h2-header {
+    margin: 0;
+    margin-left: 10px;
+  }
+
+
+  .game-info {
+    display: block;
+    width: 96%;
+    padding: 2%;
+  }
+      .info {
+        margin-bottom: 3px;
+      }
+      .place {
+        font-size: 22px;
+      }
+
+
+  .participants {
+    display: block;
+    background-color: #aaa1;
+    border-radius: 10px;
+    text-align: center;
+    overflow: hidden;
+    padding: 5px 20px 0px;
+  }
+  .header {
+    display: grid;
+    grid-template-columns: 2fr 6fr 7fr 4fr;
+    grid-gap: 30px;
+    font-weight: 500;
+    margin-bottom: 5px;
+    font-size: 18px;
+  }
+  .header-item {
+    padding: 5px;
+  }
+      .participant {
+        display: grid;
+        grid-template-columns: 2fr 6fr 7fr 4fr;
+        grid-gap: 30px;
+        margin-bottom: 10px;
+      }
+          .participant-item {
+            padding: 2px;
+          }
+          .participant-item > i {
+            color: #03a9f4;
+          }
+              .name {
+                text-align: left;
+              }
+              .status{
+                padding: 3px;
+                font-size: 14px;
+                border-radius: 4px;
+              }
+                  .status.true {
+                    color: #155724;
+                    background-color: #d4edda;
+                    border: 1px solid #c3e6cb;
+                  }
+                  .status.maybe {
+                    color: #856404;
+                    background-color: #fff3cd;
+                    border: 1px solid #ffeeba;
+                  }
+                  .status.invite {
+                    color: #383d41;
+                    background-color: #e2e3e5;
+                    border: 1px solid #d6d8db;
+                  }
+
+
+  .progress {
+    display: block;
+    width: 96%;
+    padding: 2%;
+    margin-bottom: 10px;
+    position: relative;
+  }
+      .progress-bar {
+        display: grid;
+        grid-template-columns: repeat(22, 1fr);
+        grid-gap: 2px;
+      }
+          .progress-bar .chunk {
+            display: block;
+            height: 6px;
+            background-color: #eee;
+            border-radius: 5px;
+          }
+          .progress-bar .chunk.true {
+            background-color: #c3e6cb;
+          }
+          .progress-bar .chunk.maybe {
+            background-color: #ffeeba;
+          }
+          .progress .options {
+            margin-top: 5px;
+            display: grid;
+            grid-template-columns: 10fr 6fr 6fr;
+            grid-gap: 1px;
+            /* background-color: #aaa; */
+          }
+              .progress .options .option{
+                background-color: white;
+                text-align: center;
+                opacity: 0.1;
+              }
+                  .progress .options .separator {
+                    position: absolute;
+                    width: 1px;
+                    height: 20px;
+                    background-color: grey;
+                  }
+                  .progress .options .separator.first {
+                    left: 237px;
+                  }
+                  .progress .options .separator.second {
+                    left: 374px;
+                  }
+                  .progress .options .option.true {
+                    opacity: 1;
+                  }
+
+
+  .total-info {
+    text-align: right;
+    display: block;
+    width: 96%;
+    padding: 2%;
+  }
+      .current-value {
+        display: inline-block;
+        font-size: 24px;
+        font-weight: 500;
+      }
+          .unsatisfied {
+            color: #dc3545;
+          }
+          .satisfied {
+            color: #28a745;
+          }
