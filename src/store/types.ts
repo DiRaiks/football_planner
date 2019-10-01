@@ -29,6 +29,7 @@ export interface PeopleItem {
 
 export interface AuthState {
     isAuth: boolean;
+    isLoading: boolean;
 }
 
 export interface AuthObj {

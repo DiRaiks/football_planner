@@ -6,6 +6,8 @@ import { AuthState, RootState, AuthObj } from '../types';
 
 export const actions: ActionTree<AuthState, RootState> = {
     async loginUser({ commit, dispatch }, { login, password }: AuthObj) {
+        commit('setIsLoading', true);
+
         try {
             const { user: { token } } = await loginRequest(login, password);
 
@@ -13,11 +15,15 @@ export const actions: ActionTree<AuthState, RootState> = {
 
             commit('setIsAuth', true);
             localStorage.setItem('token', token);
+            commit('setIsLoading', false);
         } catch (error) {
             commit('setError');
+            commit('setIsLoading', false);
         }
     },
     async getCurrentUser({ commit, dispatch }) {
+        commit('setIsLoading', true);
+
         try {
             const { user: { token } } = await getCurrentUserRequest();
 
@@ -25,11 +31,15 @@ export const actions: ActionTree<AuthState, RootState> = {
 
             commit('setIsAuth', true);
             localStorage.setItem('token', token);
+            commit('setIsLoading', false);
         } catch (error) {
             commit('setError');
+            commit('setIsLoading', false);
         }
     },
     async registrationUser({ commit, dispatch }, { login, password }: AuthObj) {
+        commit('setIsLoading', true);
+
         try {
             const { user: { token } } = await registrationRequest(login, password);
 
@@ -37,8 +47,10 @@ export const actions: ActionTree<AuthState, RootState> = {
 
             commit('setIsAuth', true);
             localStorage.setItem('token', token);
+            commit('setIsLoading', false);
         } catch (error) {
             commit('setError');
+            commit('setIsLoading', false);
         }
     },
 };

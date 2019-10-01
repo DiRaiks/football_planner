@@ -1,5 +1,6 @@
 <template>
     <div id="app">
+      <Loader v-if="isLoading"/>
       <template v-if="isAuth">
           <Top />
           <Home/>
@@ -22,6 +23,7 @@ import { Getter, Action } from 'vuex-class';
 import Top from '@/components/reusableComponents/top/Top.vue';
 import Auth from '@/components/routeComponents/auth/Auth.vue';
 import Home from '@/components/routeComponents/home/Home.vue';
+import Loader from '@/components/reusableComponents/loader/Loader.vue';
 
 const namespace: string = 'auth';
 
@@ -30,6 +32,7 @@ const namespace: string = 'auth';
     Top,
     Auth,
     Home,
+    Loader,
   },
 })
 export default class App extends Vue {
@@ -37,6 +40,8 @@ export default class App extends Vue {
     private getCurrentUser!: any;
     @Getter('getIsAuth', { namespace })
     private isAuth!: void;
+    @Getter('getIsLoading', { namespace })
+    private isLoading!: void;
 
     private async mounted() {
         await this.getCurrentUser();
