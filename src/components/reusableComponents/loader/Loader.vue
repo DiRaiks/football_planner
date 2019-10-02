@@ -18,14 +18,14 @@ export default class Loader extends Vue {}
         height: 100%;
         background: white;
         z-index: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
     .lds-dual-ring {
-        position: absolute;
-        top: 40%;
-        left: 46%;
         display: inline-block;
-        width: 128px;
-        height: 128px;
+        width: 105px;
+        height: 105px;
     }
     .lds-dual-ring:after {
         content: " ";

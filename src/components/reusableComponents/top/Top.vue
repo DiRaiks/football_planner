@@ -1,6 +1,6 @@
 <template>
     <div :class="currentClass">
-        <div>{{ currentText }}</div>
+        <div>Баги/предложения: телега @dir_andrew</div>
     </div>
 </template>
 
@@ -45,7 +45,7 @@ export default class Top extends Vue {
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 28px;
+        font-size: 16px;
 
         &-positive {
             background: aquamarine;

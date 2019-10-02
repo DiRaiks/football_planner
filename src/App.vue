@@ -1,17 +1,19 @@
 <template>
     <div id="app">
       <Loader v-if="isLoading"/>
-      <template v-if="isAuth">
-          <Top />
-          <Home/>
-          <!--<div id="nav">-->
+      <template v-else>
+          <template v-if="isAuth">
+              <Top />
+              <Home/>
+              <!--<div id="nav">-->
               <!--<router-link to="/">Home</router-link> |-->
               <!--<router-link to="/about">About</router-link>-->
-          <!--</div>-->
-          <!--<router-view/>-->
-      </template>
-      <template v-else>
-          <Auth/>
+              <!--</div>-->
+              <!--<router-view/>-->
+          </template>
+          <template v-else>
+              <Auth/>
+          </template>
       </template>
   </div>
 </template>
