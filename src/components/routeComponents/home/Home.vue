@@ -160,7 +160,7 @@ export default class Home extends Vue {
   .addPeopleBlock {
     display: flex;
     justify-content: space-around;
-    padding: 0 20px;
+    padding: 15px 20px;
   }
 
   @media (max-width: 1250px) {
