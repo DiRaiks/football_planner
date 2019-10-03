@@ -118,7 +118,7 @@ export default class Home extends Vue {
   }
 
   private async mounted() {
-    this.minimum = this.currentEvent.minimum || 0;
+    if (this.currentEvent )this.minimum = this.currentEvent.minimum;
   }
 }
 </script>
