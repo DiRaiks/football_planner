@@ -15,21 +15,21 @@ import { TableState, RootState, PeopleItem } from '../types';
 
 export const actions: ActionTree<TableState, RootState> = {
     async setPeopleData({ commit, getters }, newPeople: PeopleItem) {
-        const peoples = getters.getPeopleData;
         const currentEventDate = getters.getCurrentEvent.date;
 
         try {
             const savedPeople = await savePeople({ ...newPeople, date: currentEventDate });
-            const newPeopleData = [...peoples, savedPeople];
 
-            commit('setPeopleData', newPeopleData);
+            commit('setPeopleData', savedPeople);
         } catch (error) {
             commit('setError'); // TODO: need error handler
         }
     },
-    async deletePeople({ commit }, id: string) {
+    async deletePeople({ commit, getters }, id: string) {
+        const currentEventDate = getters.getCurrentEvent.date;
+
         try {
-            const newPeopleData = await deletePeople(id);
+            const newPeopleData = await deletePeople(id, currentEventDate);
 
             commit('setPeopleData', newPeopleData);
         } catch (error) {
