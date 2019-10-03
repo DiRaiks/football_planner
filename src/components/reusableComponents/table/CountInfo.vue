@@ -59,7 +59,7 @@ export default class CountInfo extends Vue {
     get currentValueClass(): object {
         return {
             currentValue: true,
-            satisfied: this.peopleDataCount > this.currentEvent.minimum,
+            satisfied: this.peopleDataCount >= this.currentEvent.minimum,
         };
     }
 
