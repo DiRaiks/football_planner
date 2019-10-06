@@ -8,17 +8,18 @@ export interface PlayersState {
     playersData: PlayerItem[];
 }
 
+export interface PlayerItem {
+    _id: string;
+    friends: string[];
+    name: string;
+    date: string;
+    status: boolean;
+}
+
 // EVENTS
 
 export interface EventsState {
     event: EventItem | null;
-}
-
-// TABLE
-
-export interface TableState {
-    peopleData: PlayerItem[];
-    event: object;
 }
 
 export interface EventItem {
@@ -27,14 +28,6 @@ export interface EventItem {
     time: string;
     date: string;
     minimum: number;
-}
-
-export interface PlayerItem {
-    _id: string;
-    friends: string[];
-    name: string;
-    date: string;
-    status: boolean;
 }
 
 // AUTH
