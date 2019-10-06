@@ -2,10 +2,22 @@ export interface RootState {
     modules: object[];
 }
 
+// PLAYERS
+
+export interface PlayersState {
+    playersData: PlayerItem[];
+}
+
+// EVENTS
+
+export interface EventsState {
+    event: EventItem | null;
+}
+
 // TABLE
 
 export interface TableState {
-    peopleData: PeopleItem[];
+    peopleData: PlayerItem[];
     event: object;
 }
 
@@ -17,7 +29,7 @@ export interface EventItem {
     minimum: number;
 }
 
-export interface PeopleItem {
+export interface PlayerItem {
     _id: string;
     friends: string[];
     name: string;

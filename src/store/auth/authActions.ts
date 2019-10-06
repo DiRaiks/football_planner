@@ -11,7 +11,7 @@ export const actions: ActionTree<AuthState, RootState> = {
         try {
             const { user: { token } } = await loginRequest(login, password);
 
-            await dispatch('table/getEvents', null, { root: true });
+            await dispatch('events/getEvents', null, { root: true });
 
             commit('setIsAuth', true);
             localStorage.setItem('token', token);
@@ -27,7 +27,7 @@ export const actions: ActionTree<AuthState, RootState> = {
         try {
             const { user: { token } } = await getCurrentUserRequest();
 
-            await dispatch('table/getEvents', null, { root: true });
+            await dispatch('events/getEvents', null, { root: true });
 
             commit('setIsAuth', true);
             localStorage.setItem('token', token);
@@ -43,7 +43,7 @@ export const actions: ActionTree<AuthState, RootState> = {
         try {
             const { user: { token } } = await registrationRequest(login, password);
 
-            await dispatch('table/getEvents', null, { root: true });
+            await dispatch('events/getEvents', null, { root: true });
 
             commit('setIsAuth', true);
             localStorage.setItem('token', token);

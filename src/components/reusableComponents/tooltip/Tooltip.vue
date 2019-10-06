@@ -42,6 +42,7 @@
         position: relative;
         color: white;
         display: inline-block;
+        margin-right: 2px;
 
         & .tooltipText, & .tooltipArrow{
             position: absolute;

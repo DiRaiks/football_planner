@@ -19,7 +19,7 @@
         <div class="total-info">
             <div class="info minimum">Минимально: {{ currentEvent.minimum }}</div>
             <div class="info current">Всего:
-                <div :class="currentValueClass">{{ peopleDataCount }}</div>
+                <div :class="currentValueClass">{{ playersDataCount }}</div>
             </div>
         </div>
     </div>
@@ -29,41 +29,37 @@
 import { Component, Vue } from 'vue-property-decorator';
 import { Getter } from 'vuex-class';
 
-import { PeopleItem, EventItem } from '@/store/types';
-
-const namespace: string = 'table';
+import { PlayerItem, EventItem } from '@/store/types';
 
 @Component
 export default class CountInfo extends Vue {
-    @Getter('getPeopleData', { namespace })
-    protected peopleData!: PeopleItem[];
-    @Getter('getCurrentEvent', { namespace })
+    @Getter('getCurrentEvent', { namespace: 'events' })
     protected currentEvent!: EventItem;
-    @Getter('getPeopleDataCount', { namespace })
-    protected peopleDataCount!: number;
-    @Getter('getAllPeople', { namespace })
+    @Getter('getPlayersDataCount', { namespace: 'players' })
+    protected playersDataCount!: number;
+    @Getter('getAllPlayers', { namespace: 'players' })
     protected currentProgress!: object[];
 
     get activeFiled(): string {
-        return this.peopleDataCount >= this.currentEvent.minimum ?
-            this.peopleDataCount < 22 ?
+        return this.playersDataCount >= this.currentEvent.minimum ?
+            this.playersDataCount < 22 ?
             'miniField' : 'normalField' : '';
     }
     get optionsClass(): object {
         return {
             options: true,
-            notEnough: this.peopleDataCount < this.currentEvent.minimum,
+            notEnough: this.playersDataCount < this.currentEvent.minimum,
             [`${this.activeFiled}`]: true,
         };
     }
     get currentValueClass(): object {
         return {
             currentValue: true,
-            satisfied: this.peopleDataCount >= this.currentEvent.minimum,
+            satisfied: this.playersDataCount >= this.currentEvent.minimum,
         };
     }
 
-    protected getChunkClass(item: PeopleItem): object {
+    protected getChunkClass(item: PlayerItem): object {
         if (item) {
             return {
                 chunk: true,

@@ -20,7 +20,7 @@
             </thead>
             <tbody>
                 <TableLine
-                        v-for="(item, index) in peopleData"
+                        v-for="(item, index) in playersData"
                         :key="index"
                         :number="index + 1"
                         :name="item.name"
@@ -38,11 +38,9 @@
 import { Component, Vue } from 'vue-property-decorator';
 import { Getter } from 'vuex-class';
 
-import { PeopleItem } from '@/store/types';
+import { PlayerItem } from '@/store/types';
 import TableLine from './TableLine.vue';
 import CountInfo from './CountInfo.vue';
-
-const namespace: string = 'table';
 
 @Component({
     components: {
@@ -51,11 +49,11 @@ const namespace: string = 'table';
     },
 })
 export default class Table extends Vue {
-    @Getter('getPeopleData', { namespace })
-    private peopleData!: PeopleItem[];
-    @Getter('getPeopleDataCount', { namespace })
-    private peopleDataCount!: number;
-    @Getter('getCurrentEvent', { namespace })
+    @Getter('getPlayersData', { namespace: 'players' })
+    private playersData!: PlayerItem[];
+    @Getter('getPlayersDataCount', { namespace: 'players' })
+    private playersDataCount!: number;
+    @Getter('getCurrentEvent', { namespace: 'events' })
     private currentEvent!: object;
 }
 </script>

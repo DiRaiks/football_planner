@@ -49,15 +49,13 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import { Action, Mutation, Getter } from 'vuex-class';
+import { Action, Getter } from 'vuex-class';
 
 import Button from '@/components/reusableComponents/button/Button.vue';
 import Input from '@/components/reusableComponents/input/Input.vue';
 import Table from '@/components/reusableComponents/table/Table.vue';
 
 import { EventItem } from '@/store/types';
-
-const namespace: string = 'table';
 
 @Component({
   components: {
@@ -76,17 +74,17 @@ export default class Home extends Vue {
   protected date: string = '';
   protected status: boolean = true;
 
-  @Action('setPeopleData', { namespace })
-  private setPeopleData!: any;
-  @Action('getEvents', { namespace })
+  @Action('setPlayersData', { namespace: 'players' })
+  private setPlayersData!: any;
+  @Action('getEvents', { namespace: 'events' })
   private getEvent!: any;
-  @Action('setEvent', { namespace })
+  @Action('setEvent', { namespace: 'events' })
   private setEvent!: any;
-  @Action('setEventMinimum', { namespace })
+  @Action('setEventMinimum', { namespace: 'events' })
   private setEventMinimum!: any;
-  @Action('deleteEvent', { namespace })
+  @Action('deleteEvent', { namespace: 'events' })
   private deleteEvent!: any;
-  @Getter('getCurrentEvent', { namespace })
+  @Getter('getCurrentEvent', { namespace: 'events' })
   private currentEvent!: EventItem;
 
   protected addFriend(): void {
@@ -99,7 +97,7 @@ export default class Home extends Vue {
         if (friend) return friend;
       });
 
-      this.setPeopleData({ name: this.peopleName, friends: filteredFriends, status: this.status });
+      this.setPlayersData({ name: this.peopleName, friends: filteredFriends, status: this.status });
       this.peopleName = '';
       this.friends = [''];
     }

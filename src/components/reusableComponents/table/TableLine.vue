@@ -22,8 +22,6 @@ import { Action } from 'vuex-class';
 
 import Tooltip from '@/components/reusableComponents/tooltip/Tooltip.vue';
 
-const namespace: string = 'table';
-
 @Component({
     components: {
         Tooltip,
@@ -36,11 +34,11 @@ export default class TableLine extends Vue {
     @Prop() private id!: string;
     @Prop() private status!: boolean;
 
-    @Action('deletePeople', { namespace })
-    private deletePeople!: any;
+    @Action('deletePlayer', { namespace: 'players' })
+    private deletePlayer!: any;
 
     protected deleteName(): void {
-        this.deletePeople(this.id);
+        this.deletePlayer(this.id);
     }
 
     get statusClass(): object {
@@ -83,7 +81,6 @@ export default class TableLine extends Vue {
             height: 16px;
             background-image: url('../../../assets/user-solid.svg');
             background-size: 16px 16px;
-            margin-right: 2px;
         }
     }
     td {
