@@ -4,10 +4,13 @@
         <td :class="statusClass">{{ statusText }}</td>
         <td class="name">{{ name }}</td>
         <td>
-            <div
-                v-for="(friend, index) in friends"
-                class="friendIcon">
-            </div>
+            <Tooltip
+                    v-for="(friend, index) in friends"
+                    :key="index"
+                    :tooltip="friend"
+            >
+                <div class="friendIcon"/>
+            </Tooltip>
         </td>
         <td><button @click="deleteName">Удалить</button></td>
     </tr>
@@ -15,11 +18,17 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import { Getter, Action } from 'vuex-class';
+import { Action } from 'vuex-class';
+
+import Tooltip from '@/components/reusableComponents/tooltip/Tooltip.vue';
 
 const namespace: string = 'table';
 
-@Component
+@Component({
+    components: {
+        Tooltip,
+    },
+})
 export default class TableLine extends Vue {
     @Prop() private number!: number;
     @Prop() private name!: string;
@@ -70,7 +79,6 @@ export default class TableLine extends Vue {
         }
 
         .friendIcon {
-            display: inline-block;
             width: 16px;
             height: 16px;
             background-image: url('../../../assets/user-solid.svg');

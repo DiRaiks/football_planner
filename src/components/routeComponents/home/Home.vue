@@ -90,6 +90,7 @@ export default class Home extends Vue {
   private currentEvent!: EventItem;
 
   protected addFriend(): void {
+    if (this.friends.length > 4) return;
     this.friends.push('');
   }
   protected savePeople(): void {
