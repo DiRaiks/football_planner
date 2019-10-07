@@ -1,23 +1,44 @@
+body {
+  font-family: Helvetica, Arial, sans-serif;
+  max-width: 1200px;
+  margin: auto;
+  padding-top: 40px;
+}
 
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+}
   .wrapper-side {
     display: block;
-    width: 536px;
-    margin: 10% auto;
-    font-family: Helvetica, Geneva, Arial, sans-serif;
+    min-width: 536px;
     font-size: 16px;
     font-weight: 300;
     color: #444
   }
+  .h1-header {
+    width: 1200px;
+    margin: auto;
+    margin-bottom: 40px;
+    margin-left: 10px;
+    font-weight: normal;
+  }
   .h2-header {
     margin: 0;
-    margin-left: 10px;
   }
-
+  .h3-header {
+    margin: 0px 0px 10px 4px;
+    font-weight: normal;
+  }
+  .h3-header.forsure {
+    color: #155724;
+  }
 
   .game-info {
     display: block;
-    width: 96%;
-    padding: 2%;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    font-weight: lighter;
   }
       .info {
         margin-bottom: 3px;
@@ -181,3 +202,151 @@
   .participant .controls:hover .control{
     opacity: 1;
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  .self-editing {
+    margin-bottom: 20px;
+  }
+
+  .edit-card {
+    background-color: #eee;
+    padding: 4px;
+    border-radius: 8px;
+  }
+
+  .edit-card > ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 0;
+  }
+
+  .edit-card > ul > li{
+    position: relative;
+    border-radius: 4px;
+    vertical-align: baseline;
+    margin-bottom: 4px;
+  }
+
+  .edit-card > ul > li:last-child{
+    margin-bottom: 0px;
+  }
+
+  .edit-card > ul > li > input{
+    display: inline-block;
+    outline: none;
+    border-radius: 4px;
+    padding: 10px;
+    border: none;
+    font-size: 16px;
+    transition: all 0.2s;
+    width: 292px;
+    color: #444;
+    vertical-align: top;
+    margin-right: 4px;
+  }
+
+  .edit-card > ul > li > input:focus{
+    padding: 16px 10px 4px;
+    transition: all 0.2s;
+  }
+
+  .edit-card > ul > li > input::placeholder{
+    opacity: 1;
+    font-family: Helvetica, Geneva, Arial, sans-serif;
+    transition: opacity 0.2s;
+  }
+  .edit-card > ul > li > input:focus::placeholder{
+    color: #fff;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .edit-card > ul > li > input:focus ~ div.placeholder{
+    padding-top: 3px;
+    opacity: 1;
+    transition: padding 0.2s, font-size 0.2s;
+    font-size: 12px;
+  }
+
+  .placeholder {
+    position: absolute;
+    top: 0;
+    font-size: 16px;
+    opacity: 0;
+    padding-left: 10px;
+    padding-top: 10px;
+    color: #888;
+    transition: padding 0.2s, font-size 0.2s;
+  }
+
+
+
+  .participation-options {
+    display: inline-block;
+    background-color: #fff;
+    border-radius: 4px;
+    padding: 4px;
+    font-size: 16px;
+    transition: all 0.2s;
+    width: auto;
+    height: 30px;
+    color: #444;
+    vertical-align: top;
+    cursor: pointer;
+  }
+
+  .participation-options > .option {
+    display: inline-block;
+    padding: 6px 8px;
+    font-size: 16px;
+    border-radius: 2px;
+  }
+
+  .participation-options > .option.active.forsure {
+    color: #155724;
+    background-color: #d4edda;
+    box-shadow: inset 0px 0px 0px 1px #c3e6cb;
+  }
+
+
+  .participation-options > .option.active.maybe {
+    color: #856404;
+    background-color: #fff3cd;
+    box-shadow: inset 0px 0px 0px 1px #ffeeba;
+  }
+
+  .accept-btn {
+    display: block;
+    padding: 10px 20px;
+    border-radius: 8px;
+    background-color: #eee;
+    margin: 4px 0px 0px auto;
+    width: 120px;
+    text-align: center;
+    cursor: pointer;
+  }
+
+
+
+
+
+
+
+
+  /* // */
