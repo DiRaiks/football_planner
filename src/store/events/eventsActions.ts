@@ -10,11 +10,11 @@ import {
 import { EventsState, RootState } from '../types';
 
 export const actions: ActionTree<EventsState, RootState> = {
-    async setEvent({ commit }, { time, place, date, minimum }) {
+    async setCurrentEvent({ commit }, { time, place, date, minimum }) {
         try {
             const savedEvent = await saveEvent(time, place, date, minimum);
 
-            commit('setEvent', savedEvent);
+            commit('setCurrentEvent', savedEvent);
         } catch (error) {
             commit('setError');
         }
@@ -22,14 +22,15 @@ export const actions: ActionTree<EventsState, RootState> = {
     async getEvents({ commit, dispatch }) {
         try {
             const events = await getEvents();
+            commit('setEvents', events);
 
             const firstEvent = events[0];
 
             if (firstEvent) await dispatch('players/getPlayersByDate', firstEvent.date, { root: true });
 
-            commit('setEvent', firstEvent);
+            commit('setCurrentEvent', firstEvent);
         } catch (error) {
-            commit('setEvent', null);
+            commit('setCurrentEvent', null);
 
             commit('setError');
         }
@@ -40,7 +41,7 @@ export const actions: ActionTree<EventsState, RootState> = {
 
             await deleteEvent(currentEvent._id);
 
-            commit('setEvent', null);
+            commit('setCurrentEvent', null);
         } catch (error) {
             commit('setError');
         }
@@ -51,7 +52,7 @@ export const actions: ActionTree<EventsState, RootState> = {
         try {
             const newEvent = await saveEventMinimum(currentEvent._id, minimum);
 
-            commit('setEvent', newEvent);
+            commit('setCurrentEvent', newEvent);
         } catch (error) {
             commit('setError');
         }

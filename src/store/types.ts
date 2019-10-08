@@ -19,7 +19,8 @@ export interface PlayerItem {
 // EVENTS
 
 export interface EventsState {
-    event: EventItem | null;
+    currentEvent: EventItem | null;
+    events: EventItem[] | null;
 }
 
 export interface EventItem {
