@@ -35,11 +35,12 @@ export default class Button extends Vue {
         color: #000000;
         transition: background-color .1s;
         white-space: nowrap;
-        border: 1px solid black;
+        background: #EEEEEE;
+        border: none;
+        cursor: pointer;
 
         &:hover {
-            background: gainsboro;
-            cursor: pointer;
+            background: #d1d1d1;
         }
 
         &.button-positive {

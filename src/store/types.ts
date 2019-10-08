@@ -14,20 +14,24 @@ export interface PlayerItem {
     name: string;
     date: string;
     status: boolean;
+    eventId: string;
 }
 
 // EVENTS
 
 export interface EventsState {
-    event: EventItem | null;
+    currentEvent: EventItem | null;
+    events: EventItem[] | null;
 }
 
 export interface EventItem {
-    _id: string;
+    _id?: string;
     place: string;
     time: string;
     date: string;
     minimum: number;
+    playersAmount: number;
+    eventName: string;
 }
 
 // AUTH

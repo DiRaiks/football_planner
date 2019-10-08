@@ -1,8 +1,6 @@
 <template>
     <div class="tableWr">
-        <h2 class="headerWr">
-            Товарищеский матч
-        </h2>
+        <h2 class="headerWr">{{ currentEvent.eventName }}</h2>
         <div class="gameInfo">
             <div class="info place">{{ currentEvent.place }}</div>
             <div class="info date">{{ currentEvent.date }}</div>

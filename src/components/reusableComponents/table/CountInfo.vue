@@ -31,6 +31,8 @@ import { Getter } from 'vuex-class';
 
 import { PlayerItem, EventItem } from '@/store/types';
 
+const MAX_PLAYERS = 22;
+
 @Component
 export default class CountInfo extends Vue {
     @Getter('getCurrentEvent', { namespace: 'events' })
@@ -38,7 +40,7 @@ export default class CountInfo extends Vue {
     @Getter('getPlayersDataCount', { namespace: 'players' })
     protected playersDataCount!: number;
     @Getter('getAllPlayers', { namespace: 'players' })
-    protected currentProgress!: object[];
+    protected allPlayers!: object[];
 
     get activeFiled(): string {
         return this.playersDataCount >= this.currentEvent.minimum ?
@@ -57,6 +59,10 @@ export default class CountInfo extends Vue {
             currentValue: true,
             satisfied: this.playersDataCount >= this.currentEvent.minimum,
         };
+    }
+    get currentProgress(): object[] {
+        const emptyArray = new Array(MAX_PLAYERS - this.playersDataCount);
+        return this.allPlayers.concat(emptyArray);
     }
 
     protected getChunkClass(item: PlayerItem): object {

@@ -52,7 +52,7 @@
 
         & .tooltipText {
             padding: 0 10px;
-            line-height: 40px;
+            line-height: 30px;
             background: #02a9f4;
             border-radius: 5px;
             bottom: 50px;
