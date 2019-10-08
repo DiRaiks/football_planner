@@ -103,6 +103,7 @@ export default class AllEvents extends Vue {
 
 <style scoped lang="scss">
     .allEventsWr {
+        height: 100%;
         padding: 20px;
         text-align: left;
 
