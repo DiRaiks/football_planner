@@ -4,11 +4,6 @@
         <template v-else>
             <template v-if="isAuth">
                 <Top/>
-                <div id="nav">
-                    <router-link to="/">Events</router-link>
-                    |
-                    <router-link to="/event">Home</router-link>
-                </div>
                 <router-view/>
             </template>
             <template v-else>
@@ -88,16 +83,16 @@ export default class App extends Vue {
         height: 100%;
     }
 
-    #nav {
-        padding: 30px;
+    /*#nav {*/
+        /*padding: 30px;*/
 
-        a {
-            font-weight: bold;
-            color: #2c3e50;
+        /*a {*/
+            /*font-weight: bold;*/
+            /*color: #2c3e50;*/
 
-            &.router-link-exact-active {
-                color: #42b983;
-            }
-        }
-    }
+            /*&.router-link-exact-active {*/
+                /*color: #42b983;*/
+            /*}*/
+        /*}*/
+    /*}*/
 </style>

@@ -1,5 +1,8 @@
 <template>
     <div class="home">
+        <div class="nav">
+            <span @click="gotToHome">Матчи</span> / <span class="active">Обзор матча</span>
+        </div>
         <div v-if="currentEvent" class="columnWr">
             <div class="leftColumn">
                 <div class="minInputWr">
@@ -39,6 +42,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import { Action, Getter } from 'vuex-class';
+import router from '@/router';
 
 import Button from '@/components/reusableComponents/button/Button.vue';
 import Input from '@/components/reusableComponents/input/Input.vue';
@@ -60,8 +64,8 @@ export default class EventPage extends Vue {
     protected minimum: number = 0;
     protected status: boolean = true;
 
-    @Action('setPlayersData', {namespace: 'players'})
-    private setPlayersData!: any;
+    @Action('setNewPlayer', {namespace: 'players'})
+    private setNewPlayer!: any;
     @Action('getEvents', {namespace: 'events'})
     private getEvent!: any;
     @Action('setEventMinimum', {namespace: 'events'})
@@ -84,7 +88,7 @@ export default class EventPage extends Vue {
                 }
             });
 
-            this.setPlayersData({name: this.peopleName, friends: filteredFriends, status: this.status});
+            this.setNewPlayer({name: this.peopleName, friends: filteredFriends, status: this.status});
             this.peopleName = '';
             this.friends = [''];
         }
@@ -93,16 +97,41 @@ export default class EventPage extends Vue {
     protected saveMinimum(): void {
         this.setEventMinimum(this.minimum);
     }
+    protected gotToHome(): void {
+        router.push('/');
+    }
 
     private async mounted() {
         if (this.currentEvent) {
             this.minimum = this.currentEvent.minimum;
+        } else {
+            router.push('/');
         }
     }
 }
 </script>
 
 <style scoped lang="scss">
+    .home {
+        .nav {
+            padding: 20px;
+            text-align: left;
+
+            span {
+                cursor: pointer;
+                color: rgba(0, 132, 254, 0.45);
+
+                &:hover {
+                    color: #0084FE;
+                    border-bottom: 1px solid #0084FE;
+                }
+
+                &.active {
+                    color: #0084FE;
+                }
+            }
+        }
+    }
     .columnWr {
         padding: 20px;
         display: flex;

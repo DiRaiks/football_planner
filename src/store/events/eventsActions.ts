@@ -5,43 +5,51 @@ import {
     getEvents,
     deleteEvent,
     saveEventMinimum,
+    changeEvent,
 } from './eventsApi';
 
-import { EventsState, RootState } from '../types';
+import { EventsState, RootState, EventItem } from '../types';
 
 export const actions: ActionTree<EventsState, RootState> = {
-    async setCurrentEvent({ commit }, { time, place, date, minimum }) {
+    async setCurrentEvent({ commit, getters, dispatch }, eventId: string) {
+        const events = getters.getEvents;
         try {
-            const savedEvent = await saveEvent(time, place, date, minimum);
+            const currentEvent = events.find((event: EventItem) => event._id === eventId);
+            commit('setCurrentEvent', currentEvent);
 
-            commit('setCurrentEvent', savedEvent);
+            await dispatch('players/getPlayersByEvent', currentEvent._id, { root: true });
         } catch (error) {
             commit('setError');
         }
     },
-    async getEvents({ commit, dispatch }) {
+    async saveNewEvent({ commit, rootGetters }, { time, place, date, minimum, eventName }) {
+        const playersAmount = rootGetters['events/getPlayersDataCount'];
+
+        try {
+            const event: EventItem = { time, place, date, minimum, eventName, playersAmount };
+            const savedEvents = await saveEvent(event);
+
+            commit('setEvents', savedEvents);
+        } catch (error) {
+            commit('setError');
+        }
+    },
+    async getEvents({ commit }) {
         try {
             const events = await getEvents();
+
             commit('setEvents', events);
-
-            const firstEvent = events[0];
-
-            if (firstEvent) await dispatch('players/getPlayersByDate', firstEvent.date, { root: true });
-
-            commit('setCurrentEvent', firstEvent);
         } catch (error) {
             commit('setCurrentEvent', null);
 
             commit('setError');
         }
     },
-    async deleteEvent({ commit, getters }) {
+    async deleteEvent({ commit, getters }, eventId) {
         try {
-            const currentEvent = getters.getCurrentEvent;
+            const events = await deleteEvent(eventId);
 
-            await deleteEvent(currentEvent._id);
-
-            commit('setCurrentEvent', null);
+            commit('setEvents', events);
         } catch (error) {
             commit('setError');
         }
@@ -53,6 +61,15 @@ export const actions: ActionTree<EventsState, RootState> = {
             const newEvent = await saveEventMinimum(currentEvent._id, minimum);
 
             commit('setCurrentEvent', newEvent);
+        } catch (error) {
+            commit('setError');
+        }
+    },
+    async changeEvent({ commit }, newEvent) {
+        try {
+            const changedEvent = await changeEvent(newEvent._id, newEvent);
+
+            commit('changeEvent', changedEvent);
         } catch (error) {
             commit('setError');
         }

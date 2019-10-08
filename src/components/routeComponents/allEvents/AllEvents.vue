@@ -1,18 +1,47 @@
 <template>
-    <div class="horizontalLine">
-        <div class="placeWr">
-            <Button
-                v-if="currentEvent"
-                class="deleteEventButton"
-                text="Удалить текущее событие"
-                @onClick="deleteCurrentEvent"
-            />
-            <template v-else>
-                <Input placeholder="Место" type="text" label="Где играем?" v-model="place"/>
-                <Input placeholder="Дата" type="date" label="Когда?" v-model="date"/>
-                <Input placeholder="Время" type="time" label="Во сколько?" v-model="time"/>
-                <Button text="Сохранить" @onClick="saveEvent"/>
-            </template>
+    <div class="allEventsWr">
+        <h1>Football Planner</h1>
+        <div class="columnWr">
+            <div class="leftColumn">
+                <div class="openMatch">
+                    <h3>Открытые Матчи</h3>
+                    <div
+                        v-for="event in activeEvents"
+                        :id="event._id"
+                        class="previewWr"
+                    >
+                        <EventPreview :event="event"/>
+                    </div>
+                </div>
+                <div v-if="oldEvents.length" class="oldMatch">
+                    <h3>Прошедшие Матчи</h3>
+                    <div
+                        v-for="event in oldEvents"
+                        :id="event._id"
+                        class="previewWr"
+                    >
+                        <EventPreview :event="event"/>
+                    </div>
+                </div>
+            </div>
+            <div class="rightColumn">
+                <div class="newEventWr">
+                    <h3>Новое событие</h3>
+                    <div class="createEventBlock">
+                        <div><StyleInput type="text" label="Название встречи" v-model="eventName"/></div>
+                        <div><StyleInput type="text" label="Адрес встречи" v-model="place"/></div>
+                        <div class="dateTime">
+                            <div class="date"><StyleInput type="date" label="Дата" v-model="date"/></div>
+                            <div class="time"><StyleInput type="time" label="Время" v-model="time"/></div>
+                        </div>
+                        <div><StyleInput type="number" nim="10" max="22" label="Количество игроков" v-model="minimum"/></div>
+                    </div>
+                    <div class="buttonWr">
+                        <Button class="addEventButton" text="Добавить событие"
+                                @onClick="setNewEvent"/>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -23,6 +52,8 @@ import { Action, Getter } from 'vuex-class';
 
 import Button from '@/components/reusableComponents/button/Button.vue';
 import Input from '@/components/reusableComponents/input/Input.vue';
+import EventPreview from '@/components/routeComponents/allEvents/EventPreview.vue';
+import StyleInput from '@/components/reusableComponents/styleInput/StyleInput.vue';
 
 import { EventItem } from '@/store/types';
 
@@ -30,49 +61,131 @@ import { EventItem } from '@/store/types';
     components: {
         Button,
         Input,
+        EventPreview,
+        StyleInput,
     },
 })
 
 export default class AllEvents extends Vue {
+    protected eventName: string = '';
     protected place: string = '';
     protected time: string = '';
     protected date: string = '';
+    protected minimum: string = '';
 
-    @Action('deleteEvent', {namespace: 'events'})
-    private deleteEvent!: any;
-    @Action('setCurrentEvent', {namespace: 'events'})
-    private setCurrentEvent!: any;
-    @Getter('getCurrentEvent', {namespace: 'events'})
-    private currentEvent!: EventItem;
-    @Getter('getEvents', {namespace: 'events'})
-    private events!: EventItem[];
+    @Action('saveNewEvent', {namespace: 'events'})
+    private saveNewEvent!: any;
+    @Getter('getActiveEvents', {namespace: 'events'})
+    private activeEvents!: EventItem[];
+    @Getter('getOldEvents', {namespace: 'events'})
+    private oldEvents!: EventItem[];
 
-    protected saveEvent(): void {
-        if (!this.time || !this.place || !this.date) {
+    protected setNewEvent(): void {
+        if (!this.time || !this.place || !this.date || !this.eventName || !this.minimum) {
             return;
         }
-        this.setCurrentEvent({time: this.time, place: this.place, date: this.date, minimum: 0});
+        this.saveNewEvent({
+            time: this.time,
+            place: this.place,
+            date: this.date,
+            minimum: +this.minimum,
+            eventName: this.eventName,
+        });
+
         this.place = '';
         this.time = '';
         this.date = '';
-    }
-
-    protected deleteCurrentEvent(): void {
-        this.deleteEvent();
+        this.eventName = '';
+        this.minimum = '';
     }
 }
 </script>
 
 <style scoped lang="scss">
-    .horizontalLine {
-        width: 100%;
-        padding: 15px 0;
-        border-bottom: 1px solid black;
+    .allEventsWr {
+        padding: 20px;
+        text-align: left;
 
-        .placeWr {
-            font-weight: bold;
-            width: 400px;
-            margin: 0 auto;
+        h1 {
+            text-align: center;
+        }
+
+        .columnWr {
+            margin-top: 60px;
+            padding: 20px;
+            display: flex;
+            justify-content: space-around;
+
+            .leftColumn {
+                .oldMatch {
+                    margin-top: 40px;
+
+                    .previewWr {
+                        opacity: .5;
+                    }
+                }
+            }
+
+            .rightColumn {
+                text-align: left;
+
+                .createEventBlock {
+                    width: 370px;
+                    border-radius: 10px;
+                    padding: 10px;
+                    background-color: #eeeeee;
+
+                    div {
+                        margin-top: 10px;
+
+                        &:nth-of-type(1) {
+                            margin: 0;
+                        }
+                    }
+
+                    .dateTime {
+                        display: flex;
+
+                        .date {
+                            flex: 3;
+                        }
+
+                        .time {
+                            margin: 0 0 0 10px;
+                            flex: 1;
+                        }
+                    }
+                }
+
+                .buttonWr {
+                    margin-top: 20px;
+                    display: flex;
+                    justify-content: flex-end;
+                }
+            }
+        }
+
+        .previewWr {
+            margin-top: 20px;
+
+            &:nth-of-type(1) {
+                margin: 0;
+            }
+        }
+
+        @media (max-width: 1250px) {
+            .columnWr {
+                flex-direction: column;
+            }
+
+            .rightColumn {
+                margin-top: 40px;
+
+            }
+
+            .leftColumn {
+
+            }
         }
     }
 </style>
