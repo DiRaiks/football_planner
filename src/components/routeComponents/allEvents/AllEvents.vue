@@ -3,7 +3,7 @@
         <h1>Football Planner</h1>
         <div class="columnWr">
             <div class="leftColumn">
-                <div class="openMatch">
+                <div v-if="activeEvents.length" class="openMatch">
                     <h3>Открытые Матчи</h3>
                     <div
                         v-for="event in activeEvents"
