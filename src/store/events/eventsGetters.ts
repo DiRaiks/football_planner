@@ -8,7 +8,7 @@ export const getters: GetterTree<EventsState, RootState> = {
     getActiveEvents: (state): EventItem[] | null => {
         if (!state.events) return [];
         const nowMonth = new Date().getMonth();
-        const nowDay = new Date().getDay();
+        const nowDay = new Date().getDate();
         const nowYear = new Date().getFullYear();
 
         return state.events.filter((event: EventItem) => {
@@ -18,7 +18,7 @@ export const getters: GetterTree<EventsState, RootState> = {
     getOldEvents: (state): EventItem[] | null => {
         if (!state.events) return [];
         const nowMonth = new Date().getMonth();
-        const nowDay = new Date().getDay();
+        const nowDay = new Date().getDate();
         const nowYear = new Date().getFullYear();
 
         return state.events.filter((event: EventItem) => {
