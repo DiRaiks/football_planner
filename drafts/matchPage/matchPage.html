@@ -6,6 +6,7 @@
     <!-- <link rel="stylesheet" href="../editingMatchLayout/editingMatchLayout.css">
     <link rel="stylesheet" href="../tableLayout/tableLayout.css"> -->
     <link rel="stylesheet" href="matchPage.css">
+    <script src="https://kit.fontawesome.com/4d7e678cf1.js" crossorigin="anonymous"></script>
   </head>
   <body>
     <h1 class="h1-header">Товарищеский матч
@@ -166,36 +167,43 @@
           <h3 class="h3-header forsure">Вы уже записались</h3>
           <div class="edit-card">
             <ul>
-              <li>
+              <li class="player-edit-card">
                 <input type="text" placeholder="Ваше имя" value="Пирогов Евгений">
                 <div class="placeholder">Ваше имя</div>
                 <div class="participation-options">
                   <div class="option forsure active">Точно буду</div>
                   <div class="option maybe">Может буду</div>
                 </div>
+                <div class="controls">
+                  <div class="control delete"><i class="fas fa-trash-alt"></i></div>
+                </div>
               </li>
             </ul>
           </div>
-          <div class="accept-btn">Редактировать</div>
         </div>
         <div class="friends-editing">
-          <h3 class="h3-header">Пригласите друзей</h3>
           <div class="edit-card">
             <ul>
-              <li>
+              <li class="player-edit-card">
                 <input type="text" placeholder="Имя друга" value="Кирилл Ковалев">
                 <div class="placeholder">Имя друга</div>
                 <div class="participation-options">
-                  <div class="option forsure active">Точно буду</div>
-                  <div class="option maybe">Может буду</div>
+                  <div class="option forsure">Точно буду</div>
+                  <div class="option maybe active">Может буду</div>
+                </div>
+                <div class="controls">
+                  <div class="control delete"><i class="fas fa-trash-alt"></i></div>
                 </div>
               </li>
-              <li>
+              <li class="player-edit-card">
                 <input type="text" placeholder="Имя друга">
                 <div class="placeholder">Имя друга</div>
                 <div class="participation-options">
-                  <div class="option forsure ">Точно буду</div>
+                  <div class="option forsure">Точно буду</div>
                   <div class="option maybe">Может буду</div>
+                </div>
+                <div class="controls">
+                  <div class="control delete"><i class="fas fa-trash-alt"></i></div>
                 </div>
               </li>
             </ul>

@@ -29,6 +29,7 @@ body {
   .h3-header {
     margin: 0px 0px 10px 4px;
     font-weight: normal;
+    font-size: 28px;
   }
   .h3-header.forsure {
     color: #155724;
@@ -54,7 +55,7 @@ body {
     border-radius: 10px;
     text-align: center;
     /* overflow: hidden; */
-    padding: 5px 20px 1px;
+    padding: 5px 10px 1px;
     position: relative;
   }
   .header {
@@ -70,6 +71,7 @@ body {
   }
       .participant {
         display: grid;
+        position: relative;
         grid-template-columns: 2fr 6fr 7fr 4fr;
         grid-gap: 30px;
         margin-bottom: 10px;
@@ -178,28 +180,30 @@ body {
 
 
 
-  .participant .controls {
+  .controls {
+    font-size: 16px;
     display: block;
     height: auto;
     padding: 3px;
     width: 50px;
     /* background-color: green; */
     position: absolute;
-    left: 100%;
+    left: calc(100% + 4px);
+    top: calc(50% - 12px);
   }
-  .participant .controls .control {
+  .controls .control {
     display: inline-block;
     opacity: 0;
     cursor: pointer;
   }
-  .participant .controls .control.edit{
+  .controls .control.edit{
     color: grey;
   }
-  .participant .controls .control.delete{
+  .controls .control.delete{
     color: #dc3545;
   }
 
-  .participant .controls:hover .control{
+  .controls:hover .control{
     opacity: 1;
   }
 
@@ -221,7 +225,7 @@ body {
 
 
   .self-editing {
-    margin-bottom: 20px;
+    margin-bottom: 4px;
   }
 
   .edit-card {
@@ -237,7 +241,7 @@ body {
     font-size: 0;
   }
 
-  .edit-card > ul > li{
+  .edit-card > ul > li.player-edit-card{
     position: relative;
     border-radius: 4px;
     vertical-align: baseline;
