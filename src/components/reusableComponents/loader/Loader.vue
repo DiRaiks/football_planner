@@ -13,14 +13,17 @@ export default class Loader extends Vue {}
 
 <style scoped lang="scss">
     .loaderWr {
-        position: absolute;
         width: 100%;
         height: 100%;
         background: white;
-        z-index: 1;
         display: flex;
         align-items: center;
         justify-content: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 1000;
+        outline: none;
     }
     .lds-dual-ring {
         display: inline-block;

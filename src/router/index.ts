@@ -1,11 +1,14 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import beforeEach from './beforeEach';
+
 import EventPage from '@/components/routeComponents/eventPage/EventPage.vue';
 import AllEvents from '@/components/routeComponents/allEvents/AllEvents.vue';
 
+
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
@@ -15,7 +18,7 @@ export default new Router({
       component: AllEvents,
     },
     {
-      path: '/event',
+      path: '/event/:eventId',
       name: 'eventPage',
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
@@ -24,3 +27,7 @@ export default new Router({
     },
   ],
 });
+
+router.beforeEach(beforeEach);
+
+export default router;

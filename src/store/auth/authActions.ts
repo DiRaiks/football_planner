@@ -6,7 +6,7 @@ import { AuthState, RootState, AuthObj } from '../types';
 
 export const actions: ActionTree<AuthState, RootState> = {
     async loginUser({ commit, dispatch }, { login, password }: AuthObj) {
-        commit('setIsLoading', true);
+        dispatch('loader/setIsLoading', true, { root: true });
 
         try {
             const { user: { token } } = await loginRequest(login, password);
@@ -15,14 +15,15 @@ export const actions: ActionTree<AuthState, RootState> = {
 
             commit('setIsAuth', true);
             localStorage.setItem('token', token);
-            commit('setIsLoading', false);
+
+            dispatch('loader/setIsLoading', false, { root: true });
         } catch (error) {
             commit('setError');
-            commit('setIsLoading', false);
+            dispatch('loader/setIsLoading', false, { root: true });
         }
     },
     async getCurrentUser({ commit, dispatch }) {
-        commit('setIsLoading', true);
+        dispatch('loader/setIsLoading', true, { root: true });
 
         try {
             const { user: { token } } = await getCurrentUserRequest();
@@ -31,14 +32,16 @@ export const actions: ActionTree<AuthState, RootState> = {
 
             commit('setIsAuth', true);
             localStorage.setItem('token', token);
-            commit('setIsLoading', false);
+
+            dispatch('loader/setIsLoading', false, { root: true });
         } catch (error) {
             commit('setError');
-            commit('setIsLoading', false);
+
+            dispatch('loader/setIsLoading', false, { root: true });
         }
     },
     async registrationUser({ commit, dispatch }, { login, password }: AuthObj) {
-        commit('setIsLoading', true);
+        dispatch('loader/setIsLoading', true, { root: true });
 
         try {
             const { user: { token } } = await registrationRequest(login, password);
@@ -47,10 +50,12 @@ export const actions: ActionTree<AuthState, RootState> = {
 
             commit('setIsAuth', true);
             localStorage.setItem('token', token);
-            commit('setIsLoading', false);
+
+            dispatch('loader/setIsLoading', false, { root: true });
         } catch (error) {
             commit('setError');
-            commit('setIsLoading', false);
+
+            dispatch('loader/setIsLoading', false, { root: true });
         }
     },
 };

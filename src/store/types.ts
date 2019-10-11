@@ -38,10 +38,15 @@ export interface EventItem {
 
 export interface AuthState {
     isAuth: boolean;
-    isLoading: boolean;
 }
 
 export interface AuthObj {
     login: string;
     password: string;
+}
+
+// LOADER
+
+export interface LoaderState {
+    isLoading: boolean;
 }

@@ -12,14 +12,20 @@ import { EventsState, RootState, EventItem } from '../types';
 
 export const actions: ActionTree<EventsState, RootState> = {
     async setCurrentEvent({ commit, getters, dispatch }, eventId: string) {
+        dispatch('loader/setIsLoading', true, { root: true });
+
         const events = getters.getEvents;
         try {
             const currentEvent = events.find((event: EventItem) => event._id === eventId);
             commit('setCurrentEvent', currentEvent);
 
             await dispatch('players/getPlayersByEvent', currentEvent._id, { root: true });
+
+            dispatch('loader/setIsLoading', false, { root: true });
         } catch (error) {
             commit('setError');
+
+            dispatch('loader/setIsLoading', false, { root: true });
         }
     },
     async saveNewEvent({ commit, rootGetters }, { time, place, date, minimum, eventName }) {

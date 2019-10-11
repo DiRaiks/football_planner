@@ -4,6 +4,7 @@ import createLogger from 'vuex/dist/logger';
 
 import { RootState } from './types';
 
+import { loader } from './loader';
 import { players } from './players';
 import { events } from './events';
 import { auth } from './auth';
@@ -22,6 +23,7 @@ if (debug) {
 }
 
 const storeModules = {
+  loader,
   auth,
   events,
   players,

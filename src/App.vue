@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <Loader v-if="isLoading"/>
-        <template v-else>
+        <template>
             <template v-if="isAuth">
                 <Top/>
                 <router-view/>
@@ -22,7 +22,6 @@ import Auth from '@/components/routeComponents/auth/Auth.vue';
 import EventPage from '@/components/routeComponents/eventPage/EventPage.vue';
 import Loader from '@/components/reusableComponents/loader/Loader.vue';
 
-const namespace: string = 'auth';
 
 @Component({
     components: {
@@ -33,11 +32,13 @@ const namespace: string = 'auth';
     },
 })
 export default class App extends Vue {
-    @Action('getCurrentUser', {namespace})
+    @Action('setCurrentEvent', { namespace: 'events' })
+    private setCurrentEvent!: any;
+    @Action('getCurrentUser', { namespace: 'auth' })
     private getCurrentUser!: any;
-    @Getter('getIsAuth', {namespace})
+    @Getter('getIsAuth', { namespace: 'auth' })
     private isAuth!: void;
-    @Getter('getIsLoading', {namespace})
+    @Getter('getIsLoading', { namespace: 'loader' })
     private isLoading!: void;
 
     private async mounted() {

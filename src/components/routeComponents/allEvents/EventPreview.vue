@@ -28,8 +28,6 @@ import { EventItem } from '@/store/types';
 export default class EventsPreview extends Vue {
     @Prop() private event!: EventItem;
 
-    @Action('setCurrentEvent', { namespace: 'events' })
-    private setCurrentEvent!: any;
     @Action('deleteEvent', {namespace: 'events'})
     private deleteEvent!: any;
 
@@ -41,8 +39,7 @@ export default class EventsPreview extends Vue {
     }
 
     protected async selectEvent(): Promise<void> {
-        await this.setCurrentEvent(this.event._id);
-        router.push('/event');
+        router.push(`/event/${ this.event._id }`);
     }
     protected deleteCurrentEvent(event: any): void {
         event.stopPropagation();

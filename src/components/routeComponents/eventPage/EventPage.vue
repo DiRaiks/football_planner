@@ -64,6 +64,8 @@ export default class EventPage extends Vue {
     protected minimum: number = 0;
     protected status: boolean = true;
 
+    @Action('setCurrentEvent', { namespace: 'events' })
+    private setCurrentEvent!: any;
     @Action('setNewPlayer', {namespace: 'players'})
     private setNewPlayer!: any;
     @Action('getEvents', {namespace: 'events'})
@@ -102,10 +104,13 @@ export default class EventPage extends Vue {
     }
 
     private async mounted() {
+        const { eventId } = this.$route.params;
+
+        if (eventId) await this.setCurrentEvent(eventId);
+        else router.push('/');
+
         if (this.currentEvent) {
             this.minimum = this.currentEvent.minimum;
-        } else {
-            router.push('/');
         }
     }
 }
