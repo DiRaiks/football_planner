@@ -38,11 +38,20 @@ export interface EventItem {
 
 export interface AuthState {
     isAuth: boolean;
+    user: UserObj | null;
 }
 
 export interface AuthObj {
-    login: string;
+    email: string;
     password: string;
+    name: string;
+}
+
+export interface UserObj {
+    _id: string;
+    token: string;
+    email: string;
+    name?: string;
 }
 
 // LOADER

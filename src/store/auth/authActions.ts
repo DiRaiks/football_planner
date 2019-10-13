@@ -5,14 +5,16 @@ import { loginRequest, getCurrentUserRequest, registrationRequest } from './auth
 import { AuthState, RootState, AuthObj } from '../types';
 
 export const actions: ActionTree<AuthState, RootState> = {
-    async loginUser({ commit, dispatch }, { login, password }: AuthObj) {
+    async loginUser({ commit, dispatch }, { email, password }: AuthObj) {
         dispatch('loader/setIsLoading', true, { root: true });
 
         try {
-            const { user: { token } } = await loginRequest(login, password);
+            const { user }  = await loginRequest(email, password);
+            const { token } = user;
 
             await dispatch('events/getEvents', null, { root: true });
 
+            commit('setCurrentUser', user);
             commit('setIsAuth', true);
             localStorage.setItem('token', token);
 
@@ -26,10 +28,12 @@ export const actions: ActionTree<AuthState, RootState> = {
         dispatch('loader/setIsLoading', true, { root: true });
 
         try {
-            const { user: { token } } = await getCurrentUserRequest();
+            const { user } = await getCurrentUserRequest();
+            const { token } = user;
 
             await dispatch('events/getEvents', null, { root: true });
 
+            commit('setCurrentUser', user);
             commit('setIsAuth', true);
             localStorage.setItem('token', token);
 
@@ -40,14 +44,16 @@ export const actions: ActionTree<AuthState, RootState> = {
             dispatch('loader/setIsLoading', false, { root: true });
         }
     },
-    async registrationUser({ commit, dispatch }, { login, password }: AuthObj) {
+    async registrationUser({ commit, dispatch }, { email, password, name }: AuthObj) {
         dispatch('loader/setIsLoading', true, { root: true });
 
         try {
-            const { user: { token } } = await registrationRequest(login, password);
+            const { user } = await registrationRequest(email, password, name);
+            const { token } = user;
 
             await dispatch('events/getEvents', null, { root: true });
 
+            commit('setCurrentUser', user);
             commit('setIsAuth', true);
             localStorage.setItem('token', token);
 

@@ -27,19 +27,7 @@
             <div class="rightColumn">
                 <div class="newEventWr">
                     <h3>Новое событие</h3>
-                    <div class="createEventBlock">
-                        <div><StyleInput type="text" label="Название встречи" v-model="eventName"/></div>
-                        <div><StyleInput type="text" label="Адрес встречи" v-model="place"/></div>
-                        <div class="dateTime">
-                            <div class="date"><StyleInput type="date" label="Дата" v-model="date"/></div>
-                            <div class="time"><StyleInput type="time" label="Время" v-model="time"/></div>
-                        </div>
-                        <div><StyleInput type="number" nim="10" max="22" label="Количество игроков" v-model="minimum"/></div>
-                    </div>
-                    <div class="buttonWr">
-                        <Button class="addEventButton" text="Добавить событие"
-                                @onClick="setNewEvent"/>
-                    </div>
+                    <EventForm/>
                 </div>
             </div>
         </div>
@@ -48,56 +36,25 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import { Action, Getter } from 'vuex-class';
+import { Getter } from 'vuex-class';
 
-import Button from '@/components/reusableComponents/button/Button.vue';
-import Input from '@/components/reusableComponents/input/Input.vue';
 import EventPreview from '@/components/routeComponents/allEvents/EventPreview.vue';
-import StyleInput from '@/components/reusableComponents/styleInput/StyleInput.vue';
+import EventForm from '@/components/reusableComponents/eventForm/EventForm.vue';
 
 import { EventItem } from '@/store/types';
 
 @Component({
     components: {
-        Button,
-        Input,
         EventPreview,
-        StyleInput,
+        EventForm,
     },
 })
 
 export default class AllEvents extends Vue {
-    protected eventName: string = '';
-    protected place: string = '';
-    protected time: string = '';
-    protected date: string = '';
-    protected minimum: string = '';
-
-    @Action('saveNewEvent', {namespace: 'events'})
-    private saveNewEvent!: any;
     @Getter('getActiveEvents', {namespace: 'events'})
     private activeEvents!: EventItem[];
     @Getter('getOldEvents', {namespace: 'events'})
     private oldEvents!: EventItem[];
-
-    protected setNewEvent(): void {
-        if (!this.time || !this.place || !this.date || !this.eventName || !this.minimum) {
-            return;
-        }
-        this.saveNewEvent({
-            time: this.time,
-            place: this.place,
-            date: this.date,
-            minimum: +this.minimum,
-            eventName: this.eventName,
-        });
-
-        this.place = '';
-        this.time = '';
-        this.date = '';
-        this.eventName = '';
-        this.minimum = '';
-    }
 }
 </script>
 
@@ -128,40 +85,6 @@ export default class AllEvents extends Vue {
 
             .rightColumn {
                 text-align: left;
-
-                .createEventBlock {
-                    width: 370px;
-                    border-radius: 10px;
-                    padding: 10px;
-                    background-color: #eeeeee;
-
-                    div {
-                        margin-top: 10px;
-
-                        &:nth-of-type(1) {
-                            margin: 0;
-                        }
-                    }
-
-                    .dateTime {
-                        display: flex;
-
-                        .date {
-                            flex: 3;
-                        }
-
-                        .time {
-                            margin: 0 0 0 10px;
-                            flex: 1;
-                        }
-                    }
-                }
-
-                .buttonWr {
-                    margin-top: 20px;
-                    display: flex;
-                    justify-content: flex-end;
-                }
             }
         }
 

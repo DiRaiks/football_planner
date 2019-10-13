@@ -7,7 +7,8 @@
                 <a @click="clickRegistrationLink" :class="regLinkClass" href="#">Регистрация</a>
             </div>
             <div class="inputWr">
-                <Input placeholder="Login" type="text" label="Login" v-model="login"/>
+                <Input placeholder="Email" type="text" label="Email" v-model="email"/>
+                <Input v-if="!isLogin" placeholder="Name" type="text" label="Name" v-model="name"/>
                 <Input placeholder="Password" type="password" label="Password" v-model="password"/>
                 <Button v-if="isLogin" class="authButton loginButton" text="Log In" viewType="positive"
                         @onClick="loginHandler"/>
@@ -34,13 +35,14 @@ const namespace: string = 'auth';
     },
 })
 export default class Auth extends Vue {
-    private login: string = '';
+    private email: string = '';
+    private name: string = '';
     private password: string = '';
     private isLogin: boolean = true;
 
-    @Action('loginUser', {namespace})
+    @Action('loginUser', { namespace })
     private loginUser!: any;
-    @Action('registrationUser', {namespace})
+    @Action('registrationUser', { namespace })
     private registrationUser!: any;
 
     get loginLinkClass(): object {
@@ -57,13 +59,15 @@ export default class Auth extends Vue {
     }
 
     protected loginHandler(): void {
-        const {login, password} = this;
-        this.loginUser({login, password});
+        const { email, password } = this;
+        if (!email || !password) return;
+        this.loginUser({ email, password });
     }
 
     protected registrationHandler(): void {
-        const {login, password} = this;
-        this.registrationUser({login, password});
+        const { email, password, name } = this;
+        if (!email || !password || !name) return;
+        this.registrationUser({ email, password, name });
     }
 
     protected clickLoginLink(event: any): void {

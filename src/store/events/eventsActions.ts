@@ -30,10 +30,11 @@ export const actions: ActionTree<EventsState, RootState> = {
     },
     async saveNewEvent({ commit, rootGetters }, { time, place, date, minimum, eventName }) {
         const playersAmount = rootGetters['events/getPlayersDataCount'];
+        const user = rootGetters['auth/getCurrentUser'];
 
         try {
             const event: EventItem = { time, place, date, minimum, eventName, playersAmount };
-            const savedEvents = await saveEvent(event);
+            const savedEvents = await saveEvent(event, user._id);
 
             commit('setEvents', savedEvents);
         } catch (error) {

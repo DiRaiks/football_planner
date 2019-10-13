@@ -1,0 +1,103 @@
+<template>
+    <div class="eventWr">
+        <div class="createEventBlock">
+            <div><StyleInput type="text" label="Название встречи" v-model="eventName"/></div>
+            <div><StyleInput type="text" label="Адрес встречи" v-model="place"/></div>
+            <div class="dateTime">
+                <div class="date"><StyleInput type="date" label="Дата" v-model="date"/></div>
+                <div class="time"><StyleInput type="time" label="Время" v-model="time"/></div>
+            </div>
+            <div><StyleInput type="number" nim="10" max="22" label="Количество игроков" v-model="minimum"/></div>
+        </div>
+        <div class="buttonWr">
+            <Button class="addEventButton" :text="buttonText"
+                    @onClick="setNewEvent"/>
+        </div>
+    </div>
+</template>
+
+<script lang="ts">
+import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Action } from 'vuex-class';
+
+import StyleInput from '@/components/reusableComponents/styleInput/StyleInput.vue';
+import Button from '@/components/reusableComponents/button/Button.vue';
+
+@Component({
+    components: {
+        Button,
+        StyleInput,
+    },
+})
+export default class EventForm extends Vue {
+    protected eventName: string = '';
+    protected place: string = '';
+    protected time: string = '';
+    protected date: string = '';
+    protected minimum: string = '';
+
+    @Prop({ default: false }) private isEdit!: boolean;
+
+    @Action('saveNewEvent', {namespace: 'events'})
+    private saveNewEvent!: any;
+
+    get buttonText(): string {
+        return this.isEdit ? 'Редактировать событие' : 'Добавить событие';
+    }
+
+    protected setNewEvent(): void {
+        if (!this.time || !this.place || !this.date || !this.eventName || !this.minimum) {
+            return;
+        }
+        this.saveNewEvent({
+            time: this.time,
+            place: this.place,
+            date: this.date,
+            minimum: +this.minimum,
+            eventName: this.eventName,
+        });
+
+        this.place = '';
+        this.time = '';
+        this.date = '';
+        this.eventName = '';
+        this.minimum = '';
+    }
+}
+</script>
+
+<style scoped lang="scss">
+    .createEventBlock {
+        width: 370px;
+        border-radius: 10px;
+        padding: 10px;
+        background-color: #eeeeee;
+
+        div {
+            margin-top: 10px;
+
+            &:nth-of-type(1) {
+                margin: 0;
+            }
+        }
+
+        .dateTime {
+            display: flex;
+
+            .date {
+                flex: 3;
+            }
+
+            .time {
+                margin: 0 0 0 10px;
+                flex: 1;
+            }
+        }
+    }
+
+    .buttonWr {
+        margin-top: 20px;
+        display: flex;
+        justify-content: flex-end;
+    }
+</style>
