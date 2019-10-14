@@ -3,7 +3,14 @@ import { GetterTree } from 'vuex';
 import { EventsState, RootState, EventItem } from '../types';
 
 export const getters: GetterTree<EventsState, RootState> = {
-    getCurrentEvent: (state): EventItem | null => state.currentEvent,
+    getCurrentEvent: (state): EventItem | null => {
+        const currentId = state.currentEventId;
+        const events = state.events;
+
+        if (!currentId || !events) return null;
+
+        return events.find((event: EventItem) => event._id === currentId) || null;
+    },
     getEvents: (state): EventItem[] | null => state.events,
     getActiveEvents: (state): EventItem[] | null => {
         if (!state.events) return [];

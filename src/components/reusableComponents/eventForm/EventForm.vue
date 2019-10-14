@@ -11,17 +11,19 @@
         </div>
         <div class="buttonWr">
             <Button class="addEventButton" :text="buttonText"
-                    @onClick="setNewEvent"/>
+                    @onClick="buttonHandler"/>
         </div>
     </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import { Action } from 'vuex-class';
+import { Action, Getter } from 'vuex-class';
 
 import StyleInput from '@/components/reusableComponents/styleInput/StyleInput.vue';
 import Button from '@/components/reusableComponents/button/Button.vue';
+
+import { EventItem } from '@/store/types';
 
 @Component({
     components: {
@@ -34,34 +36,62 @@ export default class EventForm extends Vue {
     protected place: string = '';
     protected time: string = '';
     protected date: string = '';
-    protected minimum: string = '';
+    protected minimum: string | number = '';
 
     @Prop({ default: false }) private isEdit!: boolean;
+    @Prop() private callback!: any;
 
     @Action('saveNewEvent', {namespace: 'events'})
     private saveNewEvent!: any;
+    @Action('changeEvent', {namespace: 'events'})
+    private changeEvent!: any;
+    @Getter('getCurrentEvent', { namespace: 'events' })
+    private currentEvent!: EventItem;
 
     get buttonText(): string {
         return this.isEdit ? 'Редактировать событие' : 'Добавить событие';
     }
 
-    protected setNewEvent(): void {
+    protected async buttonHandler(): Promise<void> {
         if (!this.time || !this.place || !this.date || !this.eventName || !this.minimum) {
             return;
         }
-        this.saveNewEvent({
-            time: this.time,
-            place: this.place,
-            date: this.date,
-            minimum: +this.minimum,
-            eventName: this.eventName,
-        });
+        if (this.isEdit) {
+            await this.changeEvent({
+                ...this.currentEvent,
+                time: this.time,
+                place: this.place,
+                date: this.date,
+                minimum: +this.minimum,
+                eventName: this.eventName,
+            });
+        } else {
+            await this.saveNewEvent({
+                time: this.time,
+                place: this.place,
+                date: this.date,
+                minimum: +this.minimum,
+                eventName: this.eventName,
+            });
+        }
+
+        if (this.callback) this.callback();
 
         this.place = '';
         this.time = '';
         this.date = '';
         this.eventName = '';
         this.minimum = '';
+    }
+
+    private mounted() {
+        if (this.isEdit) {
+            this.eventName = this.currentEvent.eventName;
+            this.place = this.currentEvent.place;
+            this.time = this.currentEvent.time;
+            this.date = this.currentEvent.date;
+            this.minimum = this.currentEvent.minimum;
+        }
     }
 }
 </script>

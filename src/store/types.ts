@@ -20,7 +20,7 @@ export interface PlayerItem {
 // EVENTS
 
 export interface EventsState {
-    currentEvent: EventItem | null;
+    currentEventId: string | null;
     events: EventItem[] | null;
 }
 
@@ -32,6 +32,7 @@ export interface EventItem {
     minimum: number;
     playersAmount: number;
     eventName: string;
+    creatorId?: string;
 }
 
 // AUTH

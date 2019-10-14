@@ -40,6 +40,7 @@ export const actions: ActionTree<AuthState, RootState> = {
             dispatch('loader/setIsLoading', false, { root: true });
         } catch (error) {
             commit('setError');
+            localStorage.removeItem('token');
 
             dispatch('loader/setIsLoading', false, { root: true });
         }

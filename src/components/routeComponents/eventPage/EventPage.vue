@@ -18,6 +18,9 @@
                 <Table/>
             </div>
             <div class="rightColumn">
+                <h3>{{ rightBlockHeader }}</h3>
+                <Button v-if="isEventCreator && !isEditEvent" text="Редактировать событие" @onClick="openEditEvent"/>
+                <EventForm v-if="isEditEvent" :isEdit="true" :callback="closeEditEvent"/>
                 <div class="addPeopleBlock">
                     <Button text="Добавить друга" @onClick="addFriend"/>
                     <Button class="savePeople" text="Сохранить" viewType="positive" @onClick="savePeople"/>
@@ -47,14 +50,16 @@ import router from '@/router';
 import Button from '@/components/reusableComponents/button/Button.vue';
 import Input from '@/components/reusableComponents/input/Input.vue';
 import Table from '@/components/reusableComponents/table/Table.vue';
+import EventForm from '@/components/reusableComponents/eventForm/EventForm.vue';
 
-import { EventItem } from '@/store/types';
+import { EventItem, UserObj } from '@/store/types';
 
 @Component({
     components: {
         Button,
         Input,
         Table,
+        EventForm,
     },
 })
 
@@ -63,17 +68,27 @@ export default class EventPage extends Vue {
     protected friends: string[] = [''];
     protected minimum: number = 0;
     protected status: boolean = true;
+    protected isEditEvent: boolean = false;
 
-    @Action('setCurrentEvent', { namespace: 'events' })
-    private setCurrentEvent!: any;
-    @Action('setNewPlayer', {namespace: 'players'})
+    @Action('setCurrentEventId', { namespace: 'events' })
+    private setCurrentEventId!: any;
+    @Action('setNewPlayer', { namespace: 'players' })
     private setNewPlayer!: any;
-    @Action('getEvents', {namespace: 'events'})
+    @Action('getEvents', { namespace: 'events' })
     private getEvent!: any;
-    @Action('setEventMinimum', {namespace: 'events'})
+    @Action('setEventMinimum', { namespace: 'events' })
     private setEventMinimum!: any;
-    @Getter('getCurrentEvent', {namespace: 'events'})
+    @Getter('getCurrentEvent', { namespace: 'events' })
     private currentEvent!: EventItem;
+    @Getter('getCurrentUser', { namespace: 'auth' })
+    private currentUser!: UserObj;
+
+    get isEventCreator(): boolean {
+        return this.currentEvent.creatorId === this.currentUser._id;
+    }
+    get rightBlockHeader(): string {
+        return this.isEventCreator ? 'Вы организатор события' : '';
+    }
 
     protected addFriend(): void {
         if (this.friends.length > 4) {
@@ -81,7 +96,6 @@ export default class EventPage extends Vue {
         }
         this.friends.push('');
     }
-
     protected savePeople(): void {
         if (this.peopleName) {
             const filteredFriends = this.friends.filter((friend: string) => {
@@ -95,18 +109,23 @@ export default class EventPage extends Vue {
             this.friends = [''];
         }
     }
-
     protected saveMinimum(): void {
         this.setEventMinimum(this.minimum);
     }
     protected gotToHome(): void {
         router.push('/');
     }
+    protected openEditEvent(): void {
+        this.isEditEvent = true;
+    }
+    protected closeEditEvent(): void {
+        this.isEditEvent = false;
+    }
 
     private async mounted() {
         const { eventId } = this.$route.params;
 
-        if (eventId) await this.setCurrentEvent(eventId);
+        if (eventId) await this.setCurrentEventId(eventId);
         else router.push('/');
 
         if (this.currentEvent) {
@@ -158,10 +177,18 @@ export default class EventPage extends Vue {
         align-items: center;
     }
 
-    .addPeopleBlock {
-        display: flex;
-        justify-content: space-around;
-        padding: 15px 20px;
+    .rightColumn {
+
+        h3 {
+            text-align: left;
+            color: #218012;
+        }
+
+        .addPeopleBlock {
+            display: flex;
+            justify-content: space-around;
+            padding: 15px 20px;
+        }
     }
 
     @media (max-width: 1250px) {

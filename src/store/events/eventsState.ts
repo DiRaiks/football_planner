@@ -1,6 +1,6 @@
 import { EventsState } from '../types';
 
 export const state: EventsState = {
-    currentEvent: null,
+    currentEventId: null,
     events: null,
 };
