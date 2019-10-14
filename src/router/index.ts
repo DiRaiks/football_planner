@@ -21,6 +21,11 @@ const router = new Router({
             name: 'eventPage',
             component: () => import('@/components/routeComponents/eventPage/EventPage.vue'),
         },
+        {
+            path: '*',
+            name: 'allEvents',
+            component: AllEvents,
+        },
     ],
 });
 

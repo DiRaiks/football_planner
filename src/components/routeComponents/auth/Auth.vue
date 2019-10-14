@@ -7,13 +7,27 @@
                 <a @click="clickRegistrationLink" :class="regLinkClass" href="#">Регистрация</a>
             </div>
             <div class="inputWr">
-                <Input placeholder="Email" type="text" label="Email" v-model="email"/>
-                <Input v-if="!isLogin" placeholder="Name" type="text" label="Name" v-model="name"/>
-                <Input placeholder="Password" type="password" label="Password" v-model="password"/>
-                <Button v-if="isLogin" class="authButton loginButton" text="Log In" viewType="positive"
-                        @onClick="loginHandler"/>
-                <Button v-else class="authButton regButton" text="Registration" viewType="positive"
-                        @onClick="registrationHandler"/>
+                <form
+                    v-if="isLogin"
+                    action=""
+                    method="post"
+                    @submit.prevent="loginHandler"
+                >
+                    <Input ref="userEmail" placeholder="Email" type="email" label="Email" v-model="email"/>
+                    <Input placeholder="Password" type="password" label="Password" v-model="password"/>
+                    <Button :disabled="isDisabled" type="submit" class="authButton loginButton" text="Log In" viewType="positive"/>
+                </form>
+                <form
+                    v-else
+                    action=""
+                    method="post"
+                    @submit.prevent="registrationHandler"
+                >
+                    <Input placeholder="Email" type="text" label="Email" v-model="email"/>
+                    <Input placeholder="Name" type="text" label="Name" v-model="name"/>
+                    <Input placeholder="Password" type="password" label="Password" v-model="password"/>
+                    <Button type="submit" class="authButton regButton" text="Registration" viewType="positive"/>
+                </form>
             </div>
         </div>
     </div>
@@ -58,15 +72,31 @@ export default class Auth extends Vue {
         };
     }
 
+    get isDisabled(): boolean {
+        return this.isEmailInvalid || this.isPasswordInvalid;
+    }
+
+    get isEmailInvalid(): boolean {
+        const email = this.$refs.userEmail as Vue;
+        const isEmailInvalid = !!email && !(email.$el.children[1] as HTMLInputElement).validity.valid;
+
+        return this.email.trim().length === 0 || isEmailInvalid;
+    }
+
+    get isPasswordInvalid(): boolean {
+        const passwordLength = this.password.trim().length;
+        return passwordLength === 0 || passwordLength < 6;
+    }
+
     protected loginHandler(): void {
         const { email, password } = this;
-        if (!email || !password) return;
+        if (this.isDisabled) return;
         this.loginUser({ email, password });
     }
 
     protected registrationHandler(): void {
         const { email, password, name } = this;
-        if (!email || !password || !name) return;
+        if (this.isDisabled || !name) return;
         this.registrationUser({ email, password, name });
     }
 
