@@ -10,13 +10,12 @@ import { Getter } from 'vuex-class';
 
 import { EventItem } from '@/store/types';
 
-const namespace: string = 'table';
 
 @Component
 export default class Top extends Vue {
-    @Getter('getCurrentEvent', { namespace })
+    @Getter('getCurrentEvent', { namespace: 'events' })
     private currentEvent!: EventItem;
-    @Getter('getPeopleDataCount', { namespace })
+    @Getter('getPeopleDataCount', { namespace: 'players' })
     private peopleDataCount!: number;
 
     get currentColor(): string {

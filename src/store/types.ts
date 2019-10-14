@@ -15,6 +15,7 @@ export interface PlayerItem {
     date: string;
     status: boolean;
     eventId: string;
+    userId: string;
 }
 
 // EVENTS

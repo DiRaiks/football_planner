@@ -15,9 +15,15 @@ export const actions: ActionTree<PlayersState, RootState> = {
         const currentEvent = rootGetters['events/getCurrentEvent'];
         const currentEventId = currentEvent._id;
         const currentEventDate = currentEvent.date;
+        const currentUser = rootGetters['auth/getCurrentUser'];
 
         try {
-            const savedPlayers = await savePlayer({ ...newPeople, eventId: currentEventId, date: currentEventDate });
+            const savedPlayers = await savePlayer({
+                ...newPeople,
+                eventId: currentEventId,
+                date: currentEventDate,
+                userId: currentUser._id,
+            });
             commit('setPlayersData', savedPlayers);
 
             await dispatch('changeEventPlayersCount');

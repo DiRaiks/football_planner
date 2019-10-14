@@ -52,7 +52,7 @@ import Input from '@/components/reusableComponents/input/Input.vue';
 import Table from '@/components/reusableComponents/table/Table.vue';
 import EventForm from '@/components/reusableComponents/eventForm/EventForm.vue';
 
-import { EventItem, UserObj } from '@/store/types';
+import { EventItem, UserObj, PlayerItem } from '@/store/types';
 
 @Component({
     components: {
@@ -82,12 +82,19 @@ export default class EventPage extends Vue {
     private currentEvent!: EventItem;
     @Getter('getCurrentUser', { namespace: 'auth' })
     private currentUser!: UserObj;
+    @Getter('getAlreadySignedUp', { namespace: 'players' })
+    private alreadySignedUp!: PlayerItem;
 
     get isEventCreator(): boolean {
         return this.currentEvent.creatorId === this.currentUser._id;
     }
+
     get rightBlockHeader(): string {
-        return this.isEventCreator ? 'Вы организатор события' : '';
+        return this.isEventCreator ? 'Вы организатор события' : this.playerHeader;
+    }
+
+    get playerHeader(): string {
+        return this.alreadySignedUp ? 'Вы уже записались' : 'Вы пока не записаны';
     }
 
     protected addFriend(): void {
@@ -96,6 +103,7 @@ export default class EventPage extends Vue {
         }
         this.friends.push('');
     }
+
     protected savePeople(): void {
         if (this.peopleName) {
             const filteredFriends = this.friends.filter((friend: string) => {
@@ -109,15 +117,19 @@ export default class EventPage extends Vue {
             this.friends = [''];
         }
     }
+
     protected saveMinimum(): void {
         this.setEventMinimum(this.minimum);
     }
+
     protected gotToHome(): void {
         router.push('/');
     }
+
     protected openEditEvent(): void {
         this.isEditEvent = true;
     }
+
     protected closeEditEvent(): void {
         this.isEditEvent = false;
     }
