@@ -92,20 +92,20 @@ export default class PlayerForm extends Vue {
         this.friends = [{ name: '' , status: true }];
     }
 
-    // @Watch('friends', { deep: true })
-    // private changeInput(val: FriendItem[]) {
-    //     const lastItemIndex = val.length - 1;
-    //     if (val[lastItemIndex].name) {
-    //         if (val.length < 4) val.push({ name: '', status: true });
-    //     }
-    //     if (val[lastItemIndex - 1] && !val[lastItemIndex - 1].name) val.pop();
-    // }
+    @Watch('friends', { deep: true })
+    private changeInput(val: FriendItem[]) {
+        const lastItemIndex = val.length - 1;
+        if (val[lastItemIndex].name) {
+            if (val.length < 4) val.push({ name: '', status: true });
+        }
+        if (val[lastItemIndex - 1] && !val[lastItemIndex - 1].name) val.pop();
+    }
 
     private mounted() {
         if (this.isEdit) {
             this.playerName = this.alreadySignedUp.name;
             this.status = this.alreadySignedUp.status;
-            this.friends = this.alreadySignedUp.friends;
+            if (this.alreadySignedUp.friends.length) this.friends = this.alreadySignedUp.friends;
         }
     }
 }
