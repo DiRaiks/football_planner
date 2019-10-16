@@ -87,7 +87,6 @@ export default class Table extends Vue {
             background-color: #aaa1;
             border-radius: 10px;
             text-align: center;
-            overflow: hidden;
             border-spacing: 20px 10px;
 
             thead {

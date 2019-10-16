@@ -1,4 +1,4 @@
-import { PlayerItem } from '@/store/types';
+import { PlayerItem, FriendItem } from '@/store/types';
 
 export const countAllPLayers = (playersData: PlayerItem[]) => {
     let allPlayersArray: object[] = [];
@@ -6,8 +6,8 @@ export const countAllPLayers = (playersData: PlayerItem[]) => {
     for (const value of playersData) {
         allPlayersArray.push(value);
         if (value.friends.length) {
-            const friendsArray: object[] = value.friends.map((friend: string) => {
-                return { name: friend, status: value.status };
+            const friendsArray: object[] = value.friends.filter((friend: FriendItem) => {
+                return friend.name;
             });
             allPlayersArray = allPlayersArray.concat(friendsArray);
         }

@@ -9,6 +9,7 @@ import {
 } from './playersApi';
 
 import { PlayersState, RootState, PlayerItem } from '../types';
+import { changeEvent } from '@/store/events/eventsApi';
 
 export const actions: ActionTree<PlayersState, RootState> = {
     async setNewPlayer({ commit, getters, rootGetters, dispatch }, newPeople: PlayerItem) {
@@ -39,6 +40,15 @@ export const actions: ActionTree<PlayersState, RootState> = {
             commit('setPlayersData', newPlayersData);
 
             await dispatch('changeEventPlayersCount');
+        } catch (error) {
+            commit('setError');
+        }
+    },
+    async changePlayer({ commit }, newPlayer: PlayerItem) {
+        try {
+            const changedPlayer = () => { return; };
+
+            commit('changePlayer', changedPlayer);
         } catch (error) {
             commit('setError');
         }

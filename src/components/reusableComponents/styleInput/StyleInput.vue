@@ -8,7 +8,8 @@
             :max="max"
             :value="value"
             @input="handleInput"
-            @change="handleInput">
+            @change="handleInput"
+        >
         <span class="label">{{ label }}</span>
     </label>
 </template>
@@ -19,15 +20,16 @@
     @Component
     export default class StyleInput extends Vue {
         @Prop({ default: '' }) private value!: string | number | boolean;
-        @Prop() private label!: string;
+        @Prop({ default: '' }) private label!: string;
         @Prop() private type!: string;
         @Prop() private input!: () => void;
         @Prop() private filter!: (value: string) => void;
         @Prop({ default: -99999 }) private min!: number;
         @Prop({ default: 99999 }) private max!: number;
+        @Prop({ default: '' }) private id!: string;
 
         get currentId(): string {
-            return this.label + this.type;
+            return `${ this.label }_${ this.type }_${ this.id }`;
         }
 
         protected handleInput(event: any): void {
@@ -52,7 +54,7 @@
 
     .label {
         position: absolute;
-        top: 0;
+        top: -2px;
         left:5px;
         font-size: 16px;
         color: #9098A9;

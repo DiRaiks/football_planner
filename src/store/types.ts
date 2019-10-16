@@ -10,12 +10,17 @@ export interface PlayersState {
 
 export interface PlayerItem {
     _id: string;
-    friends: string[];
+    friends: FriendItem[];
     name: string;
     date: string;
     status: boolean;
     eventId: string;
     userId: string;
+}
+
+export interface FriendItem {
+    name: string;
+    status: boolean;
 }
 
 // EVENTS

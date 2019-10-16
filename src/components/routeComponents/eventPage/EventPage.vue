@@ -19,24 +19,24 @@
             </div>
             <div class="rightColumn">
                 <h3>{{ rightBlockHeader }}</h3>
-                <Button v-if="isEventCreator && !isEditEvent" text="Редактировать событие" @onClick="openEditEvent"/>
+                <Button
+                    v-if="isEventCreator && !isEditEvent && !isSetNewPlayer && !isEditPlayer"
+                    class="editEventButton"
+                    text="Редактировать событие"
+                    @onClick="openEditEvent"
+                />
                 <EventForm v-if="isEditEvent" :isEdit="true" :callback="closeEditEvent"/>
-                <div class="addPeopleBlock">
-                    <Button text="Добавить друга" @onClick="addFriend"/>
-                    <Button class="savePeople" text="Сохранить" viewType="positive" @onClick="savePeople"/>
-                </div>
-                <div class="inputWr">
-                    <Input type="checkbox" label="Точно буду" v-model="status"/>
-                    <Input placeholder="Своё имя" type="text" label="Своё имя" v-model="peopleName"/>
-                    <Input
-                        v-for="(friend, index) in friends"
-                        :key="index"
-                        placeholder="Имя друга"
-                        type="text"
-                        :label="`Имя друга ${index + 1}`"
-                        v-model="friends[index]"
-                    />
-                </div>
+                <PlayerForm
+                    v-if="isEditPlayer || isSetNewPlayer"
+                    :alreadySignedUp="alreadySignedUp"
+                    :isEdit="isEditPlayer"
+                    :callback="closeEditPlayer"
+                />
+                <Button
+                    v-if="!isEditPlayer && !isSetNewPlayer && !isEditEvent"
+                    :text="buttonText"
+                    @onClick="playerButtonHandler"
+                />
             </div>
         </div>
     </div>
@@ -51,6 +51,7 @@ import Button from '@/components/reusableComponents/button/Button.vue';
 import Input from '@/components/reusableComponents/input/Input.vue';
 import Table from '@/components/reusableComponents/table/Table.vue';
 import EventForm from '@/components/reusableComponents/eventForm/EventForm.vue';
+import PlayerForm from '@/components/reusableComponents/playerForm/PlayerForm.vue';
 
 import { EventItem, UserObj, PlayerItem } from '@/store/types';
 
@@ -60,20 +61,20 @@ import { EventItem, UserObj, PlayerItem } from '@/store/types';
         Input,
         Table,
         EventForm,
+        PlayerForm,
     },
 })
 
 export default class EventPage extends Vue {
-    protected peopleName: string = '';
-    protected friends: string[] = [''];
     protected minimum: number = 0;
-    protected status: boolean = true;
     protected isEditEvent: boolean = false;
+    protected isEditPlayer: boolean = false;
+    protected isSetNewPlayer: boolean = false;
 
     @Action('setCurrentEventId', { namespace: 'events' })
     private setCurrentEventId!: any;
-    @Action('setNewPlayer', { namespace: 'players' })
-    private setNewPlayer!: any;
+    // @Action('setNewPlayer', { namespace: 'players' })
+    // private setNewPlayer!: any;
     @Action('getEvents', { namespace: 'events' })
     private getEvent!: any;
     @Action('setEventMinimum', { namespace: 'events' })
@@ -97,25 +98,8 @@ export default class EventPage extends Vue {
         return this.alreadySignedUp ? 'Вы уже записались' : 'Вы пока не записаны';
     }
 
-    protected addFriend(): void {
-        if (this.friends.length > 4) {
-            return;
-        }
-        this.friends.push('');
-    }
-
-    protected savePeople(): void {
-        if (this.peopleName) {
-            const filteredFriends = this.friends.filter((friend: string) => {
-                if (friend) {
-                    return friend;
-                }
-            });
-
-            this.setNewPlayer({name: this.peopleName, friends: filteredFriends, status: this.status});
-            this.peopleName = '';
-            this.friends = [''];
-        }
+    get buttonText(): string {
+        return this.alreadySignedUp ? 'Изменить решение' : 'Принять участие';
     }
 
     protected saveMinimum(): void {
@@ -130,8 +114,18 @@ export default class EventPage extends Vue {
         this.isEditEvent = true;
     }
 
+    protected playerButtonHandler(): void {
+        if (this.alreadySignedUp) this.isEditPlayer = true;
+        else this.isSetNewPlayer = true;
+    }
+
     protected closeEditEvent(): void {
         this.isEditEvent = false;
+    }
+
+    protected closeEditPlayer(): void {
+        this.isSetNewPlayer = false;
+        this.isEditPlayer = false;
     }
 
     private async mounted() {
@@ -190,6 +184,10 @@ export default class EventPage extends Vue {
     }
 
     .rightColumn {
+
+        .editEventButton {
+            margin-right: 20px;
+        }
 
         h3 {
             text-align: left;

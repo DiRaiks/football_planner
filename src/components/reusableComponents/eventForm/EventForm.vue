@@ -100,11 +100,11 @@ export default class EventForm extends Vue {
     .createEventBlock {
         width: 370px;
         border-radius: 10px;
-        padding: 10px;
+        padding: 5px;
         background-color: #eeeeee;
 
         div {
-            margin-top: 10px;
+            margin-top: 5px;
 
             &:nth-of-type(1) {
                 margin: 0;
@@ -119,7 +119,7 @@ export default class EventForm extends Vue {
             }
 
             .time {
-                margin: 0 0 0 10px;
+                margin: 0 0 0 5px;
                 flex: 1;
             }
         }
