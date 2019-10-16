@@ -3,8 +3,8 @@
         <Loader v-if="isLoading"/>
         <template>
             <template v-if="isAuth">
-                <Top/>
                 <router-view/>
+                <Footer/>
             </template>
             <template v-else>
                 <Auth/>
@@ -17,7 +17,7 @@
 import { Component, Vue } from 'vue-property-decorator';
 import { Getter, Action } from 'vuex-class';
 
-import Top from '@/components/reusableComponents/top/Top.vue';
+import Footer from '@/components/reusableComponents/footer/Footer.vue';
 import Auth from '@/components/routeComponents/auth/Auth.vue';
 import EventPage from '@/components/routeComponents/eventPage/EventPage.vue';
 import Loader from '@/components/reusableComponents/loader/Loader.vue';
@@ -25,7 +25,7 @@ import Loader from '@/components/reusableComponents/loader/Loader.vue';
 
 @Component({
     components: {
-        Top,
+        Footer,
         Auth,
         EventPage,
         Loader,

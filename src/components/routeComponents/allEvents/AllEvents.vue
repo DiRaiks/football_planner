@@ -103,6 +103,7 @@ export default class AllEvents extends Vue {
 
 <style scoped lang="scss">
     .allEventsWr {
+        height: 100%;
         padding: 20px;
         text-align: left;
 
@@ -161,6 +162,15 @@ export default class AllEvents extends Vue {
                     margin-top: 20px;
                     display: flex;
                     justify-content: flex-end;
+                }
+
+                @media (max-width: 470px) {
+                    .newEventWr {
+                        margin-bottom: 60px;
+                    }
+                    .createEventBlock {
+                        width: auto;
+                    }
                 }
             }
         }
