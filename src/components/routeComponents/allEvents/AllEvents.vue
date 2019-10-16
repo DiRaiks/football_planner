@@ -163,6 +163,15 @@ export default class AllEvents extends Vue {
                     display: flex;
                     justify-content: flex-end;
                 }
+
+                @media (max-width: 470px) {
+                    .newEventWr {
+                        margin-bottom: 60px;
+                    }
+                    .createEventBlock {
+                        width: auto;
+                    }
+                }
             }
         }
 
