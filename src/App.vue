@@ -80,8 +80,11 @@ export default class App extends Vue {
         text-align: center;
         color: #2c3e50;
         position: relative;
+        box-sizing: border-box;
         margin: 0;
-        height: 100%;
+        padding-bottom: 60px;
+        height: auto;
+        min-height: 100%;
     }
 
     /*#nav {*/
