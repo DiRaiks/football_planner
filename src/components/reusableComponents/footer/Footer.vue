@@ -20,7 +20,7 @@ export default class Footer extends Vue {}
         align-items: center;
         justify-content: center;
         font-size: 16px;
-        position: sticky;
+        position: fixed;
         bottom: 0;
     }
 </style>
