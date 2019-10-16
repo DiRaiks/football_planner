@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="editingMatchLayout.css">
+  </head>
+  <body>
+    <div class="wrapper-side">
+      <div class="self-editing">
+        <h3 class="h3-header forsure">Вы уже записались</h3>
+        <div class="edit-card">
+          <ul>
+            <li>
+              <input type="text" placeholder="Ваше имя" value="Пирогов Евгений">
+              <div class="placeholder">Ваше имя</div>
+              <div class="participation-options">
+                <div class="option forsure active">Точно буду</div>
+                <div class="option maybe">Может буду</div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="accept-btn">Редактировать</div>
+      </div>
+      <div class="friends-editing">
+        <h3 class="h3-header">Пригласите друзей</h3>
+        <div class="edit-card">
+          <ul>
+            <li>
+              <input type="text" placeholder="Имя друга" value="Олег">
+              <div class="placeholder">Имя друга</div>
+              <div class="participation-options">
+                <div class="option forsure active">Точно буду</div>
+                <div class="option maybe">Может буду</div>
+              </div>
+            </li>
+            <li>
+              <input type="text" placeholder="Имя друга">
+              <div class="placeholder">Имя друга</div>
+              <div class="participation-options">
+                <div class="option forsure active">Точно буду</div>
+                <div class="option maybe">Может буду</div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="accept-btn">Применить</div>
+      </div>
+    </div>
+    <script type="text/javascript">
+      let options = document.getElementsByClassName('participation-options');
+      for (let i = 0; i < options.length; i++) {
+        options[i].onclick = function() {
+          function swapClasses(first, second, swapClass) {
+            first.classList.remove(swapClass);
+            second.classList.add(swapClass);
+          }
+
+          let active = this.getElementsByClassName('active')[0];
+          let forsure = this.getElementsByClassName('forsure')[0];
+          let maybe = this.getElementsByClassName('maybe')[0];
+
+          if (forsure.classList.contains('active')) {
+            swapClasses(forsure, maybe, 'active');
+          } else {
+            swapClasses(maybe, forsure, 'active');
+          }
+        }
+      }
+    </script>
+  </body>
+</html>
