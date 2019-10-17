@@ -19,7 +19,7 @@
         <div class="total-info">
             <div class="info minimum">Минимально: {{ currentEvent.minimum }}</div>
             <div class="info current">Всего:
-                <div :class="currentValueClass">{{ playersDataCount }}</div>
+                <div :class="currentValueClass">{{ currentEvent.playersAmount }}</div>
             </div>
         </div>
     </div>
@@ -37,31 +37,29 @@ const MAX_PLAYERS = 22;
 export default class CountInfo extends Vue {
     @Getter('getCurrentEvent', { namespace: 'events' })
     protected currentEvent!: EventItem;
-    @Getter('getPlayersDataCount', { namespace: 'players' })
-    protected playersDataCount!: number;
     @Getter('getAllPlayers', { namespace: 'players' })
     protected allPlayers!: object[];
 
     get activeFiled(): string {
-        return this.playersDataCount >= this.currentEvent.minimum ?
-            this.playersDataCount < 22 ?
+        return this.currentEvent.playersAmount >= this.currentEvent.minimum ?
+            this.currentEvent.playersAmount < 22 ?
             'miniField' : 'normalField' : '';
     }
     get optionsClass(): object {
         return {
             options: true,
-            notEnough: this.playersDataCount < this.currentEvent.minimum,
+            notEnough: this.currentEvent.playersAmount < this.currentEvent.minimum,
             [`${this.activeFiled}`]: true,
         };
     }
     get currentValueClass(): object {
         return {
             currentValue: true,
-            satisfied: this.playersDataCount >= this.currentEvent.minimum,
+            satisfied: this.currentEvent.playersAmount >= this.currentEvent.minimum,
         };
     }
     get currentProgress(): object[] {
-        const emptyArray = new Array(MAX_PLAYERS - this.playersDataCount);
+        const emptyArray = new Array(MAX_PLAYERS - this.currentEvent.playersAmount);
         return this.allPlayers.concat(emptyArray);
     }
 

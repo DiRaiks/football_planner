@@ -49,8 +49,6 @@ import CountInfo from './CountInfo.vue';
 export default class Table extends Vue {
     @Getter('getPlayersData', { namespace: 'players' })
     private playersData!: PlayerItem[];
-    @Getter('getPlayersDataCount', { namespace: 'players' })
-    private playersDataCount!: number;
     @Getter('getCurrentEvent', { namespace: 'events' })
     private currentEvent!: object;
 }
