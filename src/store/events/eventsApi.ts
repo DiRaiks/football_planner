@@ -1,8 +1,8 @@
 import { fetch } from '@/utils';
 import { EventItem } from '../types';
 
-export const saveEvent = (event: EventItem) => fetch
-    .post('/events/saveEvent', event)
+export const saveEvent = (event: EventItem, userId: string) => fetch
+    .post('/events/saveEvent', { event, creatorId: userId })
     .then((response) => response.data);
 export const getEvents = () => fetch.get('/events/getEvent')
     .then((response) => response.data);

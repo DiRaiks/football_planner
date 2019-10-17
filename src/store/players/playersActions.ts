@@ -6,18 +6,26 @@ import {
     deletePlayer,
     getPlayersByDate,
     getPlayersByEvent,
+    changePlayer,
 } from './playersApi';
 
 import { PlayersState, RootState, PlayerItem } from '../types';
+import { changeEvent } from '@/store/events/eventsApi';
 
 export const actions: ActionTree<PlayersState, RootState> = {
     async setNewPlayer({ commit, getters, rootGetters, dispatch }, newPeople: PlayerItem) {
         const currentEvent = rootGetters['events/getCurrentEvent'];
         const currentEventId = currentEvent._id;
         const currentEventDate = currentEvent.date;
+        const currentUser = rootGetters['auth/getCurrentUser'];
 
         try {
-            const savedPlayers = await savePlayer({ ...newPeople, eventId: currentEventId, date: currentEventDate });
+            const savedPlayers = await savePlayer({
+                ...newPeople,
+                eventId: currentEventId,
+                date: currentEventDate,
+                userId: currentUser._id,
+            });
             commit('setPlayersData', savedPlayers);
 
             await dispatch('changeEventPlayersCount');
@@ -31,6 +39,17 @@ export const actions: ActionTree<PlayersState, RootState> = {
         try {
             const newPlayersData = await deletePlayer(id, currentEventId);
             commit('setPlayersData', newPlayersData);
+
+            await dispatch('changeEventPlayersCount');
+        } catch (error) {
+            commit('setError');
+        }
+    },
+    async changePlayer({ commit, dispatch }, newPlayer: PlayerItem) {
+        try {
+            const changedPlayer = await changePlayer(newPlayer._id, newPlayer);
+
+            commit('changePlayer', changedPlayer);
 
             await dispatch('changeEventPlayersCount');
         } catch (error) {

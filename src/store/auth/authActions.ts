@@ -1,18 +1,20 @@
 import { ActionTree } from 'vuex';
 
-import { loginRequest, getCurrentUserRequest, registrationRequest } from './authApi';
+import { loginRequest, getCurrentUserRequest, registrationRequest, changeUser } from './authApi';
 
-import { AuthState, RootState, AuthObj } from '../types';
+import { AuthState, RootState, AuthObj, UserObj } from '../types';
 
 export const actions: ActionTree<AuthState, RootState> = {
-    async loginUser({ commit, dispatch }, { login, password }: AuthObj) {
+    async loginUser({ commit, dispatch }, { email, password }: AuthObj) {
         dispatch('loader/setIsLoading', true, { root: true });
 
         try {
-            const { user: { token } } = await loginRequest(login, password);
+            const { user }  = await loginRequest(email, password);
+            const { token } = user;
 
             await dispatch('events/getEvents', null, { root: true });
 
+            commit('setCurrentUser', user);
             commit('setIsAuth', true);
             localStorage.setItem('token', token);
 
@@ -26,10 +28,33 @@ export const actions: ActionTree<AuthState, RootState> = {
         dispatch('loader/setIsLoading', true, { root: true });
 
         try {
-            const { user: { token } } = await getCurrentUserRequest();
+            const { user } = await getCurrentUserRequest();
+            const { token } = user;
 
             await dispatch('events/getEvents', null, { root: true });
 
+            commit('setCurrentUser', user);
+            commit('setIsAuth', true);
+            localStorage.setItem('token', token);
+
+            dispatch('loader/setIsLoading', false, { root: true });
+        } catch (error) {
+            commit('setError');
+            localStorage.removeItem('token');
+
+            dispatch('loader/setIsLoading', false, { root: true });
+        }
+    },
+    async registrationUser({ commit, dispatch }, { email, password, name }: AuthObj) {
+        dispatch('loader/setIsLoading', true, { root: true });
+
+        try {
+            const { user } = await registrationRequest(email, password, name);
+            const { token } = user;
+
+            await dispatch('events/getEvents', null, { root: true });
+
+            commit('setCurrentUser', user);
             commit('setIsAuth', true);
             localStorage.setItem('token', token);
 
@@ -40,22 +65,13 @@ export const actions: ActionTree<AuthState, RootState> = {
             dispatch('loader/setIsLoading', false, { root: true });
         }
     },
-    async registrationUser({ commit, dispatch }, { login, password }: AuthObj) {
-        dispatch('loader/setIsLoading', true, { root: true });
-
+    async changeUser({ commit }, newUser: UserObj) {
         try {
-            const { user: { token } } = await registrationRequest(login, password);
+            const changedUser = await changeUser(newUser._id, newUser);
 
-            await dispatch('events/getEvents', null, { root: true });
-
-            commit('setIsAuth', true);
-            localStorage.setItem('token', token);
-
-            dispatch('loader/setIsLoading', false, { root: true });
+            commit('changeUser', changedUser);
         } catch (error) {
             commit('setError');
-
-            dispatch('loader/setIsLoading', false, { root: true });
         }
     },
 };

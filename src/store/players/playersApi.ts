@@ -8,6 +8,9 @@ export const getPlayersByDate = (date: string) => fetch.post('/players/getPlayer
     .then((response) => response.data);
 export const savePlayer = (player: PlayerItem) => fetch.post('/players/savePlayer', { player })
     .then((response) => response.data);
+export const changePlayer = (playerId: string, player: PlayerItem) => fetch
+    .post('/players/changePlayer', { playerId, player })
+    .then((response) => response.data);
 export const deletePlayer = (id: string, eventId: string) => fetch.post('/players/deletePlayer', { id, eventId })
     .then((response) => response.data);
 export const getPlayersByEvent = (eventId: string) => fetch.post('/players/getPlayersByEvent', { eventId })

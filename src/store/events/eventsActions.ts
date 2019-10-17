@@ -11,15 +11,13 @@ import {
 import { EventsState, RootState, EventItem } from '../types';
 
 export const actions: ActionTree<EventsState, RootState> = {
-    async setCurrentEvent({ commit, getters, dispatch }, eventId: string) {
+    async setCurrentEventId({ commit, getters, dispatch }, eventId: string) {
         dispatch('loader/setIsLoading', true, { root: true });
 
-        const events = getters.getEvents;
         try {
-            const currentEvent = events.find((event: EventItem) => event._id === eventId);
-            commit('setCurrentEvent', currentEvent);
+            commit('setCurrentEventId', eventId);
 
-            await dispatch('players/getPlayersByEvent', currentEvent._id, { root: true });
+            await dispatch('players/getPlayersByEvent', eventId, { root: true });
 
             dispatch('loader/setIsLoading', false, { root: true });
         } catch (error) {
@@ -29,11 +27,12 @@ export const actions: ActionTree<EventsState, RootState> = {
         }
     },
     async saveNewEvent({ commit, rootGetters }, { time, place, date, minimum, eventName }) {
-        const playersAmount = rootGetters['events/getPlayersDataCount'];
+        const playersAmount = rootGetters['events/getPlayersDataCount'] || 0;
+        const user = rootGetters['auth/getCurrentUser'];
 
         try {
             const event: EventItem = { time, place, date, minimum, eventName, playersAmount };
-            const savedEvents = await saveEvent(event);
+            const savedEvents = await saveEvent(event, user._id);
 
             commit('setEvents', savedEvents);
         } catch (error) {
@@ -46,7 +45,7 @@ export const actions: ActionTree<EventsState, RootState> = {
 
             commit('setEvents', events);
         } catch (error) {
-            commit('setCurrentEvent', null);
+            commit('setCurrentEventId', null);
 
             commit('setError');
         }
@@ -66,7 +65,7 @@ export const actions: ActionTree<EventsState, RootState> = {
         try {
             const newEvent = await saveEventMinimum(currentEvent._id, minimum);
 
-            commit('setCurrentEvent', newEvent);
+            commit('changeEvent', newEvent);
         } catch (error) {
             commit('setError');
         }
@@ -76,7 +75,6 @@ export const actions: ActionTree<EventsState, RootState> = {
             const changedEvent = await changeEvent(newEvent._id, newEvent);
 
             commit('changeEvent', changedEvent);
-            commit('setCurrentEvent', changedEvent);
         } catch (error) {
             commit('setError');
         }

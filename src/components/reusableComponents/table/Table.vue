@@ -13,7 +13,7 @@
                     <td>Статус</td>
                     <td class="name">Игрок</td>
                     <td >Друзья</td>
-                    <td></td>
+                    <!--<td></td>-->
                 </tr>
             </thead>
             <tbody>
@@ -85,7 +85,6 @@ export default class Table extends Vue {
             background-color: #aaa1;
             border-radius: 10px;
             text-align: center;
-            overflow: hidden;
             border-spacing: 20px 10px;
 
             thead {

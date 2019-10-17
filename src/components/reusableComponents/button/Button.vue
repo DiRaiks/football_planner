@@ -1,5 +1,5 @@
 <template>
-    <button :class="buttonClass" @click="$emit('onClick')">{{text}}</button>
+    <button :class="buttonClass" @click="handlerClick">{{text}}</button>
 </template>
 
 <script lang="ts">
@@ -10,13 +10,24 @@ export default class Button extends Vue {
     @Prop() private text!: string;
     @Prop() private onClick!: () => void;
     @Prop({ default: '' }) private viewType!: string;
+    @Prop({ default: false }) private disabled!: boolean;
+    @Prop({ default: false }) private isPending!: boolean;
 
     get buttonClass(): object {
-        const { viewType } = this;
+        const { viewType, disabled } = this;
 
         return {
             [`button-${ viewType }`]: viewType,
+            buttonDisabled: disabled,
         };
+    }
+
+    protected handlerClick(event: any): void {
+        if (this.disabled || this.isPending) {
+            return;
+        } else {
+            this.$emit('onClick');
+        }
     }
 }
 </script>
@@ -48,6 +59,15 @@ export default class Button extends Vue {
 
             &:hover {
                 background: #5dbea3;
+            }
+        }
+
+        &.buttonDisabled {
+            background: #9c9c9c;
+
+            &:hover {
+                background: #9c9c9c;
+                cursor: not-allowed;
             }
         }
     }

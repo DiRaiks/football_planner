@@ -20,4 +20,10 @@ export const getters: GetterTree<PlayersState, RootState> = {
 
         return countAllPLayers(playersData);
     },
+    getAlreadySignedUp: (state, getters, rootState, rootGetters): PlayerItem => {
+        const players = getters.getPlayersData;
+        const currentUser = rootGetters['auth/getCurrentUser'];
+
+        return players.find((player: PlayerItem) => player.userId === currentUser._id);
+    },
 };

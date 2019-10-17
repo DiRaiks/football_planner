@@ -10,17 +10,23 @@ export interface PlayersState {
 
 export interface PlayerItem {
     _id: string;
-    friends: string[];
+    friends: FriendItem[];
     name: string;
     date: string;
     status: boolean;
     eventId: string;
+    userId: string;
+}
+
+export interface FriendItem {
+    name: string;
+    status: boolean;
 }
 
 // EVENTS
 
 export interface EventsState {
-    currentEvent: EventItem | null;
+    currentEventId: string | null;
     events: EventItem[] | null;
 }
 
@@ -32,17 +38,27 @@ export interface EventItem {
     minimum: number;
     playersAmount: number;
     eventName: string;
+    creatorId?: string;
 }
 
 // AUTH
 
 export interface AuthState {
     isAuth: boolean;
+    user: UserObj | null;
 }
 
 export interface AuthObj {
-    login: string;
+    email: string;
     password: string;
+    name: string;
+}
+
+export interface UserObj {
+    _id: string;
+    token: string;
+    email: string;
+    name?: string;
 }
 
 // LOADER
