@@ -7,7 +7,7 @@
             <Tooltip
                     v-for="(friend, index) in friends"
                     :key="index"
-                    :tooltip="friend.name"
+                    :tooltip="friend.name || friend"
             >
                 <div :class="['friendIcon', ...setFriendIconClass(friend)]"/>
             </Tooltip>
