@@ -2,7 +2,7 @@
     <div @click="selectEvent" class="previewBlock">
         <div class="nameWr">
             <span>{{ event.eventName }}</span>
-            <span class="deleteButton" @click="deleteCurrentEvent">x</span>
+            <span v-if="isEventCreator" class="deleteButton" @click="deleteCurrentEvent">x</span>
         </div>
         <div class="details">
             <div class="place">
@@ -19,10 +19,10 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator';
-import { Action } from 'vuex-class';
+import { Action, Getter } from 'vuex-class';
 import router from '@/router';
 
-import { EventItem } from '@/store/types';
+import { EventItem, UserObj } from '@/store/types';
 
 @Component
 export default class EventsPreview extends Vue {
@@ -30,6 +30,8 @@ export default class EventsPreview extends Vue {
 
     @Action('deleteEvent', {namespace: 'events'})
     private deleteEvent!: any;
+    @Getter('getCurrentUser', { namespace: 'auth' })
+    private currentUser!: UserObj;
 
     get valueClass(): object {
         return {
@@ -37,6 +39,7 @@ export default class EventsPreview extends Vue {
             satisfied: this.event.playersAmount >= this.event.minimum,
         };
     }
+    get isEventCreator(): boolean { return this.event.creatorId === this.currentUser._id; }
 
     protected async selectEvent(): Promise<void> {
         router.push(`/event/${ this.event._id }`);
