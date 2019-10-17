@@ -76,6 +76,7 @@ export const actions: ActionTree<EventsState, RootState> = {
             const changedEvent = await changeEvent(newEvent._id, newEvent);
 
             commit('changeEvent', changedEvent);
+            commit('setCurrentEvent', changedEvent);
         } catch (error) {
             commit('setError');
         }
