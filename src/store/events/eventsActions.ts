@@ -27,7 +27,7 @@ export const actions: ActionTree<EventsState, RootState> = {
         }
     },
     async saveNewEvent({ commit, rootGetters }, { time, place, date, minimum, eventName }) {
-        const playersAmount = rootGetters['events/getPlayersDataCount'];
+        const playersAmount = rootGetters['events/getPlayersDataCount'] || 0;
         const user = rootGetters['auth/getCurrentUser'];
 
         try {

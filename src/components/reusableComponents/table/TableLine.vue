@@ -9,7 +9,7 @@
                     :key="index"
                     :tooltip="friend.name"
             >
-                <div :class="['friendIcon', ...friendIconClass]"/>
+                <div :class="['friendIcon', ...setFriendIconClass(friend)]"/>
             </Tooltip>
         </td>
         <!--<td><button @click="deleteName">Удалить</button></td>-->
@@ -21,6 +21,8 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 import { Action } from 'vuex-class';
 
 import Tooltip from '@/components/reusableComponents/tooltip/Tooltip.vue';
+
+import { FriendItem } from '@/store/types';
 
 @Component({
     components: {
@@ -44,7 +46,8 @@ export default class TableLine extends Vue {
         };
     }
     get statusText(): string { return this.status ? 'Точно буду' : 'Может буду'; }
-    get friendIconClass(): object { return { maybe: !this.status }; }
+
+    protected setFriendIconClass(friend: FriendItem): object { return { maybe: !friend.status }; }
 
     protected deleteName(): void {
         this.deletePlayer(this.id);

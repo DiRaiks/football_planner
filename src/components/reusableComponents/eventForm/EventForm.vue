@@ -123,6 +123,10 @@ export default class EventForm extends Vue {
                 flex: 1;
             }
         }
+
+        @media (max-width: 470px) {
+            width: auto;
+        }
     }
 
     .buttonWr {

@@ -41,17 +41,8 @@ export default class PlayerInput extends Vue {
     @Prop() private changeStatus!: (value: boolean) => void;
     @Prop() private id!: string;
 
-    get forsureClass(): object {
-        return {
-            active: this.status,
-        };
-    }
-
-    get maybeClass(): object {
-        return {
-            active: !this.status,
-        };
-    }
+    get forsureClass(): object { return { active: this.status }; }
+    get maybeClass(): object { return { active: !this.status }; }
 
     protected statusHandler(event: any): void {
         if (event.target.closest('.maybe')) this.$emit('changeStatus', false);

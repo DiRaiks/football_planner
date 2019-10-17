@@ -45,11 +45,13 @@ export const actions: ActionTree<PlayersState, RootState> = {
             commit('setError');
         }
     },
-    async changePlayer({ commit }, newPlayer: PlayerItem) {
+    async changePlayer({ commit, dispatch }, newPlayer: PlayerItem) {
         try {
             const changedPlayer = await changePlayer(newPlayer._id, newPlayer);
 
             commit('changePlayer', changedPlayer);
+
+            await dispatch('changeEventPlayersCount');
         } catch (error) {
             commit('setError');
         }

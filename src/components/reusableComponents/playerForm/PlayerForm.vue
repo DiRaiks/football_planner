@@ -4,7 +4,7 @@
                 <PlayerInput
                     type="text"
                     label="Ваше имя"
-                    v-model="playerName"
+                    v-model.trim="playerName"
                     :status="status"
                     @changeStatus="changeStatus"
                 />
@@ -15,7 +15,7 @@
                     :id="`player_${index}`"
                     type="text"
                     label="Имя друга"
-                    v-model="friends[index].name"
+                    v-model.trim="friends[index].name"
                     :status="friends[index].status"
                     @changeStatus="changeFriendStatus($event, index)"
                 />
@@ -69,12 +69,15 @@ export default class PlayerForm extends Vue {
     get buttonText(): string { return this.isEdit ? 'Применить' : 'Принять участие'; }
     get filteredFriends(): FriendItem[] {
         return this.friends.filter((friend: FriendItem) => {
-            if (friend.name) return friend;
+            if (friend.name.trim()) return friend;
         });
     }
 
     protected changeStatus(status: boolean): void { this.status = status; }
-    protected changeFriendStatus(status: boolean, index: number): void { this.friends[index].status = status; }
+    protected changeFriendStatus(status: boolean, index: number): void {
+        this.friends[index].status = status;
+        this.friends = [ ...this.friends ];
+    }
     protected async buttonHandler(): Promise<void> {
         if (this.isEdit) {
             !this.playerName
@@ -111,10 +114,10 @@ export default class PlayerForm extends Vue {
     @Watch('friends', { immediate: true, deep: true })
     private changeInput(val: FriendItem[]) {
         const lastItemIndex = val.length - 1;
-        if (val[lastItemIndex] && val[lastItemIndex].name) {
+        if (val[lastItemIndex] && val[lastItemIndex].name.trim()) {
             if (val.length < 4) val.push({ name: '', status: true });
         }
-        if (val[lastItemIndex - 1] && !val[lastItemIndex - 1].name) val.pop();
+        if (val[lastItemIndex - 1] && !val[lastItemIndex - 1].name.trim()) val.pop();
     }
 
     private mounted() {
