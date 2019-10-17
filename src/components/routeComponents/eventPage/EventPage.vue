@@ -18,7 +18,7 @@
                 <Table/>
             </div>
             <div class="rightColumn">
-                <h3>{{ rightBlockHeader }}</h3>
+                <h3 :class="headerClass">{{ rightBlockHeader }}</h3>
                 <Button
                     v-if="isEventCreator && !isEditEvent && !isSetNewPlayer && !isEditPlayer"
                     class="editEventButton"
@@ -73,8 +73,6 @@ export default class EventPage extends Vue {
 
     @Action('setCurrentEventId', { namespace: 'events' })
     private setCurrentEventId!: any;
-    // @Action('setNewPlayer', { namespace: 'players' })
-    // private setNewPlayer!: any;
     @Action('getEvents', { namespace: 'events' })
     private getEvent!: any;
     @Action('setEventMinimum', { namespace: 'events' })
@@ -86,43 +84,20 @@ export default class EventPage extends Vue {
     @Getter('getAlreadySignedUp', { namespace: 'players' })
     private alreadySignedUp!: PlayerItem;
 
-    get isEventCreator(): boolean {
-        return this.currentEvent.creatorId === this.currentUser._id;
-    }
+    get isEventCreator(): boolean { return this.currentEvent.creatorId === this.currentUser._id; }
+    get rightBlockHeader(): string { return this.isEventCreator ? 'Вы организатор события' : this.playerHeader; }
+    get playerHeader(): string { return this.alreadySignedUp ? 'Вы уже записались' : 'Вы пока не записаны'; }
+    get headerClass(): object { return { active: this.alreadySignedUp }; }
+    get buttonText(): string { return this.alreadySignedUp ? 'Изменить решение' : 'Принять участие'; }
 
-    get rightBlockHeader(): string {
-        return this.isEventCreator ? 'Вы организатор события' : this.playerHeader;
-    }
-
-    get playerHeader(): string {
-        return this.alreadySignedUp ? 'Вы уже записались' : 'Вы пока не записаны';
-    }
-
-    get buttonText(): string {
-        return this.alreadySignedUp ? 'Изменить решение' : 'Принять участие';
-    }
-
-    protected saveMinimum(): void {
-        this.setEventMinimum(this.minimum);
-    }
-
-    protected gotToHome(): void {
-        router.push('/');
-    }
-
-    protected openEditEvent(): void {
-        this.isEditEvent = true;
-    }
-
+    protected saveMinimum(): void { this.setEventMinimum(this.minimum); }
+    protected gotToHome(): void { router.push('/'); }
+    protected openEditEvent(): void { this.isEditEvent = true; }
     protected playerButtonHandler(): void {
         if (this.alreadySignedUp) this.isEditPlayer = true;
         else this.isSetNewPlayer = true;
     }
-
-    protected closeEditEvent(): void {
-        this.isEditEvent = false;
-    }
-
+    protected closeEditEvent(): void { this.isEditEvent = false; }
     protected closeEditPlayer(): void {
         this.isSetNewPlayer = false;
         this.isEditPlayer = false;
@@ -134,9 +109,7 @@ export default class EventPage extends Vue {
         if (eventId) await this.setCurrentEventId(eventId);
         else router.push('/');
 
-        if (this.currentEvent) {
-            this.minimum = this.currentEvent.minimum;
-        }
+        if (this.currentEvent) this.minimum = this.currentEvent.minimum;
     }
 }
 </script>
@@ -191,7 +164,10 @@ export default class EventPage extends Vue {
 
         h3 {
             text-align: left;
-            color: #218012;
+
+            &.active {
+                color: #218012;
+            }
         }
 
         .addPeopleBlock {

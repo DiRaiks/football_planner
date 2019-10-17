@@ -6,6 +6,7 @@ import {
     deletePlayer,
     getPlayersByDate,
     getPlayersByEvent,
+    changePlayer,
 } from './playersApi';
 
 import { PlayersState, RootState, PlayerItem } from '../types';
@@ -46,7 +47,7 @@ export const actions: ActionTree<PlayersState, RootState> = {
     },
     async changePlayer({ commit }, newPlayer: PlayerItem) {
         try {
-            const changedPlayer = () => { return; };
+            const changedPlayer = await changePlayer(newPlayer._id, newPlayer);
 
             commit('changePlayer', changedPlayer);
         } catch (error) {

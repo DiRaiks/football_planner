@@ -1,8 +1,8 @@
 import { ActionTree } from 'vuex';
 
-import { loginRequest, getCurrentUserRequest, registrationRequest } from './authApi';
+import { loginRequest, getCurrentUserRequest, registrationRequest, changeUser } from './authApi';
 
-import { AuthState, RootState, AuthObj } from '../types';
+import { AuthState, RootState, AuthObj, UserObj } from '../types';
 
 export const actions: ActionTree<AuthState, RootState> = {
     async loginUser({ commit, dispatch }, { email, password }: AuthObj) {
@@ -63,6 +63,15 @@ export const actions: ActionTree<AuthState, RootState> = {
             commit('setError');
 
             dispatch('loader/setIsLoading', false, { root: true });
+        }
+    },
+    async changeUser({ commit }, newUser: UserObj) {
+        try {
+            const changedUser = await changeUser(newUser._id, newUser);
+
+            commit('changeUser', changedUser);
+        } catch (error) {
+            commit('setError');
         }
     },
 };

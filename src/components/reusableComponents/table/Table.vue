@@ -13,7 +13,7 @@
                     <td>Статус</td>
                     <td class="name">Игрок</td>
                     <td >Друзья</td>
-                    <td></td>
+                    <!--<td></td>-->
                 </tr>
             </thead>
             <tbody>

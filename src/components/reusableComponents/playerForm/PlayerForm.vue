@@ -59,43 +59,59 @@ export default class PlayerForm extends Vue {
     private setNewPlayer!: any;
     @Action('changePlayer', { namespace: 'players' })
     private changePlayer!: any;
+    @Action('deletePlayer', { namespace: 'players' })
+    private deletePlayer!: any;
+    @Action('changeUser', { namespace: 'auth' })
+    private changeUser!: any;
+    @Getter('getCurrentUser', { namespace: 'auth' })
+    private currentUser!: any;
 
-    get buttonText(): string {
-        return this.isEdit ? 'Применить' : 'Принять участие';
-    }
-
+    get buttonText(): string { return this.isEdit ? 'Применить' : 'Принять участие'; }
     get filteredFriends(): FriendItem[] {
         return this.friends.filter((friend: FriendItem) => {
             if (friend.name) return friend;
         });
     }
 
-    protected changeStatus(status: boolean): void {
-        this.status = status;
-    }
-
-    protected changeFriendStatus(status: boolean, index: number): void {
-        this.friends[index].status = status;
-    }
-
+    protected changeStatus(status: boolean): void { this.status = status; }
+    protected changeFriendStatus(status: boolean, index: number): void { this.friends[index].status = status; }
     protected async buttonHandler(): Promise<void> {
         if (this.isEdit) {
-            this.changePlayer({ name: this.playerName, friends: this.filteredFriends, status: this.status });
+            !this.playerName
+                ? await this.deletePlayer(this.alreadySignedUp._id)
+                : await this.changePlayer({
+                    ...this.alreadySignedUp,
+                    name: this.playerName,
+                    friends: this.filteredFriends,
+                    status: this.status,
+                });
         } else {
             if (!this.playerName) return;
-            this.setNewPlayer({ name: this.playerName, friends: this.filteredFriends, status: this.status });
+            await this.setNewPlayer({ name: this.playerName, friends: this.filteredFriends, status: this.status });
         }
+
+        if (this.playerName) await this.changeUser({ ...this.currentUser, name: this.playerName });
 
         if (this.callback) this.callback();
 
         this.playerName = '';
         this.friends = [{ name: '' , status: true }];
     }
+    private cloneFriendsArray(newFriendsArray: FriendItem[]): void {
+        for (const field of Object.keys(newFriendsArray)) {
+            if (this.friends[Number(field)]) {
+                this.friends[Number(field)].name = newFriendsArray[Number(field)].name;
+                this.friends[Number(field)].status = newFriendsArray[Number(field)].status;
+            } else {
+                this.friends[Number(field)] = { ...newFriendsArray[Number(field)] };
+            }
+        }
+    }
 
-    @Watch('friends', { deep: true })
+    @Watch('friends', { immediate: true, deep: true })
     private changeInput(val: FriendItem[]) {
         const lastItemIndex = val.length - 1;
-        if (val[lastItemIndex].name) {
+        if (val[lastItemIndex] && val[lastItemIndex].name) {
             if (val.length < 4) val.push({ name: '', status: true });
         }
         if (val[lastItemIndex - 1] && !val[lastItemIndex - 1].name) val.pop();
@@ -105,7 +121,9 @@ export default class PlayerForm extends Vue {
         if (this.isEdit) {
             this.playerName = this.alreadySignedUp.name;
             this.status = this.alreadySignedUp.status;
-            if (this.alreadySignedUp.friends.length) this.friends = this.alreadySignedUp.friends;
+            if (this.alreadySignedUp.friends.length) this.cloneFriendsArray(this.alreadySignedUp.friends);
+        } else {
+            this.playerName = this.currentUser.name;
         }
     }
 }

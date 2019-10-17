@@ -9,10 +9,10 @@
                     :key="index"
                     :tooltip="friend.name"
             >
-                <div class="friendIcon"/>
+                <div :class="['friendIcon', ...friendIconClass]"/>
             </Tooltip>
         </td>
-        <td><button @click="deleteName">Удалить</button></td>
+        <!--<td><button @click="deleteName">Удалить</button></td>-->
     </tr>
 </template>
 
@@ -37,18 +37,17 @@ export default class TableLine extends Vue {
     @Action('deletePlayer', { namespace: 'players' })
     private deletePlayer!: any;
 
-    protected deleteName(): void {
-        this.deletePlayer(this.id);
-    }
-
     get statusClass(): object {
         return {
             status: true,
             [`status-${ this.status ? 'true' : 'maybe' }`]: true,
         };
     }
-    get statusText(): string {
-        return this.status ? 'Точно буду' : 'Может буду';
+    get statusText(): string { return this.status ? 'Точно буду' : 'Может буду'; }
+    get friendIconClass(): object { return { maybe: !this.status }; }
+
+    protected deleteName(): void {
+        this.deletePlayer(this.id);
     }
 }
 </script>
@@ -79,8 +78,13 @@ export default class TableLine extends Vue {
         .friendIcon {
             width: 16px;
             height: 16px;
-            background-image: url('../../../assets/user-solid.svg');
             background-size: 16px 16px;
+            background-image: url('../../../assets/user-solid.svg');
+
+            &.maybe {
+                background-image: url('../../../assets/user-solid_false.svg');
+
+            }
         }
     }
     td {

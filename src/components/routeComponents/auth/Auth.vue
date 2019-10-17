@@ -23,10 +23,10 @@
                     method="post"
                     @submit.prevent="registrationHandler"
                 >
-                    <Input placeholder="Email" type="text" label="Email" v-model="email"/>
+                    <Input ref="userEmail" placeholder="Email" type="email" label="Email" v-model="email"/>
                     <Input placeholder="Name" type="text" label="Name" v-model="name"/>
                     <Input placeholder="Password" type="password" label="Password" v-model="password"/>
-                    <Button type="submit" class="authButton regButton" text="Registration" viewType="positive"/>
+                    <Button :disabled="isDisabled" type="submit" class="authButton regButton" text="Registration" viewType="positive"/>
                 </form>
             </div>
         </div>
