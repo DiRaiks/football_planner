@@ -5,16 +5,6 @@
         </div>
         <div v-if="currentEvent" class="columnWr">
             <div class="leftColumn">
-                <!--<div class="minInputWr">-->
-                    <!--<Input-->
-                        <!--placeholder="Минимум"-->
-                        <!--type="number"-->
-                        <!--:min="0" :max="20"-->
-                        <!--label="Минимум игроков"-->
-                        <!--v-model="minimum"-->
-                    <!--/>-->
-                    <!--<Button class="saveMinimum" text="Изменить" @onClick="saveMinimum"/>-->
-                <!--</div>-->
                 <Table/>
             </div>
             <div class="rightColumn">
@@ -66,7 +56,6 @@ import { EventItem, UserObj, PlayerItem } from '@/store/types';
 })
 
 export default class EventPage extends Vue {
-    protected minimum: number = 0;
     protected isEditEvent: boolean = false;
     protected isEditPlayer: boolean = false;
     protected isSetNewPlayer: boolean = false;
@@ -75,8 +64,6 @@ export default class EventPage extends Vue {
     private setCurrentEventId!: any;
     @Action('getEvents', { namespace: 'events' })
     private getEvent!: any;
-    @Action('setEventMinimum', { namespace: 'events' })
-    private setEventMinimum!: any;
     @Getter('getCurrentEvent', { namespace: 'events' })
     private currentEvent!: EventItem;
     @Getter('getCurrentUser', { namespace: 'auth' })
@@ -90,7 +77,6 @@ export default class EventPage extends Vue {
     get headerClass(): object { return { active: this.alreadySignedUp }; }
     get buttonText(): string { return this.alreadySignedUp ? 'Изменить решение' : 'Принять участие'; }
 
-    protected saveMinimum(): void { this.setEventMinimum(this.minimum); }
     protected gotToHome(): void { router.push('/'); }
     protected openEditEvent(): void { this.isEditEvent = true; }
     protected playerButtonHandler(): void {
@@ -108,8 +94,6 @@ export default class EventPage extends Vue {
 
         if (eventId) await this.setCurrentEventId(eventId);
         else router.push('/');
-
-        if (this.currentEvent) this.minimum = this.currentEvent.minimum;
     }
 }
 </script>
