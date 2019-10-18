@@ -10,7 +10,7 @@
             <div><StyleInput type="number" nim="10" max="22" label="Количество игроков" v-model="minimum"/></div>
         </div>
         <div class="buttonWr">
-            <Button class="cancelButton" text="Отмена"
+            <Button v-if="isEdit" class="cancelButton" text="Отмена"
                     @onClick="cancelHandler"/>
             <Button class="addEventButton" :text="buttonText"
                     @onClick="buttonHandler"/>
