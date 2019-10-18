@@ -5,16 +5,16 @@
         </div>
         <div v-if="currentEvent" class="columnWr">
             <div class="leftColumn">
-                <div class="minInputWr">
-                    <Input
-                        placeholder="Минимум"
-                        type="number"
-                        :min="0" :max="20"
-                        label="Минимум игроков"
-                        v-model="minimum"
-                    />
-                    <Button class="saveMinimum" text="Изменить" @onClick="saveMinimum"/>
-                </div>
+                <!--<div class="minInputWr">-->
+                    <!--<Input-->
+                        <!--placeholder="Минимум"-->
+                        <!--type="number"-->
+                        <!--:min="0" :max="20"-->
+                        <!--label="Минимум игроков"-->
+                        <!--v-model="minimum"-->
+                    <!--/>-->
+                    <!--<Button class="saveMinimum" text="Изменить" @onClick="saveMinimum"/>-->
+                <!--</div>-->
                 <Table/>
             </div>
             <div class="rightColumn">
