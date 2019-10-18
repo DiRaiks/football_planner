@@ -63,7 +63,6 @@ export default class TableLine extends Vue {
 
         .status {
             padding: 5px 10px;
-            font-size: 14px;
             border-radius: 4px;
 
             &-true {

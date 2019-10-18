@@ -206,9 +206,6 @@ export default class EventPage extends Vue {
     }
 
     @media (max-width: 475px) {
-        .tableWr {
-            font-size: 12px;
-        }
 
         .inputWr {
             width: auto;
@@ -219,12 +216,6 @@ export default class EventPage extends Vue {
             .placeWr {
                 width: auto;
             }
-        }
-    }
-
-    @media (max-width: 350px) {
-        .tableWr {
-            font-size: 8px;
         }
     }
 </style>

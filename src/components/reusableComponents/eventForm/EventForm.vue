@@ -10,6 +10,8 @@
             <div><StyleInput type="number" nim="10" max="22" label="Количество игроков" v-model="minimum"/></div>
         </div>
         <div class="buttonWr">
+            <Button class="cancelButton" text="Отмена"
+                    @onClick="cancelHandler"/>
             <Button class="addEventButton" :text="buttonText"
                     @onClick="buttonHandler"/>
         </div>
@@ -83,6 +85,7 @@ export default class EventForm extends Vue {
         this.eventName = '';
         this.minimum = '';
     }
+    protected cancelHandler(): void { this.callback(); }
 
     private mounted() {
         if (this.isEdit) {
@@ -133,5 +136,9 @@ export default class EventForm extends Vue {
         margin-top: 20px;
         display: flex;
         justify-content: flex-end;
+
+        .cancelButton {
+            margin-right: 20px;
+        }
     }
 </style>
