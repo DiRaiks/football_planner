@@ -32,8 +32,6 @@ import Loader from '@/components/reusableComponents/loader/Loader.vue';
     },
 })
 export default class App extends Vue {
-    @Action('setCurrentEvent', { namespace: 'events' })
-    private setCurrentEvent!: any;
     @Action('getCurrentUser', { namespace: 'auth' })
     private getCurrentUser!: any;
     @Getter('getIsAuth', { namespace: 'auth' })

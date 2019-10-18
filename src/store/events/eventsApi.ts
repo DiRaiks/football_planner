@@ -14,3 +14,5 @@ export const saveEventMinimum = (eventId: string, minimum: number) => fetch
 export const changeEvent = (eventId: string, event: EventItem) => fetch
     .post('/events/changeEvent', { eventId, event })
     .then((response) => response.data);
+export const getEventById = (eventId: string) => fetch.post('/events/getEventById', { eventId })
+    .then((response) => response.data);

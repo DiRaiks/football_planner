@@ -1,4 +1,5 @@
 import { ActionTree } from 'vuex';
+import router from '@/router';
 
 import {
     saveEvent,
@@ -6,6 +7,7 @@ import {
     deleteEvent,
     saveEventMinimum,
     changeEvent,
+    getEventById,
 } from './eventsApi';
 
 import { EventsState, RootState, EventItem } from '../types';
@@ -16,6 +18,8 @@ export const actions: ActionTree<EventsState, RootState> = {
 
         try {
             commit('setCurrentEventId', eventId);
+
+            await dispatch('getEventById', eventId);
 
             await dispatch('players/getPlayersByEvent', eventId, { root: true });
 
@@ -77,6 +81,16 @@ export const actions: ActionTree<EventsState, RootState> = {
             commit('changeEvent', changedEvent);
         } catch (error) {
             commit('setError');
+        }
+    },
+    async getEventById({ commit }, id: string) {
+        try {
+            const event = await getEventById(id);
+
+            commit ('changeEvent', event);
+        } catch (e) {
+            commit('setError');
+            router.push('/');
         }
     },
 };

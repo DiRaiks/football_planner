@@ -36,7 +36,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import { Getter } from 'vuex-class';
+import { Action, Getter } from 'vuex-class';
 
 import EventPreview from '@/components/routeComponents/allEvents/EventPreview.vue';
 import EventForm from '@/components/reusableComponents/eventForm/EventForm.vue';
@@ -51,10 +51,16 @@ import { EventItem } from '@/store/types';
 })
 
 export default class AllEvents extends Vue {
+    @Action('getEvents', { namespace: 'events' })
+    private getEvents!: any;
     @Getter('getActiveEvents', {namespace: 'events'})
     private activeEvents!: EventItem[];
     @Getter('getOldEvents', {namespace: 'events'})
     private oldEvents!: EventItem[];
+
+    private async mounted() {
+        await this.getEvents();
+    }
 }
 </script>
 
