@@ -1,5 +1,8 @@
 <template>
-    <button :class="buttonClass" @click="handlerClick">{{text}}</button>
+    <button :class="{ buttonClass, pending: isPending }" @click="handlerClick">
+        {{text}}
+        <div class="button-spinner"></div>
+    </button>
 </template>
 
 <script lang="ts">
@@ -34,12 +37,31 @@ export default class Button extends Vue {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+
+    @keyframes button-spinner {
+        0% {
+            -webkit-transform: rotate(0);
+            transform: rotate(0);
+            animation-timing-function: cubic-bezier(.55,.055,.675,.19);
+        }
+        50% {
+            -webkit-transform: rotate(180deg);
+            transform: rotate(180deg);
+            animation-timing-function: cubic-bezier(.215,.61,.355,1);
+        }
+        100% {
+            -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+        }
+    }
+
     button {
+        position: relative;
         border-radius: 10px;
         position: relative;
         display: inline-block;
         margin: 0;
-        padding: 10px 20px;
+        padding: 10px 25px;
         line-height: 20px;
         font-size: 15px;
         font-weight: 500;
@@ -49,6 +71,7 @@ export default class Button extends Vue {
         background: #EEEEEE;
         border: none;
         cursor: pointer;
+        transition: all ease-in 0.05s;
 
         &:hover {
             background: #d1d1d1;
@@ -69,6 +92,34 @@ export default class Button extends Vue {
                 background: #9c9c9c;
                 cursor: not-allowed;
             }
+        }
+
+        &.pending {
+            padding: 10px 35px 10px 15px;
+            transition: all ease-in 0.15s;
+            background: #d1d1d1;
+            cursor: default;
+
+            .button-spinner {
+                opacity: 1;
+                transition: all ease-in 0.1s;
+            }
+        }
+
+        .button-spinner {
+            width: 20px;
+            height: 20px;
+            opacity: 0;
+            position: absolute;
+            top: calc(50% - 10px);
+            right: 10px;
+            background-image: url('../../../assets/button-spinner.svg');
+
+            -webkit-animation: button-spinner 1.5s linear infinite;
+            -moz-animation: button-spinner 1.5s linear infinite;
+            -ms-animation: button-spinner 1.5s linear infinite;
+            -o-animation: button-spinner 1.5s linear infinite;
+            animation: button-spinner 1.5s linear infinite;
         }
     }
 </style>
