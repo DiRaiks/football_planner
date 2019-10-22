@@ -20,7 +20,7 @@ export default class Button extends Vue {
         const { viewType, disabled, isPending } = this;
 
         return {
-            [`button-${ viewType }`]: viewType,
+            [`${ viewType }`]: viewType,
             buttonDisabled: disabled,
             buttonPending: isPending,
         };
@@ -75,7 +75,7 @@ export default class Button extends Vue {
             background: #d1d1d1;
         }
 
-        &.button-positive {
+        &.positive {
             background: aquamarine;
 
             &:hover {
