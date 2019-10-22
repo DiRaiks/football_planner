@@ -1,5 +1,5 @@
 <template>
-    <button :class="{ buttonClass, pending: isPending }" @click="handlerClick">
+    <button :class="buttonClass" @click="handlerClick">
         {{text}}
         <div class="button-spinner"></div>
     </button>
@@ -17,11 +17,12 @@ export default class Button extends Vue {
     @Prop({ default: false }) private isPending!: boolean;
 
     get buttonClass(): object {
-        const { viewType, disabled } = this;
+        const { viewType, disabled, isPending } = this;
 
         return {
             [`button-${ viewType }`]: viewType,
             buttonDisabled: disabled,
+            buttonPending: isPending,
         };
     }
 
@@ -40,17 +41,14 @@ export default class Button extends Vue {
 
     @keyframes button-spinner {
         0% {
-            -webkit-transform: rotate(0);
             transform: rotate(0);
             animation-timing-function: cubic-bezier(.55,.055,.675,.19);
         }
         50% {
-            -webkit-transform: rotate(180deg);
             transform: rotate(180deg);
             animation-timing-function: cubic-bezier(.215,.61,.355,1);
         }
         100% {
-            -webkit-transform: rotate(360deg);
             transform: rotate(360deg);
         }
     }
@@ -94,7 +92,7 @@ export default class Button extends Vue {
             }
         }
 
-        &.pending {
+        &.buttonPending {
             padding: 10px 35px 10px 15px;
             transition: all ease-in 0.15s;
             background: #d1d1d1;
@@ -115,10 +113,6 @@ export default class Button extends Vue {
             right: 10px;
             background-image: url('../../../assets/button-spinner.svg');
 
-            -webkit-animation: button-spinner 1.5s linear infinite;
-            -moz-animation: button-spinner 1.5s linear infinite;
-            -ms-animation: button-spinner 1.5s linear infinite;
-            -o-animation: button-spinner 1.5s linear infinite;
             animation: button-spinner 1.5s linear infinite;
         }
     }
