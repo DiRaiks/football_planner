@@ -34,8 +34,8 @@
 import { Component, Prop, Watch, Vue } from 'vue-property-decorator';
 import { Action, Getter } from 'vuex-class';
 
-import StyleInput from '@/components/reusableComponents/styleInput/StyleInput.vue';
-import PlayerInput from '@/components/reusableComponents/playerInput/PlayerInput.vue';
+import StyleInput from '@/components/reusableComponents/inputs/StyleInput.vue';
+import PlayerInput from '@/components/reusableComponents/inputs/PlayerInput.vue';
 import Button from '@/components/reusableComponents/button/Button.vue';
 
 import { PlayerItem, FriendItem } from '@/store/types';

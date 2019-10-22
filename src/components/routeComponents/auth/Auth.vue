@@ -13,8 +13,8 @@
                     method="post"
                     @submit.prevent="loginHandler"
                 >
-                    <Input ref="userEmail" placeholder="Email" type="email" label="Email" v-model="email"/>
-                    <Input placeholder="Password" type="password" label="Password" v-model="password"/>
+                    <LableInput ref="userEmail" placeholder="Email" type="email" label="Email" v-model="email"/>
+                    <LableInput placeholder="Password" type="password" label="Password" v-model="password"/>
                     <Button :disabled="isDisabled" type="submit" class="authButton loginButton" text="Log In" viewType="positive"/>
                 </form>
                 <form
@@ -23,9 +23,9 @@
                     method="post"
                     @submit.prevent="registrationHandler"
                 >
-                    <Input ref="userEmail" placeholder="Email" type="email" label="Email" v-model="email"/>
-                    <Input placeholder="Name" type="text" label="Name" v-model="name"/>
-                    <Input placeholder="Password" type="password" label="Password" v-model="password"/>
+                    <LableInput ref="userEmail" placeholder="Email" type="email" label="Email" v-model="email"/>
+                    <LableInput placeholder="Name" type="text" label="Name" v-model="name"/>
+                    <LableInput placeholder="Password" type="password" label="Password" v-model="password"/>
                     <Button :disabled="isDisabled" type="submit" class="authButton regButton" text="Registration" viewType="positive"/>
                 </form>
             </div>
@@ -37,14 +37,14 @@
 import {Component, Vue} from 'vue-property-decorator';
 import {Action} from 'vuex-class';
 
-import Input from '@/components/reusableComponents/input/Input.vue';
+import LableInput from '@/components/reusableComponents/inputs/LableInput.vue';
 import Button from '@/components/reusableComponents/button/Button.vue';
 
 const namespace: string = 'auth';
 
 @Component({
     components: {
-        Input,
+        LableInput,
         Button,
     },
 })

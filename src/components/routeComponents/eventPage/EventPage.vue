@@ -38,7 +38,6 @@ import { Action, Getter } from 'vuex-class';
 import router from '@/router';
 
 import Button from '@/components/reusableComponents/button/Button.vue';
-import Input from '@/components/reusableComponents/input/Input.vue';
 import Table from '@/components/reusableComponents/table/Table.vue';
 import EventForm from '@/components/reusableComponents/eventForm/EventForm.vue';
 import PlayerForm from '@/components/reusableComponents/playerForm/PlayerForm.vue';
@@ -48,7 +47,6 @@ import { EventItem, UserObj, PlayerItem } from '@/store/types';
 @Component({
     components: {
         Button,
-        Input,
         Table,
         EventForm,
         PlayerForm,
@@ -119,6 +117,7 @@ export default class EventPage extends Vue {
             }
         }
     }
+
     .columnWr {
         padding: 20px;
         display: flex;
@@ -133,11 +132,6 @@ export default class EventPage extends Vue {
         label:first-child {
             font-weight: bold;
         }
-    }
-
-    .minInputWr {
-        display: flex;
-        align-items: center;
     }
 
     .rightColumn {

@@ -22,7 +22,7 @@
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { Action, Getter } from 'vuex-class';
 
-import StyleInput from '@/components/reusableComponents/styleInput/StyleInput.vue';
+import StyleInput from '@/components/reusableComponents/inputs/StyleInput.vue';
 import Button from '@/components/reusableComponents/button/Button.vue';
 
 import { EventItem } from '@/store/types';
