@@ -81,9 +81,11 @@ export default class AllEvents extends Vue {
             justify-content: space-around;
 
             .leftColumn {
-                .oldMatch {
-                    margin-top: 40px;
+                .openMatch {
+                    margin-bottom: 40px;
+                }
 
+                .oldMatch {
                     .previewWr {
                         opacity: .5;
                     }
