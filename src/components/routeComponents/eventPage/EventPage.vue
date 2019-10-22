@@ -120,20 +120,22 @@ export default class EventPage extends Vue {
         }
     }
     .columnWr {
+        max-width: 1100px;
+        margin: auto; 
         padding: 20px;
         display: flex;
         justify-content: space-around;
     }
 
-    .inputWr {
-        display: flex;
-        flex-direction: column;
-        width: 400px;
+    // .inputWr {
+    //     display: flex;
+    //     flex-direction: column;
+    //     width: 400px;
 
-        label:first-child {
-            font-weight: bold;
-        }
-    }
+    //     label:first-child {
+    //         font-weight: bold;
+    //     }
+    // }
 
     .minInputWr {
         display: flex;
@@ -141,6 +143,9 @@ export default class EventPage extends Vue {
     }
 
     .rightColumn {
+        width: 500px;
+        text-align: left;
+        padding-top: 50px;
 
         .editEventButton {
             margin-right: 20px;
@@ -161,12 +166,17 @@ export default class EventPage extends Vue {
         }
     }
 
+    .leftColumn {
+        width: 500px;
+    }
+
     @media (max-width: 1250px) {
         .columnWr {
             flex-direction: column;
         }
 
         .rightColumn {
+            width: 500px;
             margin-top: 40px;
 
             .inputWr {

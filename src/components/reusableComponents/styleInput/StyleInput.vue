@@ -70,7 +70,7 @@
         border-radius: 5px;
         font-family: inherit;
         height: 25px;
-        font-size: 12px;
+        font-size: 18px;
         font-weight: 500;
         background: white;
         color: #223254;

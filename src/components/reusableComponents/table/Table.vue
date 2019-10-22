@@ -56,7 +56,7 @@ export default class Table extends Vue {
 
 <style scoped lang="scss">
     .tableWr {
-        padding: 15px 20px;
+        // padding: 15px 20px;
         font-family: Helvetica, Geneva, Arial, sans-serif;
         font-size: 16px;
         font-weight: 300;
