@@ -1,7 +1,7 @@
 <template>
     <button :class="buttonClass" @click="handlerClick">
         {{text}}
-        <div class="button-spinner"></div>
+        <div class="buttonSpinner"></div>
     </button>
 </template>
 
@@ -39,7 +39,7 @@ export default class Button extends Vue {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 
-    @keyframes button-spinner {
+    @keyframes buttonSpinner {
         0% {
             transform: rotate(0);
             animation-timing-function: cubic-bezier(.55,.055,.675,.19);
@@ -98,13 +98,13 @@ export default class Button extends Vue {
             background: #d1d1d1;
             cursor: default;
 
-            .button-spinner {
+            .buttonSpinner {
                 opacity: 1;
                 transition: all ease-in 0.1s;
             }
         }
 
-        .button-spinner {
+        .buttonSpinner {
             width: 20px;
             height: 20px;
             opacity: 0;
@@ -113,7 +113,7 @@ export default class Button extends Vue {
             right: 10px;
             background-image: url('../../../assets/button-spinner.svg');
 
-            animation: button-spinner 1.5s linear infinite;
+            animation: buttonSpinner 1.5s linear infinite;
         }
     }
 </style>
