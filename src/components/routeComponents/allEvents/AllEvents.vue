@@ -67,20 +67,28 @@ export default class AllEvents extends Vue {
 <style scoped lang="scss">
     .allEventsWr {
         height: 100%;
-        padding: 20px;
+        // padding: 20px;
+        padding: 20px 10px;
         text-align: left;
 
         h1 {
-            text-align: center;
+            // text-align: center;
+            padding: 10px 25px 0px;
+            width: auto;
+            max-width: 1100px;
+            margin: 20px auto 30px;
+            text-align: left;
+            box-sizing: border-box;
         }
 
         .columnWr {
-            margin-top: 60px;
-            padding: 20px;
+            max-width: 1100px;
+            margin: auto; 
             display: flex;
             justify-content: space-around;
 
             .leftColumn {
+                width: 500px;
                 .openMatch {
                     margin-bottom: 40px;
                 }
@@ -93,6 +101,7 @@ export default class AllEvents extends Vue {
             }
 
             .rightColumn {
+                width: 500px;
                 text-align: left;
             }
         }
@@ -106,17 +115,39 @@ export default class AllEvents extends Vue {
         }
 
         @media (max-width: 1250px) {
+            h1 {
+                padding: 0px;
+                max-width: 500px;
+            }
             .columnWr {
                 flex-direction: column;
+
+                .leftColumn {
+                    max-width: 500px;
+                    width: 100%;
+                    margin: auto;
+                }
+
+                .rightColumn {
+                    max-width: 500px;
+                    width: 100%;
+                    margin: auto;
+                    margin-top: 40px;
+                    padding: 0px 0px 200px;
+                }
             }
+        }
 
-            .rightColumn {
-                margin-top: 40px;
+        @media (max-width: 475px) {
+            .columnWr {
+                .leftColumn {
+                    width: 100%;
+                }
 
-            }
-
-            .leftColumn {
-
+                .rightColumn {
+                    width: 100%;
+                    padding: 0px 0px 200px;
+                }
             }
         }
     }

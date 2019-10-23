@@ -53,7 +53,7 @@ export default class EventsPreview extends Vue {
 
 <style scoped lang="scss">
     .previewBlock {
-        width: 370px;
+        width: auto;
         border-radius: 10px;
         padding: 10px;
         background-color: #eeeeee;
