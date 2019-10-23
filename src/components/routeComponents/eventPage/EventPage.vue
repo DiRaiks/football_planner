@@ -122,7 +122,7 @@ export default class EventPage extends Vue {
     .columnWr {
         max-width: 1100px;
         margin: auto; 
-        padding: 20px;
+        padding: 10px;
         display: flex;
         justify-content: space-around;
     }
@@ -176,8 +176,11 @@ export default class EventPage extends Vue {
         }
 
         .rightColumn {
-            width: 500px;
-            margin-top: 40px;
+            max-width: 500px;
+            width: 100%;
+            margin: auto;
+            margin-top: 0px;
+            padding: 0px 0px 200px;
 
             .inputWr {
                 margin: 30px auto 0;
@@ -193,6 +196,9 @@ export default class EventPage extends Vue {
         }
 
         .leftColumn {
+            max-width: 500px;
+            width: 100%;
+            margin: auto;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -200,6 +206,16 @@ export default class EventPage extends Vue {
     }
 
     @media (max-width: 475px) {
+
+        .leftColumn {
+            width: 100%;
+        }
+
+        .rightColumn {
+            width: 100%;
+            margin-top: 0px;
+            padding: 0px 0px 200px;
+        }
 
         .inputWr {
             width: auto;

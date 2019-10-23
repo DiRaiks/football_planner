@@ -97,9 +97,9 @@ export default class Table extends Vue {
                 }
             }
 
-            @media (max-width: 350px) {
+            @media (max-width: 475px) {
                 font-size: 14px;
-                border-spacing: 10px 15px;
+                border-spacing: 5px;
             }
         }
     }
