@@ -56,11 +56,11 @@ export default class Table extends Vue {
 
 <style scoped lang="scss">
     .tableWr {
-        padding: 15px 20px;
         font-family: Helvetica, Geneva, Arial, sans-serif;
         font-size: 16px;
         font-weight: 300;
         color: #444;
+        width: 100%;
 
         .headerWr {
             text-align: left;
@@ -69,13 +69,15 @@ export default class Table extends Vue {
 
         .gameInfo {
             display: block;
-            width: 96%;
-            padding: 2%;
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
             text-align: left;
 
             .info {
                 margin-bottom: 3px;
             }
+
             .place {
                 font-size: 22px;
             }
@@ -97,12 +99,13 @@ export default class Table extends Vue {
                 }
             }
 
-            @media (max-width: 350px) {
+            @media (max-width: 475px) {
                 font-size: 14px;
-                border-spacing: 10px 15px;
+                border-spacing: 5px;
             }
         }
     }
+    
     td {
         padding: 0 10px;
 
@@ -110,10 +113,12 @@ export default class Table extends Vue {
             padding: 0 5px;
         }
     }
+
     .boldRow {
         background: aquamarine;
         font-weight: bold;
     }
+
     .minimumRow {
         background: rgba(255, 0, 3, 0.48);
     }

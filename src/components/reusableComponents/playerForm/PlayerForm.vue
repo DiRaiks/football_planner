@@ -137,10 +137,11 @@ export default class PlayerForm extends Vue {
 
 <style scoped lang="scss">
     .playersBlock {
-        width: 430px;
+        width: 100%;
+        box-sizing: border-box;
         border-radius: 10px;
         padding: 5px;
-        background-color: #eeeeee;
+        background-color: #aaa1;
 
         div {
             margin-top: 5px;
@@ -151,7 +152,7 @@ export default class PlayerForm extends Vue {
         }
 
         .friendsWr {
-            margin-top: 15px;
+            margin-top: 10px;
         }
 
         @media (max-width: 475px) {
@@ -160,12 +161,12 @@ export default class PlayerForm extends Vue {
     }
 
     .buttonWr {
-        margin-top: 20px;
+        margin-top: 10px;
         display: flex;
         justify-content: flex-end;
 
         .cancelButton {
-            margin-right: 20px;
+            margin-right: 10px;
         }
     }
 </style>

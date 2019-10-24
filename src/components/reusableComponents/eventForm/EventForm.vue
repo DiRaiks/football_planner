@@ -101,7 +101,7 @@ export default class EventForm extends Vue {
 
 <style scoped lang="scss">
     .createEventBlock {
-        width: 370px;
+        width: auto;
         border-radius: 10px;
         padding: 5px;
         background-color: #eeeeee;
@@ -133,12 +133,20 @@ export default class EventForm extends Vue {
     }
 
     .buttonWr {
-        margin-top: 20px;
+        margin-top: 10px;
         display: flex;
+        flex-wrap: wrap-reverse;
         justify-content: flex-end;
+        align-items: baseline;
 
         .cancelButton {
-            margin-right: 20px;
+            height: 100%;
+        }
+
+        .addEventButton {
+            height: 100%;
+            margin-bottom: 10px;
+            margin-left: 10px;
         }
     }
 </style>
