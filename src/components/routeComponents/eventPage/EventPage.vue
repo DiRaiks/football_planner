@@ -100,6 +100,7 @@ export default class EventPage extends Vue {
 
 <style scoped lang="scss">
     .home {
+        
         .nav {
             padding: 20px;
             text-align: left;
@@ -120,7 +121,9 @@ export default class EventPage extends Vue {
         }
     }
     .columnWr {
-        padding: 20px;
+        max-width: 1100px;
+        margin: auto; 
+        padding: 10px;
         display: flex;
         justify-content: space-around;
     }
@@ -140,10 +143,18 @@ export default class EventPage extends Vue {
         align-items: center;
     }
 
+    .leftColumn {
+        width: 500px;
+    }
+
     .rightColumn {
+        width: 500px;
+        text-align: left;
+        padding-top: 50px;
 
         .editEventButton {
-            margin-right: 20px;
+            margin-right: 10px;
+            margin-bottom: 10px;
         }
 
         h3 {
@@ -166,8 +177,21 @@ export default class EventPage extends Vue {
             flex-direction: column;
         }
 
+        .leftColumn {
+            max-width: 500px;
+            width: 100%;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
         .rightColumn {
-            margin-top: 40px;
+            max-width: 500px;
+            width: 100%;
+            margin: auto;
+            margin-top: 0;
+            padding: 0 0 200px;
 
             .inputWr {
                 margin: 30px auto 0;
@@ -181,15 +205,19 @@ export default class EventPage extends Vue {
                 }
             }
         }
-
-        .leftColumn {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
     }
 
     @media (max-width: 475px) {
+
+        .leftColumn {
+            width: 100%;
+        }
+
+        .rightColumn {
+            width: 100%;
+            margin-top: 0;
+            padding: 0 0 200px;
+        }
 
         .inputWr {
             width: auto;

@@ -78,7 +78,8 @@ export default class CountInfo extends Vue {
 
 <style scoped lang="scss">
     .countInfo {
-        width: 95%;
+        width: 100%;
+        box-sizing: border-box;
         padding: 5px 10px;
         margin-bottom: 10px;
     }

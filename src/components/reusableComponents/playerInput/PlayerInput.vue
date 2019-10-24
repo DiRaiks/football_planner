@@ -74,8 +74,8 @@ export default class PlayerInput extends Vue {
         .options {
             display: flex;
             background-color: #fff;
-            border-radius: 4px;
-            padding: 2px;
+            border-radius: 5px;
+            padding: 5px;
             font-size: 14px;
             transition: all 0.2s;
             width: auto;
@@ -84,8 +84,9 @@ export default class PlayerInput extends Vue {
             cursor: pointer;
 
             .option {
-                padding: 4px;
-                border-radius: 2px;
+                padding: 4px 8px;
+                border-radius: 3px;
+                line-height: 14px;
 
                 &.active.forsure {
                     color: #155724;

@@ -57,12 +57,13 @@ export default class TableLine extends Vue {
 
 <style scoped lang="scss">
     .line {
+
         .name {
             text-align: left;
         }
 
         .status {
-            padding: 5px 10px;
+            padding: 0 10px;
             border-radius: 4px;
 
             &-true {
@@ -89,6 +90,7 @@ export default class TableLine extends Vue {
             }
         }
     }
+    
     td {
         padding: 5px 10px;
     }
