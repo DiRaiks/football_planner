@@ -100,6 +100,7 @@ export default class EventPage extends Vue {
 
 <style scoped lang="scss">
     .home {
+        
         .nav {
             padding: 20px;
             text-align: left;
@@ -189,8 +190,8 @@ export default class EventPage extends Vue {
             max-width: 500px;
             width: 100%;
             margin: auto;
-            margin-top: 0px;
-            padding: 0px 0px 200px;
+            margin-top: 0;
+            padding: 0 0 200px;
 
             .inputWr {
                 margin: 30px auto 0;
@@ -214,8 +215,8 @@ export default class EventPage extends Vue {
 
         .rightColumn {
             width: 100%;
-            margin-top: 0px;
-            padding: 0px 0px 200px;
+            margin-top: 0;
+            padding: 0 0 200px;
         }
 
         .inputWr {

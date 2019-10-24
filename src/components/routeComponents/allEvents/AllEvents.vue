@@ -67,13 +67,11 @@ export default class AllEvents extends Vue {
 <style scoped lang="scss">
     .allEventsWr {
         height: 100%;
-        // padding: 20px;
         padding: 20px 10px;
         text-align: left;
 
         h1 {
-            // text-align: center;
-            padding: 10px 25px 0px;
+            padding: 10px 25px 0;
             width: auto;
             max-width: 1100px;
             margin: 20px auto 30px;
@@ -89,11 +87,13 @@ export default class AllEvents extends Vue {
 
             .leftColumn {
                 width: 500px;
+
                 .openMatch {
                     margin-bottom: 40px;
                 }
 
                 .oldMatch {
+
                     .previewWr {
                         opacity: .5;
                     }
@@ -115,10 +115,12 @@ export default class AllEvents extends Vue {
         }
 
         @media (max-width: 1250px) {
+            
             h1 {
-                padding: 0px;
+                padding: 0;
                 max-width: 500px;
             }
+
             .columnWr {
                 flex-direction: column;
 
@@ -133,20 +135,21 @@ export default class AllEvents extends Vue {
                     width: 100%;
                     margin: auto;
                     margin-top: 40px;
-                    padding: 0px 0px 200px;
+                    padding: 0 0 200px;
                 }
             }
         }
 
         @media (max-width: 475px) {
+            
             .columnWr {
+
                 .leftColumn {
                     width: 100%;
                 }
 
                 .rightColumn {
                     width: 100%;
-                    padding: 0px 0px 200px;
                 }
             }
         }
