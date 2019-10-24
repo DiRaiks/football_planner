@@ -1,4 +1,5 @@
 import { PlayerItem, FriendItem } from '@/store/types';
+import lodash from 'lodash';
 
 export const countAllPLayers = (playersData: PlayerItem[]) => {
     let allPlayersArray: object[] = [];
@@ -6,11 +7,14 @@ export const countAllPLayers = (playersData: PlayerItem[]) => {
     for (const value of playersData) {
         allPlayersArray.push(value);
         if (value.friends.length) {
-            const friendsArray: object[] = value.friends.filter((friend: FriendItem) => {
+            const friendsArray: FriendItem[] = value.friends.filter((friend: FriendItem) => {
                 return friend.name;
             });
             allPlayersArray = allPlayersArray.concat(friendsArray);
         }
     }
-    return allPlayersArray;
+    const filteredAllPlayersArray: any = lodash.sortBy(allPlayersArray, (item: PlayerItem | FriendItem) => {
+        return !item.status;
+    });
+    return filteredAllPlayersArray;
 };
