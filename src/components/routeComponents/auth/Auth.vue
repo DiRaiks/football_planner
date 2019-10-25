@@ -9,12 +9,17 @@
             <div class="inputWr">
                 <form
                     v-if="isLogin"
+                    class="loginForm"
                     action=""
                     method="post"
                     @submit.prevent="loginHandler"
                 >
-                    <LableInput ref="userEmail" placeholder="Email" type="email" label="Email" v-model="email"/>
-                    <LableInput placeholder="Password" type="password" label="Password" v-model="password"/>
+                    <IconInput class="userEmail" ref="userEmail" placeholder="Email" type="email" v-model="email">
+                        <div class="peopleIcon"/>
+                    </IconInput>
+                    <IconInput class="userPassword"placeholder="Password" type="password" label="Password" v-model="password">
+                        <div class="lockIcon"/>
+                    </IconInput>
                     <Button :disabled="isDisabled" type="submit" class="authButton loginButton" text="Log In" viewType="positive"/>
                 </form>
                 <form
@@ -23,9 +28,9 @@
                     method="post"
                     @submit.prevent="registrationHandler"
                 >
-                    <LableInput ref="userEmail" placeholder="Email" type="email" label="Email" v-model="email"/>
-                    <LableInput placeholder="Name" type="text" label="Name" v-model="name"/>
-                    <LableInput placeholder="Password" type="password" label="Password" v-model="password"/>
+                    <LabelInput ref="userEmail" placeholder="Email" type="email" label="Email" v-model="email"/>
+                    <LabelInput placeholder="Name" type="text" label="Name" v-model="name"/>
+                    <LabelInput placeholder="Password" type="password" label="Password" v-model="password"/>
                     <Button :disabled="isDisabled" type="submit" class="authButton regButton" text="Registration" viewType="positive"/>
                 </form>
             </div>
@@ -37,14 +42,16 @@
 import {Component, Vue} from 'vue-property-decorator';
 import {Action} from 'vuex-class';
 
-import LableInput from '@/components/reusableComponents/inputs/LableInput.vue';
+import LabelInput from '@/components/reusableComponents/inputs/LabelInput.vue';
+import IconInput from '@/components/reusableComponents/inputs/IconInput.vue';
 import Button from '@/components/reusableComponents/button/Button.vue';
 
 const namespace: string = 'auth';
 
 @Component({
     components: {
-        LableInput,
+        LabelInput,
+        IconInput,
         Button,
     },
 })
@@ -126,6 +133,33 @@ export default class Auth extends Vue {
 
         .inputWr {
             margin-top: 40px;
+
+            .loginForm {
+                max-width: 250px;
+
+                .userPassword{
+                    margin-top: 15px;
+                }
+
+                .loginButton {
+                    color: white;
+                    margin-top: 15px;
+                }
+            }
+
+            .peopleIcon {
+                width: 16px;
+                height: 16px;
+                background-size: 16px 16px;
+                background-image: url('../../../assets/user-solid_auth.svg');
+            }
+
+            .lockIcon {
+                width: 16px;
+                height: 16px;
+                background-size: 16px 16px;
+                background-image: url('../../../assets/open-lock.svg');
+            }
 
             .authButton {
                 margin-top: 10px;
