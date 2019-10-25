@@ -20,7 +20,7 @@
 <script lang="ts">
 import { Component, Prop, Watch, Vue } from 'vue-property-decorator';
 
-import StyleInput from '@/components/reusableComponents/styleInput/StyleInput.vue';
+import StyleInput from './StyleInput.vue';
 
 @Component({
     components: {

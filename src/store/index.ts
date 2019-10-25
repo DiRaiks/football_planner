@@ -8,6 +8,7 @@ import { loader } from './loader';
 import { players } from './players';
 import { events } from './events';
 import { auth } from './auth';
+import { errors } from './errors';
 
 Vue.use(Vuex);
 
@@ -27,6 +28,7 @@ const storeModules = {
   auth,
   events,
   players,
+  errors,
 };
 
 const store: StoreOptions<RootState> = {

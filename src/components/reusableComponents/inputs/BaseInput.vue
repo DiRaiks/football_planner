@@ -1,70 +1,45 @@
 <template>
-    <label :for="currentId">
-        <span >{{label}}</span>
-        <input
-                :class="inputClass"
-                :id="currentId"
-                :type="type"
-                :placeholder="placeholder"
-                :min="min"
-                :max="max"
-                :value="value"
-                :checked="value"
-                @input="handleInput"
-                @change="handleInput"
-        >
-    </label>
+    <input
+        :class="[ 'baseInput', viewType, { invalid : isInvalid } ]"
+        :value="value"
+        :min="min"
+        :max="max"
+        :checked="value"
+        :placeholder="placeholder"
+        :type="type"
+        @input="handleInput"
+        @change="handleInput"
+    />
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 
 @Component
-export default class Input extends Vue {
-    @Prop({ default: 'default' }) private viewType!: string;
+export default class BaseInput extends Vue {
+    @Prop({ default: '' }) private viewType!: string;
     @Prop({ default: '' }) private value!: string | number | boolean;
-    @Prop() private label!: string;
     @Prop() private placeholder!: string;
     @Prop() private type!: string;
     @Prop() private input!: () => void;
     @Prop() private filter!: (value: string) => void;
     @Prop({ default: -99999 }) private min!: number;
     @Prop({ default: 99999 }) private max!: number;
-
-    get inputClass(): object {
-        const { viewType } = this;
-
-        return {
-            [`input-${ viewType }`]: viewType,
-        };
-    }
-    get currentId(): string {
-        return this.label + this.type;
-    }
+    @Prop({ default: false }) private isInvalid!: boolean;
 
     protected handleInput(event: any): void {
         const { value } = event.target;
-        let filteredValue = this.filter ? this.filter(value) : value;
+        const { type, filter } = this;
+        let filteredValue = filter ? filter(value) : value;
 
         if (filteredValue !== value) event.currentTarget.value = value;
-        if (this.type === 'checkbox' || this.type === 'radio') filteredValue = event.target.checked;
+        if (type === 'checkbox' || type === 'radio') filteredValue = event.target.checked;
         this.$emit('input', filteredValue);
     }
 }
 </script>
 
-<style scoped lang="scss">
-    label {
-        display: flex;
-        justify-content: space-between;
-        padding: 15px 20px;
-        align-items: center;
-    }
-
-    span {
-        margin-right: 20px;
-    }
-
+<style scoped>
     input {
         margin: 0;
         vertical-align: top;
@@ -78,6 +53,7 @@ export default class Input extends Vue {
         outline: none;
         position: relative;
         appearance: none;
+        padding: 9px 14px;
     }
 
     input[type="checkbox" i] {
@@ -90,11 +66,12 @@ export default class Input extends Vue {
         border: initial;
     }
 
-    .input-default {
-        padding: 9px 14px;
+    .small {
+        padding: 4px 7px;
     }
 
-    .input-small {
-        padding: 4px 7px;
+    .invalid {
+        border-color: red;
+        z-index: 1;
     }
 </style>

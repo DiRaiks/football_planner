@@ -15,32 +15,34 @@
 </template>
 
 <script lang="ts">
-    import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Prop, Vue } from 'vue-property-decorator';
 
-    @Component
-    export default class StyleInput extends Vue {
-        @Prop({ default: '' }) private value!: string | number | boolean;
-        @Prop({ default: '' }) private label!: string;
-        @Prop() private type!: string;
-        @Prop() private input!: () => void;
-        @Prop() private filter!: (value: string) => void;
-        @Prop({ default: -99999 }) private min!: number;
-        @Prop({ default: 99999 }) private max!: number;
-        @Prop({ default: '' }) private id!: string;
+@Component
+export default class StyleInput extends Vue {
+    @Prop({ default: '' }) private value!: string | number | boolean;
+    @Prop({ default: '' }) private label!: string;
+    @Prop() private type!: string;
+    @Prop() private input!: () => void;
+    @Prop() private filter!: (value: string) => void;
+    @Prop({ default: -99999 }) private min!: number;
+    @Prop({ default: 99999 }) private max!: number;
+    @Prop({ default: '' }) private id!: string;
 
-        get currentId(): string {
-            return `${ this.label }_${ this.type }_${ this.id }`;
-        }
-
-        protected handleInput(event: any): void {
-            const { value } = event.target;
-            let filteredValue = this.filter ? this.filter(value) : value;
-
-            if (filteredValue !== value) event.currentTarget.value = value;
-            if (this.type === 'checkbox' || this.type === 'radio') filteredValue = event.target.checked;
-            this.$emit('input', filteredValue);
-        }
+    get currentId(): string {
+        const { label, type, id } = this;
+        return `${ label }_${ type }_${ id }`;
     }
+
+    protected handleInput(event: any): void {
+        const { value } = event.target;
+        const { type, filter } = this;
+        let filteredValue = filter ? filter(value) : value;
+
+        if (filteredValue !== value) event.currentTarget.value = value;
+        if (type === 'checkbox' || type === 'radio') filteredValue = event.target.checked;
+        this.$emit('input', filteredValue);
+    }
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
