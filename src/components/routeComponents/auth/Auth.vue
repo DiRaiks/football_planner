@@ -20,7 +20,7 @@
                     <IconInput class="userPassword"placeholder="Password" type="password" label="Password" v-model="password">
                         <div class="lockIcon"/>
                     </IconInput>
-                    <Button :disabled="isDisabled" type="submit" class="authButton loginButton" text="Log In" viewType="positive"/>
+                    <Button :disabled="isDisabled" type="submit" class="authButton loginButton" text="Sign In" viewType="positive"/>
                 </form>
                 <form
                     v-else
