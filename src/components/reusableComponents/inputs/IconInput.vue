@@ -10,6 +10,7 @@
             :min="min"
             :max="max"
             v-model="inputValue"
+            @focus.native="nativeFocus"
         />
     </div>
 </template>
@@ -34,16 +35,18 @@ import BaseInput from './BaseInput.vue';
     @Prop() private filter!: (value: string) => void;
     @Prop({ default: -99999 }) private min!: number;
     @Prop({ default: 99999 }) private max!: number;
+    @Prop() private focus!: () => void;
 
     @Watch('inputValue')
     private changeInput(val: string) {
         this.$emit('input', val);
     }
+    private nativeFocus(): void {
+        this.$emit('focus');
+    }
 
     private mounted() {
-        this.$nextTick(() => {
-            this.inputValue = this.value;
-        });
+        this.inputValue = this.value;
     }
 }
 </script>

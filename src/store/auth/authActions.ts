@@ -1,4 +1,5 @@
 import { ActionTree } from 'vuex';
+import router from '@/router';
 
 import { loginRequest, getCurrentUserRequest, registrationRequest, changeUser } from './authApi';
 

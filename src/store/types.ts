@@ -66,3 +66,16 @@ export interface UserObj {
 export interface LoaderState {
     isLoading: boolean;
 }
+
+// ERRORS
+
+export interface ErrorsState {
+    name: string;
+    lastErrorUrl: string;
+    lastFormData: null | object;
+}
+
+export interface ResponseError {
+    message: string;
+    code: string;
+}
