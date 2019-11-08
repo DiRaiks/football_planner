@@ -53,12 +53,15 @@ import { EventItem } from '@/store/types';
 export default class AllEvents extends Vue {
     @Action('getEvents', { namespace: 'events' })
     private getEvents!: any;
+    @Action('clearCurrentEventId', { namespace: 'events' })
+    private clearCurrentEventId!: any;
     @Getter('getActiveEvents', {namespace: 'events'})
     private activeEvents!: EventItem[];
     @Getter('getOldEvents', {namespace: 'events'})
     private oldEvents!: EventItem[];
 
     private async mounted() {
+        this.clearCurrentEventId();
         await this.getEvents();
     }
 }
@@ -81,7 +84,7 @@ export default class AllEvents extends Vue {
 
         .columnWr {
             max-width: 1100px;
-            margin: auto; 
+            margin: auto;
             display: flex;
             justify-content: space-around;
 
@@ -115,7 +118,7 @@ export default class AllEvents extends Vue {
         }
 
         @media (max-width: 1250px) {
-            
+
             h1 {
                 padding: 0;
                 max-width: 500px;
@@ -141,7 +144,7 @@ export default class AllEvents extends Vue {
         }
 
         @media (max-width: 475px) {
-            
+
             .columnWr {
 
                 .leftColumn {

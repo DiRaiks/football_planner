@@ -14,4 +14,7 @@ export const mutations: MutationTree<PlayersState> = {
             return player;
         });
     },
+    setIsAddPlayerPending(state, isPending: boolean) { state.isAddPlayerPending = isPending; },
+    setIsEditPlayerPending(state, isPending: boolean) { state.isEditPlayerPending = isPending; },
+    setIsDeletePlayerPending(state, isPending: boolean) { state.isAddPlayerPending = isPending; },
 };

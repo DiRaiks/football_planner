@@ -10,9 +10,9 @@
             <div><StyleInput type="number" nim="10" max="22" label="Количество игроков" v-model="minimum"/></div>
         </div>
         <div class="buttonWr">
-            <Button v-if="isEdit" class="cancelButton" text="Отмена"
+            <Button v-if="isEdit" class="cancelButton" text="Отмена" :disabled="buttonIsPending"
                     @onClick="cancelHandler"/>
-            <Button class="addEventButton" :text="buttonText"
+            <Button class="addEventButton" :text="buttonText" :isPending="buttonIsPending"
                     @onClick="buttonHandler"/>
         </div>
     </div>
@@ -49,9 +49,14 @@ export default class EventForm extends Vue {
     private changeEvent!: any;
     @Getter('getCurrentEvent', { namespace: 'events' })
     private currentEvent!: EventItem;
+    @Getter('getIsAddEventPending', { namespace: 'events' })
+    private isAddEventPending!: any;
+    @Getter('getIsEditEventPending', { namespace: 'events' })
+    private isEditEventPending!: any;
 
-    get buttonText(): string {
-        return this.isEdit ? 'Редактировать событие' : 'Добавить событие';
+    get buttonText(): string { return this.isEdit ? 'Редактировать событие' : 'Добавить событие'; }
+    get buttonIsPending(): boolean {
+        return this.isAddEventPending || this.isEditEventPending;
     }
 
     protected async buttonHandler(): Promise<void> {

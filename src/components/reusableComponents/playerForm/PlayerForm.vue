@@ -22,9 +22,9 @@
             </div>
         </div>
         <div class="buttonWr">
-            <Button class="cancelButton" text="Отмена"
+            <Button class="cancelButton" text="Отмена" :disabled="buttonIsPending"
                     @onClick="cancelHandler"/>
-            <Button class="addEventButton" :text="buttonText"
+            <Button class="addEventButton" :text="buttonText" :isPending="buttonIsPending"
                     @onClick="buttonHandler"/>
         </div>
     </div>
@@ -67,12 +67,21 @@ export default class PlayerForm extends Vue {
     private changeUser!: any;
     @Getter('getCurrentUser', { namespace: 'auth' })
     private currentUser!: any;
+    @Getter('getIsAddPlayerPending', { namespace: 'players' })
+    private isAddPlayerPending!: any;
+    @Getter('getIsEditPlayerPending', { namespace: 'players' })
+    private isEditPlayerPending!: any;
+    @Getter('getIsDeletePlayerPending', { namespace: 'players' })
+    private isDeletePlayerPending!: any;
 
     get buttonText(): string { return this.isEdit ? 'Применить' : 'Принять участие'; }
     get filteredFriends(): FriendItem[] {
         return this.friends.filter((friend: FriendItem) => {
             if (friend.name.trim()) return friend;
         });
+    }
+    get buttonIsPending(): boolean {
+        return this.isAddPlayerPending || this.isEditPlayerPending || this.isDeletePlayerPending;
     }
 
     protected changeStatus(status: boolean): void { this.status = status; }
@@ -95,9 +104,9 @@ export default class PlayerForm extends Vue {
             await this.setNewPlayer({ name: this.playerName, friends: this.filteredFriends, status: this.status });
         }
 
-        if (this.playerName) await this.changeUser({ ...this.currentUser, name: this.playerName });
-
         if (this.callback) this.callback();
+
+        if (this.playerName) await this.changeUser({ ...this.currentUser, name: this.playerName });
 
         this.playerName = '';
         this.friends = [{ name: '' , status: true }];

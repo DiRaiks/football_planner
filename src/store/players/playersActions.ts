@@ -10,10 +10,10 @@ import {
 } from './playersApi';
 
 import { PlayersState, RootState, PlayerItem } from '../types';
-import { changeEvent } from '@/store/events/eventsApi';
 
 export const actions: ActionTree<PlayersState, RootState> = {
     async setNewPlayer({ commit, getters, rootGetters, dispatch }, newPeople: PlayerItem) {
+        commit('setIsAddPlayerPending', true);
         const currentEvent = rootGetters['events/getCurrentEvent'];
         const currentEventId = currentEvent._id;
         const currentEventDate = currentEvent.date;
@@ -29,11 +29,14 @@ export const actions: ActionTree<PlayersState, RootState> = {
             commit('setPlayersData', savedPlayers);
 
             await dispatch('changeEventPlayersCount');
+            commit('setIsAddPlayerPending', false);
         } catch (error) {
             commit('setError'); // TODO: need error handler
+            commit('setIsAddPlayerPending', false);
         }
     },
     async deletePlayer({ commit, rootGetters, dispatch }, id: string) {
+        commit('setIsDeletePlayerPending', true);
         const currentEventId = rootGetters['events/getCurrentEvent']._id;
 
         try {
@@ -41,19 +44,25 @@ export const actions: ActionTree<PlayersState, RootState> = {
             commit('setPlayersData', newPlayersData);
 
             await dispatch('changeEventPlayersCount');
+            commit('setIsDeletePlayerPending', false);
         } catch (error) {
             commit('setError');
+            commit('setIsDeletePlayerPending', false);
         }
     },
     async changePlayer({ commit, dispatch }, newPlayer: PlayerItem) {
+        commit('setIsEditPlayerPending', true);
+
         try {
             const changedPlayer = await changePlayer(newPlayer._id, newPlayer);
 
             commit('changePlayer', changedPlayer);
 
             await dispatch('changeEventPlayersCount');
+            commit('setIsEditPlayerPending', false);
         } catch (error) {
             commit('setError');
+            commit('setIsEditPlayerPending', false);
         }
     },
     async getPlayersData({ commit }) {

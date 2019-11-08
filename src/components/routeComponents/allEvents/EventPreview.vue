@@ -1,5 +1,6 @@
 <template>
-    <div @click="selectEvent" class="previewBlock">
+    <div @click="selectEvent" :class="previewBlockClass">
+        <div class="previewBlockSpinner"></div>
         <div class="nameWr">
             <span>{{ event.eventName }}</span>
             <span v-if="isEventCreator" class="deleteButton" @click="deleteCurrentEvent">x</span>
@@ -30,8 +31,14 @@ export default class EventsPreview extends Vue {
 
     @Action('deleteEvent', {namespace: 'events'})
     private deleteEvent!: any;
+    @Action('setCurrentEventId', { namespace: 'events' })
+    private setCurrentEventId!: any;
     @Getter('getCurrentUser', { namespace: 'auth' })
     private currentUser!: UserObj;
+    @Getter('getIsDeleteEventPending', { namespace: 'events' })
+    private isDeletePendingEvents!: string[];
+    @Getter('getIsSelectEventPending', { namespace: 'events' })
+    private isSelectPendingEvents!: string[];
 
     get valueClass(): object {
         return {
@@ -40,8 +47,28 @@ export default class EventsPreview extends Vue {
         };
     }
     get isEventCreator(): boolean { return this.event.creatorId === this.currentUser._id; }
+    get previewBlockClass(): object {
+        return {
+            previewBlock: true,
+            previewBlockPending: this.isCurrentEventDelete || this.isCurrentEventSelect,
+        };
+    }
+    get isCurrentEventDelete(): string | undefined {
+        return this.isDeletePendingEvents.find((eventId: string) => {
+            return eventId === this.event._id;
+        });
+    }
+    get isCurrentEventSelect(): string | undefined {
+        return this.isSelectPendingEvents.find((eventId: string) => {
+            return eventId === this.event._id;
+        });
+    }
 
     protected async selectEvent(): Promise<void> {
+        if (this.isCurrentEventDelete || this.isSelectPendingEvents.length) return;
+
+        await this.setCurrentEventId(this.event._id);
+
         router.push(`/event/${ this.event._id }`);
     }
     protected deleteCurrentEvent(event: any): void {
@@ -58,6 +85,7 @@ export default class EventsPreview extends Vue {
         padding: 10px;
         background-color: #eeeeee;
         cursor: pointer;
+        position: relative;
 
         &:hover {
             background-color: #cdcdcd;
@@ -107,8 +135,45 @@ export default class EventsPreview extends Vue {
             }
         }
 
+        &.previewBlockPending {
+            transition: all ease-in 0.15s;
+            cursor: default;
+
+            .previewBlockSpinner {
+                opacity: 1;
+                transition: all ease-in 0.1s;
+            }
+        }
+
+        .previewBlockSpinner {
+            width: 70px;
+            height: 70px;
+            opacity: 0;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin: -35px;
+            background-image: url('../../../assets/big-spinner.svg');
+
+            animation: buttonSpinner 1.5s linear infinite;
+        }
+
         @media (max-width: 475px) {
             width: auto;
+        }
+    }
+
+    @keyframes buttonSpinner {
+        0% {
+            transform: rotate(0);
+            animation-timing-function: cubic-bezier(.55,.055,.675,.19);
+        }
+        50% {
+            transform: rotate(180deg);
+            animation-timing-function: cubic-bezier(.215,.61,.355,1);
+        }
+        100% {
+            transform: rotate(360deg);
         }
     }
 </style>

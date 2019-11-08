@@ -6,6 +6,9 @@ export interface RootState {
 
 export interface PlayersState {
     playersData: PlayerItem[];
+    isAddPlayerPending: boolean;
+    isEditPlayerPending: boolean;
+    isDeletePlayerPending: boolean;
 }
 
 export interface PlayerItem {
@@ -28,6 +31,10 @@ export interface FriendItem {
 export interface EventsState {
     currentEventId: string | null;
     events: EventItem[] | null;
+    isAddEventPending: boolean;
+    isEditEventPending: boolean;
+    isDeleteEventPending: string[];
+    isSelectEventPending: string[];
 }
 
 export interface EventItem {
@@ -65,6 +72,7 @@ export interface UserObj {
 
 export interface LoaderState {
     isLoading: boolean;
+    isNeedGlobalLoader: boolean;
 }
 
 // ERRORS

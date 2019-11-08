@@ -26,4 +26,7 @@ export const getters: GetterTree<PlayersState, RootState> = {
 
         return players.find((player: PlayerItem) => player.userId === currentUser._id);
     },
+    getIsAddPlayerPending: (state) => state.isAddPlayerPending,
+    getIsEditPlayerPending: (state) => state.isEditPlayerPending,
+    getIsDeletePlayerPending: (state) => state.isDeletePlayerPending,
 };

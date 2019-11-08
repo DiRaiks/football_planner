@@ -88,6 +88,7 @@ export default class EventPage extends Vue {
     }
 
     private async mounted() {
+        if (this.currentEvent) return;
         const { eventId } = this.$route.params;
 
         if (eventId) await this.setCurrentEventId(eventId);

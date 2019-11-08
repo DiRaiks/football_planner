@@ -32,4 +32,8 @@ export const getters: GetterTree<EventsState, RootState> = {
             if (new Date(event.date) < new Date(nowYear, nowMonth, nowDay)) return event;
         });
     },
+    getIsAddEventPending: (state) => state.isAddEventPending,
+    getIsEditEventPending: (state) => state.isEditEventPending,
+    getIsDeleteEventPending: (state) => state.isDeleteEventPending,
+    getIsSelectEventPending: (state) => state.isSelectEventPending,
 };
