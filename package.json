@@ -7,7 +7,7 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit",
-    "deploy": "scp -rp ./dist/* root@87.236.22.136:/var/www/html/",
+    "deploy": "scp -rp ./dist/* root@87.236.22.136:/var/www/football.ukit.space/public/",
     "deploy-server": "scp -rp ./football_planner_server/* root@87.236.22.136:/var/www/html/server/"
   },
   "dependencies": {

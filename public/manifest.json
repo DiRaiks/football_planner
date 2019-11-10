@@ -1,6 +1,6 @@
 {
-  "name": "football",
-  "short_name": "football",
+  "name": "Football Planner",
+  "short_name": "Football Planner",
   "icons": [
     {
       "src": "./img/icons/android-chrome-192x192.png",
