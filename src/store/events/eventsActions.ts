@@ -116,4 +116,7 @@ export const actions: ActionTree<EventsState, RootState> = {
             router.push('/');
         }
     },
+    changeEventPlayersAmount({ commit }, newPlayersAmount) {
+        commit('changeEvent', { playersAmount: newPlayersAmount.playersAmount, _id: newPlayersAmount.eventId });
+    },
 };

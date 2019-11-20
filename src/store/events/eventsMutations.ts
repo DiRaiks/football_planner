@@ -9,7 +9,7 @@ export const mutations: MutationTree<EventsState> = {
         if (!state.events) return;
         state.events = state.events.map((event: EventItem) => {
             if (event._id === newEvent._id) {
-                event = { ...newEvent };
+                event = { ...event, ...newEvent };
                 return event;
             }
             return event;

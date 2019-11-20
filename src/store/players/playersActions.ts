@@ -20,15 +20,18 @@ export const actions: ActionTree<PlayersState, RootState> = {
         const currentUser = rootGetters['auth/getCurrentUser'];
 
         try {
-            const savedPlayers = await savePlayer({
+            const { players, event } = await savePlayer({
                 ...newPeople,
                 eventId: currentEventId,
                 date: currentEventDate,
                 userId: currentUser._id,
             });
-            commit('setPlayersData', savedPlayers);
+            commit('setPlayersData', players);
 
-            await dispatch('changeEventPlayersCount');
+            await dispatch('events/changeEventPlayersAmount', {
+                playersAmount: event.playersAmount,
+                eventId: event._id,
+            }, { root: true });
             commit('setIsAddPlayerPending', false);
         } catch (error) {
             commit('setError'); // TODO: need error handler
@@ -40,10 +43,13 @@ export const actions: ActionTree<PlayersState, RootState> = {
         const currentEventId = rootGetters['events/getCurrentEvent']._id;
 
         try {
-            const newPlayersData = await deletePlayer(id, currentEventId);
-            commit('setPlayersData', newPlayersData);
+            const { players, event } = await deletePlayer(id, currentEventId);
+            commit('setPlayersData', players);
 
-            await dispatch('changeEventPlayersCount');
+            await dispatch('events/changeEventPlayersAmount', {
+                playersAmount: event.playersAmount,
+                eventId: event._id,
+            }, { root: true });
             commit('setIsDeletePlayerPending', false);
         } catch (error) {
             commit('setError');
