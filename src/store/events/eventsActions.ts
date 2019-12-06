@@ -45,11 +45,10 @@ export const actions: ActionTree<EventsState, RootState> = {
     async saveNewEvent({ commit, rootGetters }, { time, place, date, minimum, eventName }) {
         commit('setIsAddEventPending', true);
         const playersAmount = rootGetters['events/getPlayersDataCount'] || 0;
-        const user = rootGetters['auth/getCurrentUser'];
 
         try {
             const event: EventItem = { time, place, date, minimum, eventName, playersAmount };
-            const savedEvents = await saveEvent(event, user._id);
+            const savedEvents = await saveEvent(event);
 
             commit('setEvents', savedEvents);
             commit('setIsAddEventPending', false);
