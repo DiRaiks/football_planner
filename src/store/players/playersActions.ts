@@ -40,10 +40,9 @@ export const actions: ActionTree<PlayersState, RootState> = {
     },
     async deletePlayer({ commit, rootGetters, dispatch }, id: string) {
         commit('setIsDeletePlayerPending', true);
-        const currentEventId = rootGetters['events/getCurrentEvent']._id;
 
         try {
-            const { players, event } = await deletePlayer(id, currentEventId);
+            const { players, event } = await deletePlayer(id);
             commit('setPlayersData', players);
 
             await dispatch('events/changeEventPlayersAmount', {

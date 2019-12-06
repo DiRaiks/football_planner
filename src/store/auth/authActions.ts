@@ -1,5 +1,4 @@
 import { ActionTree } from 'vuex';
-import router from '@/router';
 
 import { loginRequest, getCurrentUserRequest, registrationRequest, changeUser } from './authApi';
 
@@ -10,14 +9,14 @@ export const actions: ActionTree<AuthState, RootState> = {
         dispatch('loader/setIsLoading', true, { root: true });
 
         try {
-            const { user }  = await loginRequest(email, password);
+            const user  = await loginRequest(email, password);
             const { token } = user;
+            localStorage.setItem('token', token);
 
             await dispatch('events/getEvents', null, { root: true });
 
             commit('setCurrentUser', user);
             commit('setIsAuth', true);
-            localStorage.setItem('token', token);
 
             dispatch('loader/setIsLoading', false, { root: true });
         } catch (error) {
@@ -25,11 +24,17 @@ export const actions: ActionTree<AuthState, RootState> = {
             dispatch('loader/setIsLoading', false, { root: true });
         }
     },
+    async logout({ commit }) {
+        commit('setCurrentUser', null);
+        commit('setIsAuth', false);
+
+        localStorage.removeItem('token');
+    },
     async getCurrentUser({ commit, dispatch }) {
         dispatch('loader/setIsLoading', true, { root: true });
 
         try {
-            const { user } = await getCurrentUserRequest();
+            const user = await getCurrentUserRequest();
             const { token } = user;
 
             await dispatch('events/getEvents', null, { root: true });
@@ -50,7 +55,7 @@ export const actions: ActionTree<AuthState, RootState> = {
         dispatch('loader/setIsLoading', true, { root: true });
 
         try {
-            const { user } = await registrationRequest(email, password, name);
+            const user = await registrationRequest(email, password, name);
             const { token } = user;
 
             await dispatch('events/getEvents', null, { root: true });
@@ -68,7 +73,7 @@ export const actions: ActionTree<AuthState, RootState> = {
     },
     async changeUser({ commit }, newUser: UserObj) {
         try {
-            const changedUser = await changeUser(newUser._id, newUser);
+            const changedUser = await changeUser(newUser);
 
             commit('changeUser', changedUser);
         } catch (error) {
