@@ -7,7 +7,7 @@
             <div class="leftColumn">
                 <Table/>
             </div>
-            <div class="rightColumn">
+            <div class="rightColumn" v-if="isCanModify">
                 <h3 :class="headerClass">{{ rightBlockHeader }}</h3>
                 <Button
                     v-if="isEventCreator && !isEditEvent && !isSetNewPlayer && !isEditPlayer"
@@ -64,6 +64,8 @@ export default class EventPage extends Vue {
     private getEvent!: any;
     @Getter('getCurrentEvent', { namespace: 'events' })
     private currentEvent!: EventItem;
+    @Getter('getOldEvents', { namespace: 'events' })
+    private oldEvents!: EventItem[];
     @Getter('getCurrentUser', { namespace: 'auth' })
     private currentUser!: UserObj;
     @Getter('getAlreadySignedUp', { namespace: 'players' })
@@ -74,6 +76,9 @@ export default class EventPage extends Vue {
     get playerHeader(): string { return this.alreadySignedUp ? 'Вы уже записались' : 'Вы пока не записаны'; }
     get headerClass(): object { return { active: this.alreadySignedUp }; }
     get buttonText(): string { return this.alreadySignedUp ? 'Изменить решение' : 'Принять участие'; }
+    get isCanModify(): boolean {
+        return !this.oldEvents.some((event: EventItem) => event._id === this.currentEvent._id);
+    }
 
     protected gotToHome(): void { router.push('/'); }
     protected openEditEvent(): void { this.isEditEvent = true; }
