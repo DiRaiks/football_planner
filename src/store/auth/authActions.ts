@@ -57,12 +57,12 @@ export const actions: ActionTree<AuthState, RootState> = {
         try {
             const user = await registrationRequest(email, password, name);
             const { token } = user;
+            localStorage.setItem('token', token);
 
             await dispatch('events/getEvents', null, { root: true });
 
             commit('setCurrentUser', user);
             commit('setIsAuth', true);
-            localStorage.setItem('token', token);
 
             dispatch('loader/setIsLoading', false, { root: true });
         } catch (error) {
