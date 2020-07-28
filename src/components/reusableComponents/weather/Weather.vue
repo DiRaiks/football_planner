@@ -2,7 +2,7 @@
     <div class="weatherWr">
         <div v-for="(day, index) in weatherByDays" class="weather">
             <div class="date">{{formatDate(day.dt)}}</div>
-            <img class="icon" :src="`http://openweathermap.org/img/wn/${day.weatherObj.icon}.png`" alt="">
+            <img class="icon" :src="`https://openweathermap.org/img/wn/${day.weatherObj.icon}.png`" alt="">
             <div class="temp">
                 <div class="maxTemp"><span>{{ formatTemp(day.temp.max) }}</span></div>
                 <div><span>{{formatTemp(day.temp.min)}}</span></div>
