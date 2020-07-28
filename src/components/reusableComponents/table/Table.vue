@@ -3,7 +3,7 @@
         <h2 class="headerWr">{{ currentEvent.eventName }}</h2>
         <div class="gameInfo">
             <div class="info place">{{ currentEvent.place }}</div>
-            <div class="info date">{{ currentEvent.date }}</div>
+            <div class="info date">{{ formattedDate }}</div>
             <div class="info time">{{ currentEvent.time }}</div>
         </div>
         <table>
@@ -50,7 +50,11 @@ export default class Table extends Vue {
     @Getter('getPlayersData', { namespace: 'players' })
     private playersData!: PlayerItem[];
     @Getter('getCurrentEvent', { namespace: 'events' })
-    private currentEvent!: object;
+    private currentEvent!: Record<string, string>;
+
+    get formattedDate(): string {
+        return new Date(this.currentEvent.date).toLocaleDateString('ru-RU');
+    }
 }
 </script>
 
@@ -105,7 +109,7 @@ export default class Table extends Vue {
             }
         }
     }
-    
+
     td {
         padding: 0 10px;
 

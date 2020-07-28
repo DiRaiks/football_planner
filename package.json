@@ -7,8 +7,8 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit",
-    "deploy": "scp -rp ./dist/* root@45.84.225.242:/var/www/football.ukit.space/public/",
-    "deploy-server": "scp -rp ./football_planner_server/* root@45.84.225.242:/var/www/html/server/"
+    "deploy": "scp -rp ./dist/* root@45.80.68.86:/var/www/football-planner.online/public/",
+    "deploy-server": "scp -rp ../football-planner-server-nestjs/* root@45.80.68.86:/var/www/server/"
   },
   "dependencies": {
     "@types/lodash": "^4.14.144",

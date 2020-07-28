@@ -9,6 +9,7 @@ import { players } from './players';
 import { events } from './events';
 import { auth } from './auth';
 import { errors } from './errors';
+import { weather } from './weather';
 
 Vue.use(Vuex);
 
@@ -29,6 +30,7 @@ const storeModules = {
   events,
   players,
   errors,
+  weather,
 };
 
 const store: StoreOptions<RootState> = {

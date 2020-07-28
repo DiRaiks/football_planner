@@ -3,6 +3,7 @@
         <div class="nav">
             <span @click="gotToHome">Матчи</span> / <span class="active">Обзор матча</span>
         </div>
+        <Weather/>
         <div v-if="currentEvent" class="columnWr">
             <div class="leftColumn">
                 <Table/>
@@ -41,6 +42,7 @@ import Button from '@/components/reusableComponents/button/Button.vue';
 import Table from '@/components/reusableComponents/table/Table.vue';
 import EventForm from '@/components/reusableComponents/eventForm/EventForm.vue';
 import PlayerForm from '@/components/reusableComponents/playerForm/PlayerForm.vue';
+import Weather from '@/components/reusableComponents/weather/Weather.vue';
 
 import { EventItem, UserObj, PlayerItem } from '@/store/types';
 
@@ -50,6 +52,7 @@ import { EventItem, UserObj, PlayerItem } from '@/store/types';
         Table,
         EventForm,
         PlayerForm,
+        Weather,
     },
 })
 
